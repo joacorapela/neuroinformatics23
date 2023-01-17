@@ -14,7 +14,7 @@ def main(argv):
                         help="mean of Normal distribution")
     parser.add_argument("--std", type=float, default=1.0,
                         help="standard deviation of Normal distribution")
-    parser.add_argument("--n_samples", type=int, default=1000,
+    parser.add_argument("--n_samples", type=int, default=10000,
                         help="number of samples of Noral distribution "
                              "to generate per repeat")
     parser.add_argument("--n_repeats", type=int, default=1000,

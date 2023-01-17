@@ -131,7 +131,7 @@ def main(argv):
               password='international', silent=True)
     spikes = aOne.load_object(eID, 'spikes', f'alf/{probe_id}/pykilosort')
     trials = aOne.load_object(eID, 'trials')
-    breakpoint()
+
     epoch_times = trials[epoch_event_name]
     keep_trial = np.logical_not(np.isnan(epoch_times))
     epoch_times = epoch_times[keep_trial]

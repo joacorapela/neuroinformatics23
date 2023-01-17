@@ -1,0 +1,9 @@
+*~
+*.xoj
+
+worksheets/ws1/mySolution/figures/*
+worksheets/ws1/mySolution/results/*
+**/notes/
+**/report/*
+!**/report/*pdf
+!**/report/*tex

@@ -1,0 +1,65 @@
+\documentclass{article}
+
+\usepackage[hypertexnames=false,colorlinks=true,breaklinks]{hyperref}
+\usepackage{graphicx}
+\usepackage[shortlabels]{enumitem}
+\usepackage{subcaption}
+\usepackage{caption}
+
+\title{Report worksheet 1}
+\author{Joaqu\'{i}n Rapela}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercise 1}
+
+\begin{enumerate}[(a)]
+
+    \item  Please refer to Figure~\ref{fig:ex1a}.
+
+        \begin{figure}
+            \begin{center}
+                \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples10000.html}{\includegraphics[width=4in]{../figures/ex1_distributionStdCauchy_mean0.0000_nSamples10000.png}}
+
+                \caption{Exercise 1a. Histogram of p-values of 1.000 t-tests
+                evaluating if the mean of 10.000 samples from a $\mathcal{N}(0,
+                1)$ is equal to zero.
+                Click on the figure to see its interactive version.}
+
+                \label{fig:ex1a}
+
+            \end{center}
+        \end{figure}
+
+    \item  Please refer to Figure~\ref{fig:ex1b}.
+
+        \begin{figure}
+            % \begin{center}
+
+                \begin{subfigure}{1.0\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_mean0.1000_nSamples1000.html}{\includegraphics[width=4in]{../figures/ex1_distributionNormal_mean0.1000_nSamples1000.png}}
+                    \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean of 10.000 samples from a $\mathcal{N}(0.1, 1)$ is equal to zero.  Click on the figure to see its interactive version.}
+                    \label{fig:ex1b_1}
+                \end{subfigure}
+
+                \begin{subfigure}{1.0\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_mean0.0100_nSamples1000.html}{\includegraphics[width=4in]{../figures/ex1_distributionNormal_mean0.0100_nSamples1000.png}}
+                    \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean
+                    of 10.000 samples from a $\mathcal{N}(0.01, 1)$ is equal to zero.
+                    Click on the figure to see its interactive version.}
+                    \label{fig:ex1b_1}
+                \end{subfigure}
+
+                \caption{Exercise 1b}
+                \label{fig:ex1b}
+
+            % \end{center}
+        \end{figure}
+
+\end{enumerate}
+
+\end{document}

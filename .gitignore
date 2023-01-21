@@ -7,3 +7,4 @@ worksheets/ws1/mySolution/results/*
 **/report/*
 !**/report/*pdf
 !**/report/*tex
+!**/report/Makefile

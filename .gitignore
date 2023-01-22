@@ -1,5 +1,7 @@
 *~
 *.xoj
+__pycache__
+*Rsync
 
 worksheets/ws1/mySolution/figures/*
 worksheets/ws1/mySolution/results/*

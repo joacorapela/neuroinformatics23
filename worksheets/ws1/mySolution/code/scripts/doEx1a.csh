@@ -1,3 +1,3 @@
 #!/bin/csh
 
-python doEx1.py --distribution Normal --mean 0
+ipython --pdb doEx1.py -- --distribution Normal --mean 0

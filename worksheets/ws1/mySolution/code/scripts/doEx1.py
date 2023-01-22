@@ -1,8 +1,10 @@
 import sys
 import argparse
 import numpy as np
-import scipy.stats
-import plotly.graph_objects as go
+
+import stats
+import plots
+
 
 def main(argv):
     parser = argparse.ArgumentParser()
@@ -19,9 +21,6 @@ def main(argv):
                              "to generate per repeat")
     parser.add_argument("--n_repeats", type=int, default=1000,
                         help="number of repeats")
-    parser.add_argument("--n_resamples", type=int, default=100,
-                        help="number of resamples used to estimate histograms "
-                             "means and stds")
     parser.add_argument("--n_bins", type=int, default=20,
                         help="number of bins for the p-values histogram")
     parser.add_argument("--fig_filename_pattern", type=str,
@@ -35,43 +34,21 @@ def main(argv):
     std = args.std
     n_samples = args.n_samples
     n_repeats = args.n_repeats
-    n_resamples = args.n_resamples
     n_bins = args.n_bins
     fig_filename_pattern = args.fig_filename_pattern
 
-    bins = np.arange(0, 1+1.0/n_bins, 1.0/n_bins)
-    p_values_hist_resamples = np.empty((n_resamples, n_bins), dtype=np.double)
-
-    for n in range(n_resamples):
-        print("Processed resample {:03d} ({:d})".format(n, n_resamples))
-        p_values = [None] * n_repeats
-
-        for i in range(n_repeats):
-            if distribution == "Normal":
-                sample = np.random.normal(loc=mean, scale=std, size=n_samples)
-            elif distribution == "StdCauchy":
-                sample = np.random.normal(size=n_samples)
-            elif distribution == "Rademacher":
-                uniforms = np.random.uniform(size=n_samples)
-                sample = np.where(uniforms<0.5, 1, -1)
-            elif distribution == "VerySkewed":
-                uniforms = np.random.uniform(size=n_samples)
-                sample = np.where(uniforms<1e-3, 1, 0)
-            else:
-                raise ValueError(f"Invalid distribution: {distribution}")
-            _, p_values[i] = scipy.stats.ttest_1samp(sample, popmean=popmean)
-        p_values_hist_resamples[n, :], _ = np.histogram(p_values, bins=bins)
-    p_values_hist_means = np.mean(p_values_hist_resamples, axis=0)
-    p_values_hist_stds = np.std(p_values_hist_resamples, axis=0)
+    p_values_hist, count_p_values_less0_05 = \
+        stats.get_pvalues_hist(distribution=distribution,
+                               mean=mean, std=std,
+                               n_repeats=n_repeats,
+                               popmean=popmean,
+                               n_bins=n_bins)
     bin_centers = np.arange(1/n_bins, 1.05, 1.0/n_bins)
 
-    fig = go.Figure()
-    trace = go.Bar(x=bin_centers, y=p_values_hist_means, error_y=dict(type="data", array=1.96*p_values_hist_stds))
-    fig.add_trace(trace)
-    fig.update_layout(xaxis_title="p value", yaxis_title="count")
+    title = f"{count_p_values_less0_05} out of {n_repeats} tests with p<0.05"
+    fig = plots.getPlotHistPValues(bin_centers=bin_centers, p_values=p_values_hist, title=title)
     fig.write_image(fig_filename_pattern.format(distribution, popmean, mean, n_samples, "png"))
     fig.write_html(fig_filename_pattern.format(distribution, popmean, mean, n_samples, "html"))
-
     # breakpoint()
 
 if __name__ == "__main__":

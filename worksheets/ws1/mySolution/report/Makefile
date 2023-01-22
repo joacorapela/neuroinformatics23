@@ -1,4 +1,4 @@
-all: rapela_ws1.pdf
+all: rapela_ws1_withErrorBars.pdf
 
 
 %.pdf: %.tex

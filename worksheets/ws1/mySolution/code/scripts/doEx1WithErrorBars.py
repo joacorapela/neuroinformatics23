@@ -48,6 +48,7 @@ def main(argv):
         p_values_hist_resamples[n, :], count_p_values_less0_05_resamples[n] = \
             stats.get_pvalues_hist(distribution=distribution,
                                    mean=mean, std=std,
+                                   n_samples=n_samples,
                                    n_repeats=n_repeats,
                                    popmean=popmean,
                                    n_bins=n_bins)
@@ -57,7 +58,7 @@ def main(argv):
     count_p_values_less0_05_std = np.std(count_p_values_less0_05_resamples)
     bin_centers = np.arange(1/n_bins, 1.05, 1.0/n_bins)
 
-    title="{:.02f}&#177;{:.02f} out of {:d} tests with p<0.05".format(count_p_values_less0_05_mean, 1.96*count_p_values_less0_05_std, n_repeats)
+    title="{:.02f}&#177;{:.02f} out of {:d} tests with p<0.05, n_samples={:d}".format(count_p_values_less0_05_mean, 1.96*count_p_values_less0_05_std, n_repeats, n_samples)
     fig = plots.getPlotHistPValues(bin_centers=bin_centers, p_values=p_values_hist_means, title=title, errors=1.96*p_values_hist_stds)
     fig.write_image(fig_filename_pattern.format(distribution, popmean, mean, n_samples, "png"))
     fig.write_html(fig_filename_pattern.format(distribution, popmean, mean, n_samples, "html"))

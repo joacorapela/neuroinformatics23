@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 
 \usepackage[hypertexnames=false,colorlinks=true,breaklinks]{hyperref}
 \usepackage{graphicx}
@@ -9,6 +9,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage[title]{appendix}
+\usepackage[margin=1in]{geometry}
 
 \newtheorem{claim}{Claim}
 \newtheorem{lemma}{Lemma}
@@ -33,10 +34,12 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
 \begin{enumerate}[(a)]
 
-    \item  Please refer to Figure~\ref{fig:ex1a}. Here we are sampling from a
-        normal distribution with zero mean. Thus, all histogram bins of length
-        0.05 should have around 50 counts. And this is what
-        Figure~\ref{fig:ex1a} shows.
+    \item Here we are sampling from a normal distribution with zero mean. Thus,
+        all histogram bins of length 0.05 should have around 50 counts. And
+        this is what Figure~\ref{fig:ex1a} shows.
+
+        For a probability of type I error less than 0.05, the null hypothesis
+        is rejected 5\% of the time when the null hypothesis is true.
 
         \begin{figure}[H]
             \begin{center}
@@ -59,36 +62,261 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
     \item  The previous item, and all the following ones, study the probability
         Type I error of a hypothesis test. This is the probabiliy of rejecting
         the null hypothesis when this hypothesis is true.
+        %
+        This item studies the probability of Type II error, which is the
+        probability of accepting the null hypothesis when this hypothesis is
+        false.
 
-        This item studies the probability of Type II error
-        Please refer to Figure~\ref{fig:ex1b}.
+        Figure~\ref{fig:typeIIerror}a illustrates Type I
+        and II errors. Here the null hypothesis is that the observed samples
+        come from a standard Gaussian distribution (mean 0 and standard
+        deviation 1). The probability density function of the observations
+        under the null hypothesis is the blue trace in
+        Fig.~\ref{fig:typeIIerror}a.
+        %
+        If we accept a probability of type I error of at most 5\%
+        (i.e., take $\alpha=0.05$), a type I error will occur if the
+        observed sample mean is to the right of the dashed vertical line. The
+        probability of this error is the area of the region colored in blue in
+        Fig.~\ref{fig:typeIIerror}a.
+
+        To calculate the probability of type II error we need to specify the
+        distribution of an alternative hypothesis. In
+        Figure~\ref{fig:typeIIerror}a the distribution of
+        the observations under the alternative hypothesis is a Gaussian with
+        mean 2.5 and standard deviation 1.0. If we take $\alpha=0.05$, a type
+        II error will occur if the observed sample mean is to the left of the
+        dashed vertical line. The probability of this error is the area of the
+        region colored in red in
+        Fig.~\ref{fig:typeIIerror}a.
+
+        To reduce the probability of Type II error we can:
+
+        \begin{enumerate}[1.]
+
+            \item accept a larger probability of type I error (i.e., reduce
+                $\alpha$).
+                Fig.~\ref{fig:typeIIerror}b
+                illustrates the reduction of type II error when accepting a
+                probability of type I error of 10\%. Compare with
+                Fig.~\ref{fig:typeIIerror}a.
+
+            \item use an alternative hypothesis with a mean more different from
+                that of the null hypothesis (i.e., increase the effect size).
+                Fig~.\ref{fig:typeIIerror}c
+                illustrates the reduction of type II error when samples under
+                the alternative hypothesis have a mean of 3.5 and standard
+                deviation of 1. Compare with
+                Fig.~\ref{fig:typeIIerror}a.
+
+            \item increase the sample size. If $n$ samples come from a Gaussian
+                distribution with mean $\mu$ and standard deviation $\sigma$
+                (i.e., $x_i\sim\mathcal{N}(x_i|\mu,\sigma^2)$), then the sample
+                mean will follow another Gaussian distribution with mean $\mu$
+                and standard deviation $\frac{\sigma}{\sqrt{n}}$. Therefore, as
+                the sample size increases, the variability of the sample mean
+                decreases, both under the null and alternative hypothesis. Then
+                the Gaussian distributions under the null and alternative
+                hypothesis will overlap less, which will decrease the
+                probability of type II error.
+                Fig.~\ref{fig:typeIIerror}d shows
+                the distributions of the sample means under the same null
+                and alternative hypothesis as in 
+                Fig.~\ref{fig:typeIIerror}a, but
+                with an increased sample size of 250.
+        \end{enumerate}
+    
+        \begin{figure}[H]
+            \begin{center}
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples100.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples100.png}}
+                    \caption{Baseline distributions of $\bar{x}$ under the null
+                    (blue trace) and alternative (red trace) hypothesis.}
+                    \label{fig:ex1b_intro_a}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.1000_nSamples100.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.1000_nSamples100.png}}
+                    \caption{Decreasing the probability of type II error by
+                    increasing the probability of type I error.}
+                    \label{fig:ex1b_intro_b}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.1000_nSamples100.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean13.5000_std10.0000_alpha0.0500_nSamples100.png}}
+                    \caption{Decreasing the probability of type II error by
+                    increasing the effect size.}
+                    \label{fig:ex1b_intro_c}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.1000_nSamples250.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples250.png}}
+                    \caption{Decreasing the probability of type II error by
+                    increasing the sample size.}
+                    \label{fig:ex1b_intro_d}
+                \end{subfigure}
+
+                \caption{Exercise 1b. Type II errors in hypothesis testing and
+                ways to decrease it. Click on any of the figures to see its
+                interactive version.  The script to generate these figures
+                appears
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doPlotTwoGaussians.py}{here}
+                and the parameters used for this script appear
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doPlotTwoGaussians.py}{here}.}
+
+                \label{fig:typeIIerror}
+            \end{center}
+        \end{figure}
+
+        Figure~\ref{fig:ex1b_part1}a shows a histogram of p-values for 1000
+        one-sample t-tests checking if the mean of a sample of size 1000 from
+        the $\mathcal{N}(0.1, 1)$ distribution is different from zero.
+        %
+        For all 1000 tests the null hypothesis was rejected at the 0.05
+        criterion.
+        %
+        Figure~\ref{fig:ex1b_part1}b shows the pdf of the sample mean under
+        the null (blue trace) and the alternative (red trace) hypothesis.  That
+        the t-test rejected the null hypothesis for all samples is
+        explained by the fact that the area of the pdf of the sample mean under
+        the alternative hypothesis (red trace) to the left of the vertical
+        dashed line (i.e., the probability of type II error) is almost zero.
+
+        From the discussion above we see that, if we decrease the sample size,
+        the Gaussian distributions under the null and alternative hypothesis
+        should overlap more, which will increase the probability of a type II
+        error. Figure~\ref{fig:ex1b_part1}c is identical to
+        Fig.~\ref{fig:ex1b_part1}a, but uses a reduced sample size of 500.
+        We observe an increase in  the counts for bins corresponding to p-values
+        greater than 0.05, which implies that the probability of type II error
+        increased.  Figure~\ref{fig:ex1b_part1}d shows the probability
+        density functions of the sample means under the null and alternative
+        hypothesis. These pdf's overlap substantially more than those in
+        Fig.~\ref{fig:ex1b_part1}b, which indicates a larger probability of
+        type II error, in agreement with Fig.~\ref{fig:ex1b_part1}c.
 
         \begin{figure}[H]
             \begin{center}
-
-                \begin{subfigure}{1.0\textwidth}
+                \begin{subfigure}{0.4\textwidth}
                     \centering
-                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.1000_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionNormal_popmean0.0000_mean0.1000_nSamples10000_withErrorBars.png}}
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.1000_nSamples10000_withErrorBars.html}{\includegraphics[width=\textwidth]{../figures/ex1_distributionNormal_popmean0.0000_mean0.1000_nSamples10000_withErrorBars.png}}
                     \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean of 10.000 samples from a $\mathcal{N}(0.1, 1)$ is equal to zero.  Click on the figure to see its interactive version.}
-                    \label{fig:ex1b_1}
+                    \label{fig:ex1b_part1_a}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean10.1000_std1.0000_alpha0.0500_nSamples10000.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean10.1000_std1.0000_alpha0.0500_nSamples10000.png}}
+                    \caption{Distributions of samples means under the null
+                    hypothesis that samples come from a $\mathcal{N}(0, 1)$
+                    (blue trace) and under the alternative hypothesis that
+                    samples come from a $\mathcal{N}(0.1, 1)$ (red trace), for
+                    a sample size of 10000.}
+                    \label{fig:ex1b_part1_b}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.1000_nSamples10000_withErrorBars.html}{\includegraphics[width=\textwidth]{../figures/ex1_distributionNormal_popmean0.0000_mean0.1000_nSamples500_withErrorBars.png}}
+                    \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean of 500 samples from a $\mathcal{N}(0.1, 1)$ is equal to zero.  Click on the figure to see its interactive version.}
+                    \label{fig:ex1b_part1_c}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean10.1000_std1.0000_alpha0.0500_nSamples10000.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean10.1000_std1.0000_alpha0.0500_nSamples500.png}}
+                    \caption{Distributions of samples means under the null
+                    hypothesis that samples come from a $\mathcal{N}(0, 1)$
+                    (blue trace) and under the alternative hypothesis that
+                    samples come from a $\mathcal{N}(0.1, 1)$ (red trace), for
+                    a sample size of 500.}
+                    \label{fig:ex1b_part1_d}
                 \end{subfigure}
 
-                \begin{subfigure}{1.0\textwidth}
+                \caption{Exercise 1b. Histogram of p-values from 1000
+                one-sample t-tests used with samples from a $\mathcal{N}(0.1,
+                1)$, and pdfs of the sample mean under  the null and
+                alternative hypothesis.  The script to generate this figure
+                appears
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here}
+                and the parameters used for this script appear
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1bWithErrorBars.csh}{here}.}
+
+                \label{fig:ex1b_part1}
+            \end{center}
+        \end{figure}
+
+        The second part of this exercise asks to run t-tests using samples with
+        a mean that is an order or magnitude more similar to the mean under the
+        null hypothesis than the mean of the samples in the first part of this
+        exercise. That is, in this second part we want to study the probability
+        of type II error when the difference between the true and alternative
+        hypothesis (i.e., the effect size) is smaller. As illustrated in
+        Figs.~\ref{fig:typeIIerror}a and~\ref{fig:typeIIerror}c, decreasing the
+        effect size should increase the probability of type II error. This
+        increase is reflected in the larger number of counts for bins with
+        p-values larger than 0.05 in Fig.~\ref{fig:ex1b_part2}a than in
+        Fig.~\ref{fig:ex1b_part1}a, and by the larger overlap between the pdfs
+        of the sample means under the null and alternative hypothesis in
+        Fig.~\ref{fig:ex1b_part2}b than in Fig.~\ref{fig:ex1b_part1}b. 
+
+        As illustrated in Fig.~\ref{fig:typeIIerror}d, increasing the sample
+        size reduces the probability of type II error. In
+        Figs.~\ref{fig:ex1b_part2}c and~d we increased the sample size from
+        10000 to 50000.  Fig~.\ref{fig:ex1b_part2} shows that the overlap
+        between the pdf of the sample mean under the null and alternative
+        hypothesis decreased, and Fig.~\ref{fig:ex1b_part2}b shows that the
+        proportion of type II errors decreased from 1-170/10000=83\% to
+        1-610/1000=39\%.
+
+        \begin{figure}[H]
+            \begin{center}
+                \begin{subfigure}{0.4\textwidth}
                     \centering
                     \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.0100_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionNormal_popmean0.0000_mean0.0100_nSamples10000_withErrorBars.png}}
                     \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean
-                    of 10.000 samples from a $\mathcal{N}(0.01, 1)$ is equal to zero.
-                    Click on the figure to see its interactive version.}
-                    \label{fig:ex1b_2}
+                    of 10.000 samples from a $\mathcal{N}(0.01, 1)$ is equal to zero.}
+                    \label{fig:ex1b_part2_a}
                 \end{subfigure}
-
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean10.1000_std1.0000_alpha0.0500_nSamples10000.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean10.0100_std1.0000_alpha0.0500_nSamples10000.png}}
+                    \caption{Distributions of samples means under the null
+                    hypothesis that samples come from a $\mathcal{N}(0, 1)$
+                    (blue trace) and under the alternative hypothesis that
+                    samples come from a $\mathcal{N}(0.01, 1)$ (red trace), for
+                    a sample size of 10000.}
+                    \label{fig:ex1b_part2_b}
+                \end{subfigure}
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.0100_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionNormal_popmean0.0000_mean0.0100_nSamples50000_withErrorBars.png}}
+                    \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean
+                    of 50,000 samples from a $\mathcal{N}(0.01, 1)$ is equal to zero.}
+                    \label{fig:ex1b_part2_c}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean10.1000_std1.0000_alpha0.0500_nSamples10000.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean10.0100_std1.0000_alpha0.0500_nSamples50000.png}}
+                    \caption{Distributions of samples means under the null
+                    hypothesis that samples come from a $\mathcal{N}(0, 1)$
+                    (blue trace) and under the alternative hypothesis that
+                    samples come from a $\mathcal{N}(0.01, 1)$ (red trace), for
+                    a sample size of 50000.}
+                    \label{fig:ex1b_part2_d}
+                \end{subfigure}
                 \caption{Exercise 1b.
                 The script to generate this figure appears
                 \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here} and the
                 parameters used for this script appear
                 \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1bWithErrorBars.csh}{here}.}
-                \label{fig:ex1b}
-
+                \label{fig:ex1b_part2}
             \end{center}
         \end{figure}
 
@@ -322,7 +550,7 @@ $t_\text{obs}$, when the null hipothesis is true.
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\fig_width]{../figures/pvalue.png}
+        % \includegraphics[width=\fig_width]{../figures/pvalue.png}
 
         \caption{Illustration of the p-value concept. A p-value is the
         probability of observing a statistic, $t$, greater than the observed

@@ -13,6 +13,7 @@
 \newtheorem{claim}{Claim}
 \newtheorem{lemma}{Lemma}
 
+\def\fig_width{3.5in}
 \title{Report worksheet 1}
 \author{Joaqu\'{i}n Rapela}
 
@@ -39,37 +40,42 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
         \begin{figure}[H]
             \begin{center}
-                \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.html}{\includegraphics[width=4in]{../figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.png}}
+                \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.png}}
 
                 \caption{Exercise 1a. Histogram of p-values of 1.000 t-tests
                 evaluating if the mean of 10.000 samples from a $\mathcal{N}(0,
                 1)$ is equal to zero.
                 Click on the figure to see its interactive version.
-                The code to generate this figure appears
+                The script to generate this figure appears
                 \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here} and the
                 parameters used for this script appear
-                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1a.csh}{here}.}
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1aWithErrorBars.csh}{here}.}
 
                 \label{fig:ex1a}
 
             \end{center}
         \end{figure}
 
-    \item  Please refer to Figure~\ref{fig:ex1b}.
+    \item  The previous item, and all the following ones, study the probability
+        Type I error of a hypothesis test. This is the probabiliy of rejecting
+        the null hypothesis when this hypothesis is true.
+
+        This item studies the probability of Type II error
+        Please refer to Figure~\ref{fig:ex1b}.
 
         \begin{figure}[H]
             \begin{center}
 
                 \begin{subfigure}{1.0\textwidth}
                     \centering
-                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.1000_nSamples10000_withErrorBars.html}{\includegraphics[width=4in]{../figures/ex1_distributionNormal_popmean0.0000_mean0.1000_nSamples10000_withErrorBars.png}}
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.1000_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionNormal_popmean0.0000_mean0.1000_nSamples10000_withErrorBars.png}}
                     \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean of 10.000 samples from a $\mathcal{N}(0.1, 1)$ is equal to zero.  Click on the figure to see its interactive version.}
                     \label{fig:ex1b_1}
                 \end{subfigure}
 
                 \begin{subfigure}{1.0\textwidth}
                     \centering
-                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.0100_nSamples10000_withErrorBars.html}{\includegraphics[width=4in]{../figures/ex1_distributionNormal_popmean0.0000_mean0.0100_nSamples10000_withErrorBars.png}}
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.0100_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionNormal_popmean0.0000_mean0.0100_nSamples10000_withErrorBars.png}}
                     \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean
                     of 10.000 samples from a $\mathcal{N}(0.01, 1)$ is equal to zero.
                     Click on the figure to see its interactive version.}
@@ -77,7 +83,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
                 \end{subfigure}
 
                 \caption{Exercise 1b.
-                The code to generate this figure appears
+                The script to generate this figure appears
                 \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here} and the
                 parameters used for this script appear
                 \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1bWithErrorBars.csh}{here}.}
@@ -93,7 +99,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
                 \begin{subfigure}{1.0\textwidth}
                     \centering
-                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.html}{\includegraphics[width=4in]{../figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.png}}
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.png}}
 
                     \caption{Histogram of p-values of 1.000 t-tests evaluating
                     if the mean of 10.000 samples from a standard Cauchy
@@ -105,7 +111,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
                 \begin{subfigure}{1.0\textwidth}
                     \centering
-                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples3_withErrorBars.html}{\includegraphics[width=4in]{../figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples3_withErrorBars.png}}
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples3_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples3_withErrorBars.png}}
 
                     \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean
                     of 3 samples from a standard Cauchy distribution is equal to zero.
@@ -115,7 +121,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
                 \end{subfigure}
 
                 \caption{Exercise 1c.
-                The code to generate this figure appears
+                The script to generate this figure appears
                 \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here} and the
                 parameters used for this script appear
                 \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1cWithErrorBars.csh}{here}.}
@@ -131,7 +137,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
                 \begin{subfigure}{1.0\textwidth}
                     \centering
-                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.html}{\includegraphics[width=4in]{../figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.png}}
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.png}}
 
                     \caption{Histogram of p-values of 1.000 t-tests evaluating
                     if the mean of 10.000 samples from a Rademacher
@@ -143,7 +149,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
                 \begin{subfigure}{1.0\textwidth}
                     \centering
-                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples3_withErrorBars.html}{\includegraphics[width=4in]{../figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples3_withErrorBars.png}}
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples3_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples3_withErrorBars.png}}
 
                     \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean
                     of 3 samples from a Rademacher distribution is equal to zero.
@@ -153,10 +159,10 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
                 \end{subfigure}
 
                 \caption{Exercise 1d.
-                The code to generate this figure appears
+                The script to generate this figure appears
                 \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here} and the
                 parameters used for this script appear
-                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1d.csh}{here}.}
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1dWithErrorBars.csh}{here}.}
                 \label{fig:ex1d}
 
             \end{center}
@@ -169,7 +175,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
                 \begin{subfigure}{1.0\textwidth}
                     \centering
-                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionVerySkewed_popmean0.0010_mean0.0000_nSamples100_withErrorBars.html}{\includegraphics[width=4in]{../figures/ex1_distributionVerySkewed_popmean0.0010_mean0.0000_nSamples100_withErrorBars.png}}
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionVerySkewed_popmean0.0010_mean0.0000_nSamples100_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionVerySkewed_popmean0.0010_mean0.0000_nSamples100_withErrorBars.png}}
 
                     \caption{Histogram of p-values of 1.000 t-tests evaluating
                     if the mean of 100 samples from the very skewed
@@ -181,7 +187,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
                 \begin{subfigure}{1.0\textwidth}
                     \centering
-                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples3_withErrorBars.html}{\includegraphics[width=4in]{../figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples3_withErrorBars.png}}
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples3_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples3_withErrorBars.png}}
 
                     \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean
                     of 3 samples from the very skewed distribution is equal to zero.
@@ -191,10 +197,10 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
                 \end{subfigure}
 
                 \caption{Exercise 1e.
-                The code to generate this figure appears
+                The script to generate this figure appears
                 \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here} and the
                 parameters used for this script appear
-                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1e.csh}{here}.}
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1eWithErrorBars.csh}{here}.}
                 \label{fig:ex1e}
 
             \end{center}
@@ -211,7 +217,7 @@ Please refer to Figure~\ref{fig:ex2}.
 
         \begin{subfigure}{1.0\textwidth}
             \centering
-            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex2_distributionRademacher_popmean0.0000_mean0.0000_nSamples10.html}{\includegraphics[width=4in]{../figures/ex2_distributionRademacher_popmean0.0000_mean0.0000_nSamples10.png}}
+            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex2_distributionRademacher_popmean0.0000_mean0.0000_nSamples10.html}{\includegraphics[width=\fig_width]{../figures/ex2_distributionRademacher_popmean0.0000_mean0.0000_nSamples10.png}}
 
             \caption{Histogram of p-values of 1.000 randomization tests evaluating
             if the mean of 10 samples from the Rademacher
@@ -223,7 +229,7 @@ Please refer to Figure~\ref{fig:ex2}.
 
         \begin{subfigure}{1.0\textwidth}
             \centering
-            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex2_distributionSkewed_popmean0.0000_mean0.0000_nSamples10.html}{\includegraphics[width=4in]{../figures/ex2_distributionSkewed_popmean0.0000_mean0.0000_nSamples10.png}}
+            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex2_distributionSkewed_popmean0.0000_mean0.0000_nSamples10.html}{\includegraphics[width=\fig_width]{../figures/ex2_distributionSkewed_popmean0.0000_mean0.0000_nSamples10.png}}
 
             \caption{Histogram of p-values of 1.000 randomization tests evaluating if the mean
             of 10 samples from the skewed distribution is equal to zero.
@@ -232,7 +238,7 @@ Please refer to Figure~\ref{fig:ex2}.
             \label{fig:ex2_2}
         \end{subfigure}
 
-        \caption{Exercise 2. The code to generate this figure appears
+        \caption{Exercise 2. The script to generate this figure appears
         \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx2.py}{here}
         and the parameters used for this script appear
         \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx2.csh}{here}.
@@ -252,7 +258,7 @@ Please refer to Figure~\ref{fig:ex3}.
 
         \begin{subfigure}{1.0\textwidth}
             \centering
-            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/spikes_times_clusterID41_epochedBystimOn_times_sortedByresponse_times_colorschoice.html}{\includegraphics[width=4in]{../figures/spikes_times_clusterID41_epochedBystimOn_times_sortedByresponse_times_colorschoice.png}}
+            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/spikes_times_clusterID41_epochedBystimOn_times_sortedByresponse_times_colorschoice.html}{\includegraphics[width=\fig_width]{../figures/spikes_times_clusterID41_epochedBystimOn_times_sortedByresponse_times_colorschoice.png}}
 
             \caption{Rasterplot of neuron 41 aligned to
             \texttt{stimOn\_times},
@@ -267,7 +273,7 @@ Please refer to Figure~\ref{fig:ex3}.
 
         \begin{subfigure}{1.0\textwidth}
             \centering
-            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/spikes_times_clusterID41_epochedBystimOn_times_sortedByresponse_times_colorsfeedbackType.html}{\includegraphics[width=4in]{../figures/spikes_times_clusterID41_epochedBystimOn_times_sortedByresponse_times_colorsfeedbackType.png}}
+            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/spikes_times_clusterID41_epochedBystimOn_times_sortedByresponse_times_colorsfeedbackType.html}{\includegraphics[width=\fig_width]{../figures/spikes_times_clusterID41_epochedBystimOn_times_sortedByresponse_times_colorsfeedbackType.png}}
 
             \caption{Rasterplot of neuron 41 aligned to
             \texttt{stimOn\_times},
@@ -280,7 +286,7 @@ Please refer to Figure~\ref{fig:ex3}.
             \label{fig:ex3_2}
         \end{subfigure}
 
-        \caption{Exercise 3. The code to generate this figure appears
+        \caption{Exercise 3. The script to generate this figure appears
         \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doPlotEpochedSpikesTimes.py}{here}
         and the parameters used for this script appear
         \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doPlotEpochedSpikesTimes.csh}{here}.
@@ -316,7 +322,7 @@ $t_\text{obs}$, when the null hipothesis is true.
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=4in]{../figures/pvalue.png}
+        \includegraphics[width=\fig_width]{../figures/pvalue.png}
 
         \caption{Illustration of the p-value concept. A p-value is the
         probability of observing a statistic, $t$, greater than the observed

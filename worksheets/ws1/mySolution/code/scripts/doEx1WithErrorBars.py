@@ -12,9 +12,9 @@ def main(argv):
                         help="distribution from which to generate samples")
     parser.add_argument("--popmean", type=float, default=0.0,
                         help="population mean")
-    parser.add_argument("--mean", type=float, default=0.0,
-                        help="mean of Normal distribution")
-    parser.add_argument("--std", type=float, default=1.0,
+    parser.add_argument("--normal_mean", type=float, default=0.0,
+                        help="normal_mean of Normal distribution")
+    parser.add_argument("--normal_std", type=float, default=1.0,
                         help="standard deviation of Normal distribution")
     parser.add_argument("--n_samples", type=int, default=10000,
                         help="number of samples of Noral distribution "
@@ -33,8 +33,8 @@ def main(argv):
 
     distribution = args.distribution
     popmean = args.popmean
-    mean = args.mean
-    std = args.std
+    normal_mean = args.normal_mean
+    normal_std = args.normal_std
     n_samples = args.n_samples
     n_repeats = args.n_repeats
     n_resamples = args.n_resamples
@@ -47,7 +47,7 @@ def main(argv):
         print("Processed resample {:03d} ({:d})".format(n, n_resamples))
         p_values_hist_resamples[n, :], bins_centers, count_p_values_less0_05_resamples[n] = \
             stats.get_pvalues_hist(distribution=distribution,
-                                   mean=mean, std=std,
+                                   normal_mean=normal_mean, normal_std=normal_std,
                                    n_samples=n_samples,
                                    n_repeats=n_repeats,
                                    popmean=popmean,
@@ -59,8 +59,8 @@ def main(argv):
 
     title="{:.02f}&#177;{:.02f} out of {:d} tests with p<0.05, n_samples={:d}".format(count_p_values_less0_05_mean, 1.96*count_p_values_less0_05_std, n_repeats, n_samples)
     fig = plots.getPlotHistPValues(bins_centers=bins_centers, p_values_hist=p_values_hist_means, title=title, errors=1.96*p_values_hist_stds)
-    fig.write_image(fig_filename_pattern.format(distribution, popmean, mean, n_samples, "png"))
-    fig.write_html(fig_filename_pattern.format(distribution, popmean, mean, n_samples, "html"))
+    fig.write_image(fig_filename_pattern.format(distribution, popmean, normal_mean, n_samples, "png"))
+    fig.write_html(fig_filename_pattern.format(distribution, popmean, normal_mean, n_samples, "html"))
     # breakpoint()
 
 

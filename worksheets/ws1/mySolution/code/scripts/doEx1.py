@@ -12,9 +12,9 @@ def main(argv):
                         help="distribution from which to generate samples")
     parser.add_argument("--popmean", type=float, default=0.0,
                         help="population mean")
-    parser.add_argument("--mean", type=float, default=0.0,
-                        help="mean of Normal distribution")
-    parser.add_argument("--std", type=float, default=1.0,
+    parser.add_argument("--normal_mean", type=float, default=0.0,
+                        help="normal_mean of Normal distribution")
+    parser.add_argument("--normal_std", type=float, default=1.0,
                         help="standard deviation of Normal distribution")
     parser.add_argument("--n_samples", type=int, default=10000,
                         help="number of samples of Noral distribution "
@@ -30,8 +30,8 @@ def main(argv):
 
     distribution = args.distribution
     popmean = args.popmean
-    mean = args.mean
-    std = args.std
+    normal_mean = args.normal_mean
+    normal_std = args.normal_std
     n_samples = args.n_samples
     n_repeats = args.n_repeats
     n_bins = args.n_bins
@@ -39,15 +39,16 @@ def main(argv):
 
     p_values_hist, bins_centers, count_p_values_less0_05 = \
         stats.get_pvalues_hist(distribution=distribution,
-                               mean=mean, std=std,
+                               normal_mean=normal_mean,
+                               normal_std=normal_std,
                                n_repeats=n_repeats,
                                popmean=popmean,
                                n_bins=n_bins)
 
     title = f"{count_p_values_less0_05} out of {n_repeats} tests with p<0.05"
-    fig = plots.getPlotHistPValues(bins_centers=bins_centers, p_values=p_values_hist, title=title)
-    fig.write_image(fig_filename_pattern.format(distribution, popmean, mean, n_samples, "png"))
-    fig.write_html(fig_filename_pattern.format(distribution, popmean, mean, n_samples, "html"))
+    fig = plots.getPlotHistPValues(bins_centers=bins_centers, p_values_hist=p_values_hist, title=title)
+    fig.write_image(fig_filename_pattern.format(distribution, popmean, normal_mean, n_samples, "png"))
+    fig.write_html(fig_filename_pattern.format(distribution, popmean, normal_mean, n_samples, "html"))
     # breakpoint()
 
 if __name__ == "__main__":

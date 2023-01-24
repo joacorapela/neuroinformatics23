@@ -3,7 +3,7 @@ import numpy as np
 import scipy.stats
 
 
-def get_pvalues_hist(distribution="Normal", mean=0.0, std=1.0, n_samples=10000,
+def get_pvalues_hist(distribution="Normal", normal_mean=0.0, normal_std=1.0, n_samples=10000,
                      n_repeats=1000, popmean=0.0, n_bins=20):
     bins = np.arange(0, 1+1.0/n_bins, 1.0/n_bins)
     bins_centers = np.arange(1/n_bins, 1+1.0/n_bins, 1.0/n_bins)
@@ -11,7 +11,7 @@ def get_pvalues_hist(distribution="Normal", mean=0.0, std=1.0, n_samples=10000,
 
     for i in range(n_repeats):
         if distribution == "Normal":
-            sample = np.random.normal(loc=mean, scale=std, size=n_samples)
+            sample = np.random.normal(loc=normal_mean, scale=normal_std, size=n_samples)
         elif distribution == "StdCauchy":
             sample = np.random.standard_cauchy(size=n_samples)
         elif distribution == "Rademacher":

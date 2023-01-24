@@ -45,7 +45,7 @@ def main(argv):
     count_p_values_less0_05_resamples = np.empty(n_resamples, dtype=np.int)
     for n in range(n_resamples):
         print("Processed resample {:03d} ({:d})".format(n, n_resamples))
-        p_values_hist_resamples[n, :], count_p_values_less0_05_resamples[n] = \
+        p_values_hist_resamples[n, :], bins_centers, count_p_values_less0_05_resamples[n] = \
             stats.get_pvalues_hist(distribution=distribution,
                                    mean=mean, std=std,
                                    n_samples=n_samples,
@@ -56,10 +56,9 @@ def main(argv):
     p_values_hist_stds = np.std(p_values_hist_resamples, axis=0)
     count_p_values_less0_05_mean = np.mean(count_p_values_less0_05_resamples)
     count_p_values_less0_05_std = np.std(count_p_values_less0_05_resamples)
-    bin_centers = np.arange(1/n_bins, 1.05, 1.0/n_bins)
 
     title="{:.02f}&#177;{:.02f} out of {:d} tests with p<0.05, n_samples={:d}".format(count_p_values_less0_05_mean, 1.96*count_p_values_less0_05_std, n_repeats, n_samples)
-    fig = plots.getPlotHistPValues(bin_centers=bin_centers, p_values=p_values_hist_means, title=title, errors=1.96*p_values_hist_stds)
+    fig = plots.getPlotHistPValues(bins_centers=bins_centers, p_values_hist=p_values_hist_means, title=title, errors=1.96*p_values_hist_stds)
     fig.write_image(fig_filename_pattern.format(distribution, popmean, mean, n_samples, "png"))
     fig.write_html(fig_filename_pattern.format(distribution, popmean, mean, n_samples, "html"))
     # breakpoint()

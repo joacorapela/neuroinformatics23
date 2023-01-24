@@ -37,16 +37,15 @@ def main(argv):
     n_bins = args.n_bins
     fig_filename_pattern = args.fig_filename_pattern
 
-    p_values_hist, count_p_values_less0_05 = \
+    p_values_hist, bins_centers, count_p_values_less0_05 = \
         stats.get_pvalues_hist(distribution=distribution,
                                mean=mean, std=std,
                                n_repeats=n_repeats,
                                popmean=popmean,
                                n_bins=n_bins)
-    bin_centers = np.arange(1/n_bins, 1.05, 1.0/n_bins)
 
     title = f"{count_p_values_less0_05} out of {n_repeats} tests with p<0.05"
-    fig = plots.getPlotHistPValues(bin_centers=bin_centers, p_values=p_values_hist, title=title)
+    fig = plots.getPlotHistPValues(bins_centers=bins_centers, p_values=p_values_hist, title=title)
     fig.write_image(fig_filename_pattern.format(distribution, popmean, mean, n_samples, "png"))
     fig.write_html(fig_filename_pattern.format(distribution, popmean, mean, n_samples, "html"))
     # breakpoint()

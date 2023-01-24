@@ -36,7 +36,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
     \item Here we are sampling from a normal distribution with zero mean. Thus,
         all histogram bins of length 0.05 should have around 50 counts. And
-        this is what Figure~\ref{fig:ex1a} shows.
+        this is what Fig.~\ref{fig:ex1a} shows.
 
         For a probability of type I error less than 0.05, the null hypothesis
         is rejected 5\% of the time when the null hypothesis is true.
@@ -67,10 +67,10 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
         probability of accepting the null hypothesis when this hypothesis is
         false.
 
-        Figure~\ref{fig:typeIIerror}a illustrates Type I
+        Fig.~\ref{fig:typeIIerror}a illustrates Type I
         and II errors. Here the null hypothesis is that the observed samples
         come from a standard Gaussian distribution (mean 0 and standard
-        deviation 1). The probability density function of the observations
+        deviation 1). The probability density function of the sample mean
         under the null hypothesis is the blue trace in
         Fig.~\ref{fig:typeIIerror}a.
         %
@@ -82,7 +82,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
         To calculate the probability of type II error we need to specify the
         distribution of an alternative hypothesis. In
-        Figure~\ref{fig:typeIIerror}a the distribution of
+        Fig.~\ref{fig:typeIIerror}a the distribution of
         the observations under the alternative hypothesis is a Gaussian with
         mean 2.5 and standard deviation 1.0. If we take $\alpha=0.05$, a type
         II error will occur if the observed sample mean is to the left of the
@@ -172,14 +172,14 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
             \end{center}
         \end{figure}
 
-        Figure~\ref{fig:ex1b_part1}a shows a histogram of p-values for 1000
+        Fig.~\ref{fig:ex1b_part1}a shows a histogram of p-values for 1000
         one-sample t-tests checking if the mean of a sample of size 1000 from
         the $\mathcal{N}(0.1, 1)$ distribution is different from zero.
         %
         For all 1000 tests the null hypothesis was rejected at the 0.05
         criterion.
         %
-        Figure~\ref{fig:ex1b_part1}b shows the pdf of the sample mean under
+        Fig.~\ref{fig:ex1b_part1}b shows the pdf of the sample mean under
         the null (blue trace) and the alternative (red trace) hypothesis.  That
         the t-test rejected the null hypothesis for all samples is
         explained by the fact that the area of the pdf of the sample mean under
@@ -189,11 +189,11 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
         From the discussion above we see that, if we decrease the sample size,
         the Gaussian distributions under the null and alternative hypothesis
         should overlap more, which will increase the probability of a type II
-        error. Figure~\ref{fig:ex1b_part1}c is identical to
+        error. Fig.~\ref{fig:ex1b_part1}c is identical to
         Fig.~\ref{fig:ex1b_part1}a, but uses a reduced sample size of 500.
         We observe an increase in  the counts for bins corresponding to p-values
         greater than 0.05, which implies that the probability of type II error
-        increased.  Figure~\ref{fig:ex1b_part1}d shows the probability
+        increased.  Fig.~\ref{fig:ex1b_part1}d shows the probability
         density functions of the sample means under the null and alternative
         hypothesis. These pdf's overlap substantially more than those in
         Fig.~\ref{fig:ex1b_part1}b, which indicates a larger probability of
@@ -320,7 +320,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
             \end{center}
         \end{figure}
 
-    \item  Please refer to Figure~\ref{fig:ex1c}.
+    \item  Please refer to Fig.~\ref{fig:ex1c}.
 
         \begin{figure}[H]
             \begin{center}
@@ -358,7 +358,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
             \end{center}
         \end{figure}
 
-    \item  Please refer to Figure~\ref{fig:ex1d}.
+    \item  Please refer to Fig.~\ref{fig:ex1d}.
 
         \begin{figure}[H]
             \begin{center}
@@ -396,7 +396,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
             \end{center}
         \end{figure}
 
-    \item  Please refer to Figure~\ref{fig:ex1e}.
+    \item  Please refer to Fig.~\ref{fig:ex1e}.
 
         \begin{figure}[H]
             \begin{center}
@@ -438,7 +438,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
 \section*{Exercise 2: randomization test}
 
-Please refer to Figure~\ref{fig:ex2}.
+Please refer to Fig.~\ref{fig:ex2}.
 
 \begin{figure}[H]
     \begin{center}
@@ -479,7 +479,7 @@ Please refer to Figure~\ref{fig:ex2}.
 
 \section*{Exercise 3: raster plots}
 
-Please refer to Figure~\ref{fig:ex3}.
+Please refer to Fig.~\ref{fig:ex3}.
 
 \begin{figure}[H]
     \begin{center}
@@ -544,7 +544,7 @@ proof is given in Lemma~\ref{lemma:p_values_uniform01}. Before giving this
 proof we prove two auxiliary claims (Claims~\ref{claim:pvalue_as_function_of_stat}
 and~\ref{claim:uniform_cummulative}).
 
-Figure~\ref{fig:pvalue} illustrates the concept of a p-value. It is the
+Fig.~\ref{fig:pvalue} illustrates the concept of a p-value. It is the
 probability of observing a statistic, $t$, greater than the observed one,
 $t_\text{obs}$, when the null hipothesis is true.
 

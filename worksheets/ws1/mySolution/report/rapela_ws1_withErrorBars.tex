@@ -11,6 +11,7 @@
 \usepackage[title]{appendix}
 \usepackage[margin=1in]{geometry}
 
+\newtheorem{theorem}{Theorem}
 \newtheorem{claim}{Claim}
 \newtheorem{lemma}{Lemma}
 
@@ -322,6 +323,13 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
     \item  Please refer to Fig.~\ref{fig:ex1c}.
 
+        By the central limit theorem, the mean of 10,000 Cauchy random
+        variables should be Normally distributed. Therefore, the distirbution
+        of p-values for samples of 10,000 Cauchy random variables
+        (Fig.~\ref{fig:ex1c}a) should be very similar to that for samples of
+        10,000 Normal random variables (Fig.~\ref{fig:ex1a}). The reason for
+        this difference is explained in Section~\ref{sec:clt}.
+
         \begin{figure}[H]
             \begin{center}
 
@@ -623,6 +631,36 @@ Note: the second equality in Eq.~\ref{eq:lemmaUniformPvaluesLine1} follows
 from Claim~\ref{claim:pvalue_as_function_of_stat}.
 
 \end{proof}
+
+\section{Central limit theorem}
+\label{sec:clt}
+
+The central limit theorem demonstrates that, under certain conditions, the
+distribution of the mean of a sufficiently large number of random variables
+becomes Normal. Precisely:
+
+\begin{theorem}[Central Limit Theorem]
+
+If $X_{1},X_{2},\dots ,X_{n},\dots$ are random samples drawn from a population
+    with overall mean $\mu$ and finite variance $\sigma^{2}$and if $\bar
+    {X}_{n}$ is the sample mean of the first $n$ samples, then the limiting
+    form of the distribution,
+    $Z=\lim_{n\to\infty}\left(\frac{\bar{X}_{n}-\mu}{\sigma_{\bar{X}}}\right)$,
+    with $\sigma _{\bar{X}}=\sigma/\sqrt{n}$, is a standard normal
+    distribution\footnote{\url{https://en.wikipedia.org/wiki/Central_limit_theorem}}.
+
+\end{theorem}
+
+For $n=10,000$ we generally expect that the distribution of the sample mean is
+is well approximated by a Normal distribution. Thus, for this large $n$, the
+t-test should work well for any distribution. This explain why the t-test
+worked well for the samples of 10,000 Rademacher random variables in
+exercise~1d (Figure~\ref{fig:ex1d}a).
+
+The t-test did not work well for the sample of 10.000 Cauchy random variables
+in exercise~1c (Figure~\ref{fig:ex1c}a), because the Cauchy distribution has
+infinite variance, and the central limit theorem applies only to random
+variables with finite variance.
 
 \end{appendices}
 

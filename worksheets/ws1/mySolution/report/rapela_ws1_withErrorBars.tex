@@ -26,7 +26,7 @@
 \section*{Exercise 1: t-test for non-Gaussian distributions}
 
 Under the null hypothesis, p-values should follow a uniform distribution (see
-proof in Apendix~\ref{sec:pValuesAreUniform}). Therefore, when sampling from a
+proof in Appendix~\ref{sec:pValuesAreUniform}). Therefore, when sampling from a
 normal distribution with zero mean, we should observe
 0.05*\texttt{n\_repeats}=50 tests with pvalues in the range $[p,
 p+0.05],\;\forall p\in[0, 0.95]$. In particular, when sampling from a Normal
@@ -61,7 +61,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
         \end{figure}
 
     \item  The previous item, and all the following ones, study the probability
-        Type I error of a hypothesis test. This is the probabiliy of rejecting
+        Type I error of a hypothesis test. This is the probability of rejecting
         the null hypothesis when this hypothesis is true.
         %
         This item studies the probability of Type II error, which is the
@@ -78,7 +78,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
         If we accept a probability of type I error of at most 5\%
         (i.e., take $\alpha=0.05$), a type I error will occur if the
         observed sample mean is to the right of the dashed vertical line. The
-        probability of this error is the area of the region colored in blue in
+        probability of this error is the area of the region coloured in blue in
         Fig.~\ref{fig:typeIIerror}a.
 
         To calculate the probability of type II error we need to specify the
@@ -88,7 +88,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
         mean 2.5 and standard deviation 1.0. If we take $\alpha=0.05$, a type
         II error will occur if the observed sample mean is to the left of the
         dashed vertical line. The probability of this error is the area of the
-        region colored in red in
+        region coloured in red in
         Fig.~\ref{fig:typeIIerror}a.
 
         To reduce the probability of Type II error we can:
@@ -196,7 +196,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
         greater than 0.05, which implies that the probability of type II error
         increased.  Fig.~\ref{fig:ex1b_part1}d shows the probability
         density functions of the sample means under the null and alternative
-        hypothesis. These pdf's overlap substantially more than those in
+        hypothesis. These pdfs overlap substantially more than those in
         Fig.~\ref{fig:ex1b_part1}b, which indicates a larger probability of
         type II error, in agreement with Fig.~\ref{fig:ex1b_part1}c.
 
@@ -324,11 +324,11 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
     \item  Please refer to Fig.~\ref{fig:ex1c}.
 
         By the central limit theorem, the mean of 10,000 Cauchy random
-        variables should be Normally distributed. Therefore, the distirbution
+        variables should be Normally distributed. Therefore, the distribution
         of p-values for samples of 10,000 Cauchy random variables
         (Fig.~\ref{fig:ex1c}a) should be very similar to that for samples of
         10,000 Normal random variables (Fig.~\ref{fig:ex1a}). The reason for
-        this difference is explained in Section~\ref{sec:clt}.
+        this difference is explained in Appendix~\ref{sec:clt}.
 
         \begin{figure}[H]
             \begin{center}
@@ -502,7 +502,7 @@ Please refer to Fig.~\ref{fig:ex3}.
             \texttt{stimOn\_times},
             sorted by
             \texttt{response\_times}
-            and colored by
+            and coloured by
             % \texttt{choice}.
             }
 
@@ -517,7 +517,7 @@ Please refer to Fig.~\ref{fig:ex3}.
             \texttt{stimOn\_times},
             sorted by
             \texttt{response\_times}
-            and colored by
+            and coloured by
             \texttt{feedbackType}.
             }
 
@@ -556,7 +556,7 @@ and~\ref{claim:uniform_cummulative}).
 
 Fig.~\ref{fig:pvalue} illustrates the concept of a p-value. It is the
 probability of observing a statistic, $t$, greater than the observed one,
-$t_\text{obs}$, when the null hipothesis is true.
+$t_\text{obs}$, when the null hypothesis is true.
 
 \begin{figure}[H]
     \begin{center}
@@ -573,7 +573,7 @@ $t_\text{obs}$, when the null hipothesis is true.
 \begin{claim}
 
     Let $P$ be the p-values random variable, $T$ be the t-statistic random
-    variable, and $F_T$ be the cummulative distribution function of $T$. Then
+    variable, and $F_T$ be the cumulative distribution function of $T$. Then
     $P=1-F_T(T)$
     \label{claim:pvalue_as_function_of_stat}
 
@@ -596,7 +596,7 @@ $t_\text{obs}$, when the null hipothesis is true.
 \begin{claim}
 
     A random variable $U$ is uniformly distributed in [0,1]; i.e.,
-    $U\sim\mathcal{U}[0,1]$, if and only if its cummulative distribution
+    $U\sim\mathcal{U}[0,1]$, if and only if its cumulative distribution
     function is $F_U(u)=P(U<u)=u$, for $u\in[0,1]$.
     \label{claim:uniform_cummulative}
 
@@ -623,7 +623,7 @@ $t_\text{obs}$, when the null hipothesis is true.
 
     \begin{align}
         F_P(p)&=P(P<p)=P(1-F_T(T)<p)=P(1-p<F_T(T)\label{eq:lemmaUniformPvaluesLine1}\\
-              &=P(T>F_T^{-1}(1-1))=1-P(T<F_T^{-1}(1-p))\nonumber\\
+              &=P(T>F_T^{-1}(1-p))=1-P(T<F_T^{-1}(1-p))\nonumber\\
               &=1-F_T(F_T^{-1}(1-p))=1-(1-p)=p\nonumber
     \end{align}
 

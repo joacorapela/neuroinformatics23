@@ -37,15 +37,19 @@ def main(argv):
     n_bins = args.n_bins
     fig_filename_pattern = args.fig_filename_pattern
 
-    p_values_hist, bins_centers, count_p_values_less0_05 = \
+    all_std_errors = []
+    p_values_hist, bins_centers, count_p_values_less0_05, std_errors = \
         stats.get_pvalues_hist(distribution=distribution,
                                normal_mean=normal_mean,
                                normal_std=normal_std,
                                n_repeats=n_repeats,
                                popmean=popmean,
                                n_bins=n_bins)
+    all_std_errors.append(std_errors)
 
-    title = f"{count_p_values_less0_05} out of {n_repeats} tests with p<0.05"
+    mean_all_std_errors = np.mean(all_std_errors)
+    std_all_std_errors = np.std(all_std_errors)
+    title = f"{count_p_values_less0_05} out of {n_repeats} tests with p<0.05, std_error={mean_all_std_errors}&#177;{std_all_std_errors}"
     fig = plots.getPlotHistPValues(bins_centers=bins_centers, p_values_hist=p_values_hist, title=title)
     fig.write_image(fig_filename_pattern.format(distribution, popmean, normal_mean, n_samples, "png"))
     fig.write_html(fig_filename_pattern.format(distribution, popmean, normal_mean, n_samples, "html"))

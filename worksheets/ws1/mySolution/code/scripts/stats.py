@@ -3,7 +3,7 @@ import numpy as np
 import scipy.stats
 
 
-def sample(distribution, normal_mean, normal_std, n_samples):
+def sample(distribution, n_samples, normal_mean=0.0, normal_std=1.0):
     if distribution == "Normal":
         sample = np.random.normal(loc=normal_mean, scale=normal_std, size=n_samples)
     elif distribution == "StdCauchy":

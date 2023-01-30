@@ -108,7 +108,7 @@ def main(argv):
 
     fig.show()
 
-    breakpoint()
+    # breakpoint()
 
 if __name__ == "__main__":
     main(sys.argv)

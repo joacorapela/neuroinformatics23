@@ -37,23 +37,34 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
     \item Here we are sampling from a normal distribution with zero mean. Thus,
         all histogram bins of length 0.05 should have around 50 counts. And
-        this is what Fig.~\ref{fig:ex1a} shows.
+        this is what Figs.~\ref{fig:ex1a}a and~\ref{fig:ex1a}b show.
 
         For a probability of type I error less than 0.05, the null hypothesis
         is rejected 5\% of the time when the null hypothesis is true.
 
         \begin{figure}[H]
             \begin{center}
-                \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.png}}
+                \begin{subfigure}{0.5\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.png}}
+                    \caption{sample size = 10,000}
+                \end{subfigure}
+                \begin{subfigure}{0.5\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples3_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples3_withErrorBars.png}}
+                    \caption{sample size = 3}
+                \end{subfigure}
 
                 \caption{Exercise 1a. Histogram of p-values of 1.000 t-tests
-                evaluating if the mean of 10.000 samples from a $\mathcal{N}(0,
-                1)$ is equal to zero.
-                Click on the figure to see its interactive version.
-                The script to generate this figure appears
-                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here} and the
-                parameters used for this script appear
-                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1aWithErrorBars.csh}{here}.}
+                evaluating if the mean of 10.000 samples (a) or 3 samples (b)
+                from a $\mathcal{N}(0, 1)$ is equal to zero. The t-test works
+                well for both small (a) and large (b) samples. Click on the
+                figure to see its interactive version.  The script to generate
+                this figure appears
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here}
+                and the parameters used for this script appear
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1aWithErrorBars.csh}{here}.
+                }
 
                 \label{fig:ex1a}
 
@@ -104,7 +115,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
             \item use an alternative hypothesis with a mean more different from
                 that of the null hypothesis (i.e., increase the effect size).
-                Fig~.\ref{fig:typeIIerror}c
+                Fig.~\ref{fig:typeIIerror}c
                 illustrates the reduction of type II error when samples under
                 the alternative hypothesis have a mean of 3.5 and standard
                 deviation of 1. Compare with
@@ -131,7 +142,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
             \begin{center}
                 \begin{subfigure}{0.4\textwidth}
                     \centering
-                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples100.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples100.png}}
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples100.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples100_colored.png}}
                     \caption{Baseline distributions of $\bar{x}$ under the null
                     (blue trace) and alternative (red trace) hypothesis.}
                     \label{fig:ex1b_intro_a}
@@ -147,7 +158,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
                 \hfill
                 \begin{subfigure}{0.4\textwidth}
                     \centering
-                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean13.5000_std10.0000_alpha0.0500_nSamples100.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean13.5000_std10.0000_alpha0.0500_nSamples100.png}}
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean13.5000_std10.0000_alpha0.0500_nSamples100.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean13.5000_std10.0000_alpha0.0500_nSamples100_colored.png}}
                     \caption{Decreasing the probability of type II error by
                     increasing the effect size.}
                     \label{fig:ex1b_intro_c}
@@ -155,7 +166,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
                 \hfill
                 \begin{subfigure}{0.4\textwidth}
                     \centering
-                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples250.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples250.png}}
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples250.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples250_colored.png}}
                     \caption{Decreasing the probability of type II error by
                     increasing the sample size.}
                     \label{fig:ex1b_intro_d}
@@ -267,12 +278,12 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
 
         As illustrated in Fig.~\ref{fig:typeIIerror}d, increasing the sample
         size reduces the probability of type II error. In
-        Figs.~\ref{fig:ex1b_part2}c and~d we increased the sample size from
-        10000 to 50000.  Fig~.\ref{fig:ex1b_part2} shows that the overlap
-        between the pdf of the sample mean under the null and alternative
-        hypothesis decreased, and Fig.~\ref{fig:ex1b_part2}b shows that the
-        proportion of type II errors decreased from 1-170/10000=83\% to
-        1-610/1000=39\%.
+        Figs.~\ref{fig:ex1b_part2}c and~\ref{fig:ex1b_part2}d we increased the
+        sample size from 10000 to 50000.  Fig.~\ref{fig:ex1b_part2}d shows that
+        the overlap between the pdf of the sample mean under the null and
+        alternative hypothesis decreased, and Fig.~\ref{fig:ex1b_part2}d shows
+        that the proportion of type II errors decreased from 1-170/10000=83\%
+        to 1-610/1000=39\%.
 
         \begin{figure}[H]
             \begin{center}
@@ -321,14 +332,17 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
             \end{center}
         \end{figure}
 
-    \item  Please refer to Fig.~\ref{fig:ex1c}.
+    \item Fig.~\ref{fig:ex1c} shows histograms of p-values for samples from a
+        standard Cauchy distribution.
 
-        By the central limit theorem, the mean of 10,000 Cauchy random
-        variables should be Normally distributed. Therefore, the distribution
-        of p-values for samples of 10,000 Cauchy random variables
-        (Fig.~\ref{fig:ex1c}a) should be very similar to that for samples of
-        10,000 Normal random variables (Fig.~\ref{fig:ex1a}). The reason for
-        this difference is explained in Appendix~\ref{sec:clt}.
+        By the central limit theorem, I was expecting that for large samples
+        the t-test was robust to the use of standard Cauchy samples. However,
+        in Fig.~\ref{fig:ex1c}a the distribution of p-values is not
+        $\mathcal{U}[0,1]$, indicating that the t-test is not robust to the use
+        of standard Cauchy samples. Note, from Fig.~\ref{fig:ex1d}, that the
+        t-test is robust the use of Rademacher samples. The reason for this
+        difference in robustness between standard Cauchy and Rademacher samples
+        is explained in Appendix~\ref{sec:clt}.
 
         \begin{figure}[H]
             \begin{center}
@@ -337,10 +351,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
                     \centering
                     \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.png}}
 
-                    \caption{Histogram of p-values of 1.000 t-tests evaluating
-                    if the mean of 10.000 samples from a standard Cauchy
-                    distribution is equal to zero.  Click on the figure to see
-                    its interactive version.}
+                    \caption{sample size = 10,000}
 
                     \label{fig:ex1c_1}
                 \end{subfigure}
@@ -349,14 +360,16 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
                     \centering
                     \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples3_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples3_withErrorBars.png}}
 
-                    \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean
-                    of 3 samples from a standard Cauchy distribution is equal to zero.
-                    Click on the figure to see its interactive version.}
+                    \caption{sample size = 3}
 
                     \label{fig:ex1c_2}
                 \end{subfigure}
 
-                \caption{Exercise 1c.
+                \caption{Exercise 1c. Histogram of p-values of 1.000 t-tests
+                evaluating if the mean of 10.000 samples (a) or 3 samples
+                (b) from a standard Cauchy distribution is equal to zero. The
+                t-test fails for both small (a) and large (b)
+                samples. Click on the figure to see its interactive version.
                 The script to generate this figure appears
                 \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here} and the
                 parameters used for this script appear
@@ -375,10 +388,7 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
                     \centering
                     \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.png}}
 
-                    \caption{Histogram of p-values of 1.000 t-tests evaluating
-                    if the mean of 10.000 samples from a Rademacher
-                    distribution is equal to zero.  Click on the figure to see
-                    its interactive version.}
+                    \caption{sample size = 10,000}
 
                     \label{fig:ex1d_1}
                 \end{subfigure}
@@ -387,17 +397,21 @@ distribution with zero mean, we should observe 50 tests with p\_value\textless
                     \centering
                     \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples3_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples3_withErrorBars.png}}
 
-                    \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean
-                    of 3 samples from a Rademacher distribution is equal to zero.
-                    Click on the figure to see its interactive version.}
+                    \caption{sample size = 3}
 
                     \label{fig:ex1d_2}
                 \end{subfigure}
 
-                \caption{Exercise 1d.
-                The script to generate this figure appears
-                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here} and the
-                parameters used for this script appear
+                \caption{Exercise 1d. Histogram of p-values of 1.000 t-tests
+                evaluating if the mean of 10.000 samples (a) or 3 samples (b)
+                from a standard Rademacher distribution is equal to zero.  For
+                Rademacher samples, the t-test is robust to the assumption that
+                its samples should come from a Normal distribution. It works
+                well for both small (a) and large (b) samples. Click on the
+                figure to see its interactive version.  The script to generate
+                this figure appears
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here}
+                and the parameters used for this script appear
                 \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1dWithErrorBars.csh}{here}.}
                 \label{fig:ex1d}
 
@@ -560,7 +574,7 @@ $t_\text{obs}$, when the null hypothesis is true.
 
 \begin{figure}[H]
     \begin{center}
-        % \includegraphics[width=\fig_width]{../figures/pvalue.png}
+        \includegraphics[width=\fig_width]{../figures/pvalue.png}
 
         \caption{Illustration of the p-value concept. A p-value is the
         probability of observing a statistic, $t$, greater than the observed
@@ -636,8 +650,8 @@ from Claim~\ref{claim:pvalue_as_function_of_stat}.
 \label{sec:clt}
 
 The central limit theorem demonstrates that, under certain conditions, the
-distribution of the mean of a sufficiently large number of random variables
-becomes Normal. Precisely:
+distribution of the mean of a sufficiently large number of random samples
+is Normally distributed. Precisely:
 
 \begin{theorem}[Central Limit Theorem]
 
@@ -651,17 +665,113 @@ If $X_{1},X_{2},\dots ,X_{n},\dots$ are random samples drawn from a population
 
 \end{theorem}
 
-For $n=10,000$ we generally expect that the distribution of the sample mean is
-is well approximated by a Normal distribution. Thus, for this large $n$, the
-t-test should work well for any distribution. This explain why the t-test
-worked well for the samples of 10,000 Rademacher random variables in
-exercise~1d (Figure~\ref{fig:ex1d}a).
+For $n=10,000$ we expect that the distribution of the sample mean closely
+follows a Normal distribution.
 
-The t-test did not work well for the sample of 10.000 Cauchy random variables
-in exercise~1c (Figure~\ref{fig:ex1c}a), because the Cauchy distribution has
-infinite variance, and the central limit theorem applies only to random
-variables with finite variance.
+The t statistic, i.e., $t=\frac{\bar{X}_n-\mu}{S_n}$, depends on the samples
+only through the sample mean, i.e., $\bar{X}_n$, and the sample standard
+deviation, i.e., $S_n=\frac{1}{n-1}\sum_{i=1}^n\left(x_i-\bar{X}_n\right)^2$.  For
+simplicity of explanation, we ignore the dependence on the sample standard
+deviation.
 
+With this simplification, the t-statistic depends on the samples only though
+the sample mean. For sufficiently large $n$, by the central limit theorem, the
+mean of samples from most distributions will be Normally distributed, as
+required by the t-test. Thus, we expect that, for large samples, the t-test
+works correctly for samples from most distributions.
+
+The central limit theorem holds to the Rademacher distribution and, as shown in
+Fig.~\ref{fig:cltExamples}a, the distribution of the mean of 10,000 Rademacer
+samples follows a Normal distribution. This explain why the t-test worked well
+for the samples of 10,000 Rademacher random variables in exercise~1d
+(Fig.~\ref{fig:ex1d}a).
+%
+However, the central limit theorem does not hold for the standard Cauchy
+distribution, since this theorem requires finite
+variance and variance is not defined for the standard Cauchy distribution. As
+shown in Fig.~\ref{fig:cltExamples}b, the distribution of the mean of 10,000
+standard Cauchy samples does not follows a Normal distribution.
+This explains why the t-test was not robust to the use of 10,000 standard
+Cauchy samples in exercise~1c (Fig.~\ref{fig:ex1c}a).
+
+Fig.~\ref{fig:cltExamples}b shows that the distribution of the mean of 10,000
+standard Cauchy samples is well approximated by the standard Cauchy
+distribition, as expected by Lemma~\ref{lemma:samleMeanOfStdCauchyIsStdCauchy}.
+
+\begin{figure}[H]
+    \begin{center}
+
+        \begin{subfigure}{1.0\textwidth}
+            \centering
+            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/checkCLT_distributionRademacher_nSamples10000.html}{\includegraphics[width=\fig_width]{../figures/checkCLT_distributionRademacher_nSamples10000.png}}
+
+            \caption{Rademacher samples}
+
+            \label{fig:cltExamples_1}
+        \end{subfigure}
+
+        \begin{subfigure}{1.0\textwidth}
+            \centering
+            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/checkCLT_distributionStdCauchy_nSamples10000.html}{\includegraphics[width=\fig_width]{../figures/checkCLT_distributionStdCauchy_nSamples10000.png}}
+
+            \caption{Standard Cauchy}
+
+            \label{fig:cltExamples_2}
+        \end{subfigure}
+
+        \caption{Central limit theorem examples. The central limit theorem
+        applies to the Rademacher distribution, and panel (a) shows that a
+        historgram of 10,000 samples from this distribution is well
+        approximated by a Normal density with mean 0 and standard deviation
+        $\sigma=\frac{1}{\sqrt{10,000}}$. The central limit theorem does not
+        apply to the standard Cauchy distribution, and panel (b) shows that a
+        histogram of 10,000 samples from this distribution is not well
+        approximated by a Normal density with mean 0 and standard deviation
+        equal to the sample standard deviation. This histogram is well
+        approximated by a Standard Cauchy density, as expected by
+        Lemma~\ref{lemma:samleMeanOfStdCauchyIsStdCauchy}.}
+
+        \label{fig:cltExamples}
+
+    \end{center}
+
+\end{figure}
+
+\begin{lemma}
+    If $X_1,\ldots,X_n$ are iid Standard Cauchy random variables, then
+    $\bar{X}_n=\frac{1}{n}\sum_{i=1}^nX_i$ is also Standard Cauchy.
+    \label{lemma:samleMeanOfStdCauchyIsStdCauchy}
+\end{lemma}
+\begin{proof}
+
+    We will show that the characteristic function of the mean of Standard
+    Cauchy iid random variables, i.e., $\varphi_{\bar{X}_n}(t)$, equals the
+    characteristic function of a Standard Cauchy random variable, i.e.,
+    $\varphi_X(t)=e^{-|t|}$\footnote{\url{https://en.wikipedia.org/wiki/Cauchy_distribution}}.
+    Then, because the characteristic function uniquely specficies a random
+    variable, we conclude that this mean is a Standard Cauchy random variable.
+
+    \begin{align}
+        \varphi_{\bar{X}_n}(t)&=E\left\{e^{j\bar{X}_nt}\right\}=E\left\{\prod_{i=1}^ne^{\frac{jX_it}{n}}\right\}=\prod_{i=1}^nE\left\{e^{\frac{jX_it}{n}}\right\}=\prod_{i=1}^ne^{-\frac{|t|}{n}}=\left(e^{-\frac{|t|}{n}}\right)^n=e^{-|t|}
+    \end{align}
+    Notes:
+    \begin{enumerate}
+
+        \item the first equality follows from the definition of the
+            characteristic function,
+
+        \item the second equality uses the property that the exponential of
+            sums is a product of exponentials,
+
+        \item the third equality is a consequence of the independece of the
+            random variables,
+
+        \item the fourth equality follows from the characteristic function of a
+            Cauchy random variable, i.e., $\varphi_X(t)=e^{-|t|}$, evaluated at
+            $\frac{t}{n}$.
+    \end{enumerate}
+
+\end{proof}
 \end{appendices}
 
 \end{document}

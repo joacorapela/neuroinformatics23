@@ -67,11 +67,10 @@ def main(argv):
     tsel = slice(int(s0), int(s0) + int(duration * sr.fs))
 
     # Important: remove sync channel from raw data, and transpose
-    lfp = sr[tsel, channel_nro]
-    n_samples = len(lfp)
+    channel_lfp = sr[tsel, channel_nro]*1000
+    n_samples = len(channel_lfp)
     print(f"Data has {n_samples} samples")
 
-    channel_lfp = sr[tsel, channel_nro]*1000
     f, t, Sxx = scipy.signal.spectrogram(x=channel_lfp, fs=sr.fs,
                                          nperseg=segment_len,
                                          scaling="spectrum")

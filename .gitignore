@@ -3,9 +3,12 @@
 __pycache__
 *Rsync
 
-worksheets/ws1/mySolution/figures/*
-worksheets/ws1/mySolution/results/*
+**/figures/
+**/results/
 **/notes/
+**/docs/
+**/outputs/
+**/practical/
 **/report/*
 !**/report/*pdf
 !**/report/*tex

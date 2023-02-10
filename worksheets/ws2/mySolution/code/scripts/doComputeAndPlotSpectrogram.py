@@ -17,12 +17,8 @@ def main(argv):
     parser.add_argument("--pid", type=str, help="probed ID",
                         default="38124fca-a0ac-4b58-8e8b-84a2357850e6")
     parser.add_argument("--channel_nro", type=int,
-                        help="channel number for spectogram calculation",
+                        help="channel number for spectrogram calculation",
                         default=250)
-    parser.add_argument("--start_time", type=float,
-                        help="plotting start time (sec)", default=0.0)
-    parser.add_argument("--duration", type=float,
-                        help="signal duration (sec)", default=1200.0)
     parser.add_argument("--segment_len", type=int,
                         help="Segement length (samples)", default=2**14)
     parser.add_argument("--n_ticks", type=int,
@@ -33,22 +29,23 @@ def main(argv):
                         default="Time (sec)")
     parser.add_argument("--y_label", type=str, help="y_label",
                         default="Frequency (Hz)")
+    parser.add_argument("--xlim", type=str, help="limits of x-axis (sec)",
+                        default="[4500.0,5500.0]")
     parser.add_argument("--ylim", type=str, help="limits of x-axis (Hz)",
                         default="[0,160]")
     parser.add_argument("--fig_filename_pattern", type=str,
                         help="figure filename pattern",
-                        default="../../figures/spectogram_segmentLength_{:d}_pid_{:s}.{:s}")
+                        default="../../figures/spectrogram_segmentLength_{:d}_pid_{:s}_channel_{:d}.{:s}")
     args = parser.parse_args()
 
     pid = args.pid
     channel_nro = args.channel_nro
-    start_time = args.start_time
-    duration = args.duration
     segment_len = args.segment_len
     n_ticks = args.n_ticks
     colorscale = args.colorscale
     x_label = args.x_label
     y_label = args.y_label
+    xlim = [float(str) for str in args.xlim[1:-1].split(',')]
     ylim = [float(str) for str in args.ylim[1:-1].split(',')]
     fig_filename_pattern = args.fig_filename_pattern
 
@@ -63,11 +60,8 @@ def main(argv):
     els = brainbox.io.one.load_channel_locations(eID, one=aOne)
     channel_locs_acronyms = els[probe_label]["acronym"]
 
-    s0 = start_time * sr.fs
-    tsel = slice(int(s0), int(s0) + int(duration * sr.fs))
-
     # Important: remove sync channel from raw data, and transpose
-    channel_lfp = sr[tsel, channel_nro]*1000
+    channel_lfp = sr[0:sr.ns, channel_nro]*1000
     n_samples = len(channel_lfp)
     print(f"Data has {n_samples} samples")
 
@@ -78,11 +72,11 @@ def main(argv):
     zmax = np.max(Sxx)
 
     # let's plot now
-    hovertext = []
-    for yi, yy in enumerate(f):
-        hovertext.append([])
-        for xi, xx in enumerate(t):
-            hovertext[-1].append(f"time: {xx}<br />frequency: {yy}<br />Sxx: {Sxx[yi][xi]}<br />")
+#     hovertext = []
+#     for yi, yy in enumerate(f):
+#         hovertext.append([])
+#         for xi, xx in enumerate(t):
+#             hovertext[-1].append(f"time: {xx}<br />frequency: {yy}<br />Sxx: {Sxx[yi][xi]}<br />")
 
     title = f"Sxx (mv^2): channel {channel_nro}, region {channel_locs_acronyms[channel_nro]}, segment_len {segment_len}"
     fig = go.Figure()
@@ -92,19 +86,19 @@ def main(argv):
                        colorbar=plotUtils.colorbar(
                            zmin=zmin, zmax=zmax, n_ticks=n_ticks,
                            title="Power (mv^2)"),
-                       hoverinfo="text", text=hovertext,
+#                        hoverinfo="text", text=hovertext,
                        )
     fig.add_trace(trace)
-    fig.update_xaxes(title_text=x_label)
+    fig.update_xaxes(title_text=x_label, range=xlim)
     fig.update_yaxes(title_text=y_label, range=ylim)
     fig.update_layout(title=title)
 
-    fig.write_image(fig_filename_pattern.format(segment_len, pid, "png"))
-    fig.write_html(fig_filename_pattern.format(segment_len, pid, "html"))
+    # fig.write_image(fig_filename_pattern.format(segment_len, pid, channel_nro, "png"))
+    fig.write_html(fig_filename_pattern.format(segment_len, pid, channel_nro, "html"))
 
-    fig.show()
+    # fig.show()
 
-    breakpoint()
+    # breakpoint()
 
 
 if __name__ == "__main__":

@@ -82,7 +82,7 @@ def main(argv):
     for yi, yy in enumerate(f):
         hovertext.append([])
         for xi, xx in enumerate(t):
-            hovertext[-1].append(f"frequency: {xx}<br />channel: {yy}<br />Sxx: {Sxx[yi][xi]}<br />")
+            hovertext[-1].append(f"time: {xx}<br />frequency: {yy}<br />Sxx: {Sxx[yi][xi]}<br />")
 
     title = f"Sxx (mv^2): channel {channel_nro}, region {channel_locs_acronyms[channel_nro]}, segment_len {segment_len}"
     fig = go.Figure()

@@ -29,7 +29,9 @@ def main(argv):
                         default="Time (sec)")
     parser.add_argument("--y_label", type=str, help="y_label",
                         default="Frequency (Hz)")
-    parser.add_argument("--ylim", type=str, help="limits of x-axis (Hz)",
+    parser.add_argument("--xlim", type=str, help="limits of x-axis (sec)",
+                        default="[4500.0,5500.0]")
+    parser.add_argument("--ylim", type=str, help="limits of y-axis (Hz)",
                         default="[0,160]")
     parser.add_argument("--spectrogram_filename_pattern", type=str,
                         help="results filename pattern",
@@ -48,10 +50,12 @@ def main(argv):
     colorscale = args.colorscale
     x_label = args.x_label
     y_label = args.y_label
+    xlim = [float(str) for str in args.xlim[1:-1].split(',')]
     ylim = [float(str) for str in args.ylim[1:-1].split(',')]
     spectrogram_filename_pattern = args.spectrogram_filename_pattern
     fig_filename_pattern = args.fig_filename_pattern
 
+    breakpoint()
     spectrogram_filename = spectrogram_filename_pattern.format(
         duration, segment_len, pid, channel_nro)
     load_res = np.load(spectrogram_filename)
@@ -62,25 +66,26 @@ def main(argv):
     zmin = np.min(Sxx)
     zmax = np.max(Sxx)
 
+    '''
     # let's plot now
     hovertext = []
     for yi, yy in enumerate(f):
         hovertext.append([])
         for xi, xx in enumerate(t):
             hovertext[-1].append(f"time: {xx}<br />frequency: {yy}<br />Sxx: {Sxx[yi][xi]}<br />")
+    '''
 
     title = f"Sxx (mv^2): channel {channel_nro}, duration: {duration}, segment_len: {segment_len}"
     fig = go.Figure()
-    trace = go.Heatmap(x=t, y=f, z=np.log10(Sxx), colorscale=colorscale, zmin=np.log10(zmin), zmax=np.log10(zmax), colorbar=plotUtils.colorbar( zmin=zmin, zmax=zmax, n_ticks=n_ticks, title="Power (mv^2)"), hoverinfo="text", text=hovertext,)
+#     trace = go.Heatmap(x=t, y=f, z=np.log10(Sxx), colorscale=colorscale, zmin=np.log10(zmin), zmax=np.log10(zmax), colorbar=plotUtils.colorbar(zmin=zmin, zmax=zmax, n_ticks=n_ticks, title="Power (mv^2)"), hoverinfo="text", text=hovertext,)
+    trace = go.Heatmap(x=t, y=f, z=np.log10(Sxx), colorscale=colorscale, zmin=np.log10(zmin), zmax=np.log10(zmax), colorbar=plotUtils.colorbar(zmin=zmin, zmax=zmax, n_ticks=n_ticks, title="Power (mv^2)"),)
     fig.add_trace(trace)
-    fig.update_xaxes(title_text=x_label)
+    fig.update_xaxes(title_text=x_label, range=xlim)
     fig.update_yaxes(title_text=y_label, range=ylim)
     fig.update_layout(title=title)
 
-    fig.write_image(fig_filename_pattern.format(segment_len, pid, channel_nro,
-                                                "png"))
-    fig.write_html(fig_filename_pattern.format(segment_len, pid, channel_nro,
-                                               "html"))
+    # fig.write_image(fig_filename_pattern.format(segment_len, pid, channel_nro, "png"))
+    # fig.write_html(fig_filename_pattern.format(segment_len, pid, channel_nro, "html"))
 
     fig.show()
 

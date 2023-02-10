@@ -3,13 +3,11 @@ import sys
 import argparse
 import numpy as np
 import scipy.signal
-import plotly.graph_objects as go
 
 import one.api
 import brainbox.io.one
 import brainbox.io.spikeglx
 
-import plotUtils
 
 def main(argv):
     parser = argparse.ArgumentParser()
@@ -27,7 +25,7 @@ def main(argv):
                         help="Segement length (samples)", default=2**14)
     parser.add_argument("--results_filename_pattern", type=str,
                         help="results filename pattern",
-                        default="../../results/spectogram_duration_{:.02f}_segmentLength_{:d}_pid_{:s}.npz")
+                        default="../../results/spectogram_duration_{:.02f}_segmentLength_{:d}_pid_{:s}_channel_{:d}.npz")
     args = parser.parse_args()
 
     pid = args.pid
@@ -43,10 +41,6 @@ def main(argv):
                        password="international", silent=True)
     sr = brainbox.io.spikeglx.Streamer(pid=pid, one=aOne, remove_cached=False,
                                        typ=band)
-    # extract channel location acronyms for hover
-    eID, probe_label = aOne.pid2eid(pid=pid)
-    els = brainbox.io.one.load_channel_locations(eID, one=aOne)
-    channel_locs_acronyms = els[probe_label]["acronym"]
 
     s0 = start_time * sr.fs
     tsel = slice(int(s0), int(s0) + int(duration * sr.fs))
@@ -59,9 +53,10 @@ def main(argv):
     f, t, Sxx = scipy.signal.spectrogram(x=channel_lfp, fs=sr.fs,
                                          nperseg=segment_len,
                                          scaling="spectrum")
-    results_filename = results_filename_pattern.format(duration, segment_len, pid)
+    results_filename = results_filename_pattern.format(duration, segment_len,
+                                                       pid, channel_nro)
     np.savez(file=results_filename, f=f, t=t, Sxx=Sxx)
 
 
 if __name__ == "__main__":
-   main(sys.argv)
+    main(sys.argv)

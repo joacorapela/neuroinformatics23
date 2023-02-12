@@ -1,0 +1,945 @@
+\documentclass[12pt]{article}
+
+\usepackage{natbib}
+\usepackage{apalike}
+\usepackage[hypertexnames=false,colorlinks=true,breaklinks]{hyperref}
+\usepackage{graphicx}
+\usepackage[shortlabels]{enumitem}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[title]{appendix}
+\usepackage[margin=1in]{geometry}
+\usepackage{verbatim}
+
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+
+\def\fig_width{3.5in}
+\title{Report worksheet 2}
+\author{Joaqu\'{i}n Rapela}
+
+\begin{document}
+
+\maketitle
+
+\begin{comment}
+\section*{Exercise 1: t-test for non-Gaussian distributions}
+
+Under the null hypothesis, p-values should follow a uniform distribution (see
+proof in Appendix~\ref{sec:pValuesAreUniform}). Therefore, when sampling from a
+normal distribution with zero mean, we should observe
+0.05*\texttt{n\_repeats}=50 tests with pvalues in the range $[p,
+p+0.05],\;\forall p\in[0, 0.95]$. In particular, when sampling from a Normal
+distribution with zero mean, we should observe 50 tests with p\_value\textless
+0.05.
+
+\begin{enumerate}[(a)]
+
+    \item Here we are sampling from a normal distribution with zero mean. Thus,
+        all histogram bins of length 0.05 should have around 50 counts. And
+        this is what Figs.~\ref{fig:ex1a}a and~\ref{fig:ex1a}b show.
+
+        For a probability of type I error less than 0.05, the null hypothesis
+        is rejected 5\% of the time when the null hypothesis is true.
+
+        \begin{figure}[H]
+            \begin{center}
+                \begin{subfigure}{0.5\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.png}}
+                    \caption{sample size = 10,000}
+                \end{subfigure}
+                \begin{subfigure}{0.5\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples3_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionNormal_popmean0.0000_mean0.0000_nSamples3_withErrorBars.png}}
+                    \caption{sample size = 3}
+                \end{subfigure}
+
+                \caption{Exercise 1a. Histogram of p-values of 1.000 t-tests
+                evaluating if the mean of 10.000 samples (a) or 3 samples (b)
+                from a $\mathcal{N}(0, 1)$ is equal to zero. The t-test works
+                well for both small (a) and large (b) samples. Click on the
+                figure to see its interactive version.  The script to generate
+                this figure appears
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here}
+                and the parameters used for this script appear
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1aWithErrorBars.csh}{here}.
+                }
+
+                \label{fig:ex1a}
+
+            \end{center}
+        \end{figure}
+
+    \item  The previous item, and all the following ones, study the probability
+        Type I error of a hypothesis test. This is the probability of rejecting
+        the null hypothesis when this hypothesis is true.
+        %
+        This item studies the probability of Type II error, which is the
+        probability of accepting the null hypothesis when this hypothesis is
+        false.
+
+        Fig.~\ref{fig:typeIIerror}a illustrates Type I
+        and II errors. Here the null hypothesis is that the observed samples
+        come from a standard Gaussian distribution (mean 0 and standard
+        deviation 1). The probability density function of the sample mean
+        under the null hypothesis is the blue trace in
+        Fig.~\ref{fig:typeIIerror}a.
+        %
+        If we accept a probability of type I error of at most 5\%
+        (i.e., take $\alpha=0.05$), a type I error will occur if the
+        observed sample mean is to the right of the dashed vertical line. The
+        probability of this error is the area of the region coloured in blue in
+        Fig.~\ref{fig:typeIIerror}a.
+
+        To calculate the probability of type II error we need to specify the
+        distribution of an alternative hypothesis. In
+        Fig.~\ref{fig:typeIIerror}a the distribution of
+        the observations under the alternative hypothesis is a Gaussian with
+        mean 2.5 and standard deviation 1.0. If we take $\alpha=0.05$, a type
+        II error will occur if the observed sample mean is to the left of the
+        dashed vertical line. The probability of this error is the area of the
+        region coloured in red in
+        Fig.~\ref{fig:typeIIerror}a.
+
+        To reduce the probability of Type II error we can:
+
+        \begin{enumerate}[1.]
+
+            \item accept a larger probability of type I error (i.e., reduce
+                $\alpha$).
+                Fig.~\ref{fig:typeIIerror}b
+                illustrates the reduction of type II error when accepting a
+                probability of type I error of 10\%. Compare with
+                Fig.~\ref{fig:typeIIerror}a.
+
+            \item use an alternative hypothesis with a mean more different from
+                that of the null hypothesis (i.e., increase the effect size).
+                Fig.~\ref{fig:typeIIerror}c
+                illustrates the reduction of type II error when samples under
+                the alternative hypothesis have a mean of 3.5 and standard
+                deviation of 1. Compare with
+                Fig.~\ref{fig:typeIIerror}a.
+
+            \item increase the sample size. If $n$ samples come from a Gaussian
+                distribution with mean $\mu$ and standard deviation $\sigma$
+                (i.e., $x_i\sim\mathcal{N}(x_i|\mu,\sigma^2)$), then the sample
+                mean will follow another Gaussian distribution with mean $\mu$
+                and standard deviation $\frac{\sigma}{\sqrt{n}}$. Therefore, as
+                the sample size increases, the variability of the sample mean
+                decreases, both under the null and alternative hypothesis. Then
+                the Gaussian distributions under the null and alternative
+                hypothesis will overlap less, which will decrease the
+                probability of type II error.
+                Fig.~\ref{fig:typeIIerror}d shows
+                the distributions of the sample means under the same null
+                and alternative hypothesis as in 
+                Fig.~\ref{fig:typeIIerror}a, but
+                with an increased sample size of 250.
+        \end{enumerate}
+    
+        \begin{figure}[H]
+            \begin{center}
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples100.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples100_colored.png}}
+                    \caption{Baseline distributions of $\bar{x}$ under the null
+                    (blue trace) and alternative (red trace) hypothesis.}
+                    \label{fig:ex1b_intro_a}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.1000_nSamples100.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.1000_nSamples100.png}}
+                    \caption{Decreasing the probability of type II error by
+                    increasing the probability of type I error.}
+                    \label{fig:ex1b_intro_b}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean13.5000_std10.0000_alpha0.0500_nSamples100.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean13.5000_std10.0000_alpha0.0500_nSamples100_colored.png}}
+                    \caption{Decreasing the probability of type II error by
+                    increasing the effect size.}
+                    \label{fig:ex1b_intro_c}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples250.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean12.5000_std10.0000_alpha0.0500_nSamples250_colored.png}}
+                    \caption{Decreasing the probability of type II error by
+                    increasing the sample size.}
+                    \label{fig:ex1b_intro_d}
+                \end{subfigure}
+
+                \caption{Exercise 1b. Type II errors in hypothesis testing and
+                ways to decrease it. Click on any of the figures to see its
+                interactive version.  The script to generate these figures
+                appears
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doPlotTwoGaussians.py}{here}
+                and the parameters used for this script appear
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doPlotTwoGaussians.py}{here}.}
+
+                \label{fig:typeIIerror}
+            \end{center}
+        \end{figure}
+
+        Fig.~\ref{fig:ex1b_part1}a shows a histogram of p-values for 1000
+        one-sample t-tests checking if the mean of a sample of size 1000 from
+        the $\mathcal{N}(0.1, 1)$ distribution is different from zero.
+        %
+        For all 1000 tests the null hypothesis was rejected at the 0.05
+        criterion.
+        %
+        Fig.~\ref{fig:ex1b_part1}b shows the pdf of the sample mean under
+        the null (blue trace) and the alternative (red trace) hypothesis.  That
+        the t-test rejected the null hypothesis for all samples is
+        explained by the fact that the area of the pdf of the sample mean under
+        the alternative hypothesis (red trace) to the left of the vertical
+        dashed line (i.e., the probability of type II error) is almost zero.
+
+        From the discussion above we see that, if we decrease the sample size,
+        the Gaussian distributions under the null and alternative hypothesis
+        should overlap more, which will increase the probability of a type II
+        error. Fig.~\ref{fig:ex1b_part1}c is identical to
+        Fig.~\ref{fig:ex1b_part1}a, but uses a reduced sample size of 500.
+        We observe an increase in  the counts for bins corresponding to p-values
+        greater than 0.05, which implies that the probability of type II error
+        increased.  Fig.~\ref{fig:ex1b_part1}d shows the probability
+        density functions of the sample means under the null and alternative
+        hypothesis. These pdfs overlap substantially more than those in
+        Fig.~\ref{fig:ex1b_part1}b, which indicates a larger probability of
+        type II error, in agreement with Fig.~\ref{fig:ex1b_part1}c.
+
+        \begin{figure}[H]
+            \begin{center}
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.1000_nSamples10000_withErrorBars.html}{\includegraphics[width=\textwidth]{../figures/ex1_distributionNormal_popmean0.0000_mean0.1000_nSamples10000_withErrorBars.png}}
+                    \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean of 10.000 samples from a $\mathcal{N}(0.1, 1)$ is equal to zero.  Click on the figure to see its interactive version.}
+                    \label{fig:ex1b_part1_a}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean10.1000_std1.0000_alpha0.0500_nSamples10000.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean10.1000_std1.0000_alpha0.0500_nSamples10000.png}}
+                    \caption{Distributions of samples means under the null
+                    hypothesis that samples come from a $\mathcal{N}(0, 1)$
+                    (blue trace) and under the alternative hypothesis that
+                    samples come from a $\mathcal{N}(0.1, 1)$ (red trace), for
+                    a sample size of 10000.}
+                    \label{fig:ex1b_part1_b}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.1000_nSamples500_withErrorBars.html}{\includegraphics[width=\textwidth]{../figures/ex1_distributionNormal_popmean0.0000_mean0.1000_nSamples500_withErrorBars.png}}
+                    \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean of 500 samples from a $\mathcal{N}(0.1, 1)$ is equal to zero.  Click on the figure to see its interactive version.}
+                    \label{fig:ex1b_part1_c}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean10.1000_std1.0000_alpha0.0500_nSamples500.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean10.1000_std1.0000_alpha0.0500_nSamples500.png}}
+                    \caption{Distributions of samples means under the null
+                    hypothesis that samples come from a $\mathcal{N}(0, 1)$
+                    (blue trace) and under the alternative hypothesis that
+                    samples come from a $\mathcal{N}(0.1, 1)$ (red trace), for
+                    a sample size of 500.}
+                    \label{fig:ex1b_part1_d}
+                \end{subfigure}
+
+                \caption{Exercise 1b. Histogram of p-values from 1000
+                one-sample t-tests used with samples from a $\mathcal{N}(0.1,
+                1)$, and pdfs of the sample mean under  the null and
+                alternative hypothesis.  The script to generate this figure
+                appears
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here}
+                and the parameters used for this script appear
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1bWithErrorBars.csh}{here}.}
+
+                \label{fig:ex1b_part1}
+            \end{center}
+        \end{figure}
+
+        The second part of this exercise asks to run t-tests using samples with
+        a mean that is an order or magnitude more similar to the mean under the
+        null hypothesis than the mean of the samples in the first part of this
+        exercise. That is, in this second part we want to study the probability
+        of type II error when the difference between the true and alternative
+        hypothesis (i.e., the effect size) is smaller. As illustrated in
+        Figs.~\ref{fig:typeIIerror}a and~\ref{fig:typeIIerror}c, decreasing the
+        effect size should increase the probability of type II error. This
+        increase is reflected in the larger number of counts for bins with
+        p-values larger than 0.05 in Fig.~\ref{fig:ex1b_part2}a than in
+        Fig.~\ref{fig:ex1b_part1}a, and by the larger overlap between the pdfs
+        of the sample means under the null and alternative hypothesis in
+        Fig.~\ref{fig:ex1b_part2}b than in Fig.~\ref{fig:ex1b_part1}b. 
+
+        As illustrated in Fig.~\ref{fig:typeIIerror}d, increasing the sample
+        size reduces the probability of type II error. In
+        Figs.~\ref{fig:ex1b_part2}c and~\ref{fig:ex1b_part2}d we increased the
+        sample size from 10000 to 50000.  Fig.~\ref{fig:ex1b_part2}d shows that
+        the overlap between the pdf of the sample mean under the null and
+        alternative hypothesis decreased, and Fig.~\ref{fig:ex1b_part2}d shows
+        that the proportion of type II errors decreased from 1-170/10000=83\%
+        to 1-610/1000=39\%.
+
+        \begin{figure}[H]
+            \begin{center}
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.0100_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionNormal_popmean0.0000_mean0.0100_nSamples10000_withErrorBars.png}}
+                    \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean
+                    of 10.000 samples from a $\mathcal{N}(0.01, 1)$ is equal to zero.}
+                    \label{fig:ex1b_part2_a}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean10.0100_std1.0000_alpha0.0500_nSamples10000.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean10.0100_std1.0000_alpha0.0500_nSamples10000.png}}
+                    \caption{Distributions of samples means under the null
+                    hypothesis that samples come from a $\mathcal{N}(0, 1)$
+                    (blue trace) and under the alternative hypothesis that
+                    samples come from a $\mathcal{N}(0.01, 1)$ (red trace), for
+                    a sample size of 10000.}
+                    \label{fig:ex1b_part2_b}
+                \end{subfigure}
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionNormal_popmean0.0000_mean0.0100_nSamples50000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionNormal_popmean0.0000_mean0.0100_nSamples50000_withErrorBars.png}}
+                    \caption{Histogram of p-values of 1.000 t-tests evaluating if the mean
+                    of 50,000 samples from a $\mathcal{N}(0.01, 1)$ is equal to zero.}
+                    \label{fig:ex1b_part2_c}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.4\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/two_gaussians_mean00.0000_mean10.0100_std1.0000_alpha0.0500_nSamples50000.html}{\includegraphics[width=\textwidth]{../figures/two_gaussians_mean00.0000_mean10.0100_std1.0000_alpha0.0500_nSamples50000.png}}
+                    \caption{Distributions of samples means under the null
+                    hypothesis that samples come from a $\mathcal{N}(0, 1)$
+                    (blue trace) and under the alternative hypothesis that
+                    samples come from a $\mathcal{N}(0.01, 1)$ (red trace), for
+                    a sample size of 50000.}
+                    \label{fig:ex1b_part2_d}
+                \end{subfigure}
+                \caption{Exercise 1b.
+                The script to generate this figure appears
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here} and the
+                parameters used for this script appear
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1bWithErrorBars.csh}{here}.}
+                \label{fig:ex1b_part2}
+            \end{center}
+        \end{figure}
+
+    \item Fig.~\ref{fig:ex1c} shows histograms of p-values for samples from a
+        standard Cauchy distribution.
+
+        By the central limit theorem, I was expecting that for large samples
+        the t-test was robust to the use of standard Cauchy samples. However,
+        in Fig.~\ref{fig:ex1c}a the distribution of p-values is not
+        $\mathcal{U}[0,1]$, indicating that the t-test is not robust to the use
+        of standard Cauchy samples. Note, from Fig.~\ref{fig:ex1d}, that the
+        t-test is robust the use of Rademacher samples. The reason for this
+        difference in robustness between standard Cauchy and Rademacher samples
+        is explained in Appendix~\ref{sec:clt}.
+
+        \begin{figure}[H]
+            \begin{center}
+
+                \begin{subfigure}{1.0\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.png}}
+
+                    \caption{sample size = 10,000}
+
+                    \label{fig:ex1c_1}
+                \end{subfigure}
+
+                \begin{subfigure}{1.0\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples3_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionStdCauchy_popmean0.0000_mean0.0000_nSamples3_withErrorBars.png}}
+
+                    \caption{sample size = 3}
+
+                    \label{fig:ex1c_2}
+                \end{subfigure}
+
+                \caption{Exercise 1c. Histogram of p-values of 1.000 t-tests
+                evaluating if the mean of 10.000 samples (a) or 3 samples
+                (b) from a standard Cauchy distribution is equal to zero. The
+                t-test fails for both small (a) and large (b)
+                samples. Click on the figure to see its interactive version.
+                The script to generate this figure appears
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here} and the
+                parameters used for this script appear
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1cWithErrorBars.csh}{here}.}
+                \label{fig:ex1c}
+
+            \end{center}
+        \end{figure}
+
+    \item  Please refer to Fig.~\ref{fig:ex1d}.
+
+        \begin{figure}[H]
+            \begin{center}
+
+                \begin{subfigure}{1.0\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples10000_withErrorBars.png}}
+
+                    \caption{sample size = 10,000}
+
+                    \label{fig:ex1d_1}
+                \end{subfigure}
+
+                \begin{subfigure}{1.0\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples3_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples3_withErrorBars.png}}
+
+                    \caption{sample size = 3}
+
+                    \label{fig:ex1d_2}
+                \end{subfigure}
+
+                \caption{Exercise 1d. Histogram of p-values of 1.000 t-tests
+                evaluating if the mean of 10.000 samples (a) or 3 samples (b)
+                from a standard Rademacher distribution is equal to zero.  For
+                Rademacher samples, the t-test is robust to the assumption that
+                its samples should come from a Normal distribution. It works
+                well for both small (a) and large (b) samples. Click on the
+                figure to see its interactive version.  The script to generate
+                this figure appears
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here}
+                and the parameters used for this script appear
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1dWithErrorBars.csh}{here}.}
+                \label{fig:ex1d}
+
+            \end{center}
+        \end{figure}
+
+    \item  Please refer to Fig.~\ref{fig:ex1e}.
+
+        \begin{figure}[H]
+            \begin{center}
+
+                \begin{subfigure}{1.0\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionVerySkewed_popmean0.0010_mean0.0000_nSamples100_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionVerySkewed_popmean0.0010_mean0.0000_nSamples100_withErrorBars.png}}
+
+                    \caption{Histogram of p-values of 1.000 t-tests evaluating
+                    if the mean of 100 samples from the very skewed
+                    distribution distribution with mean 0.001 is equal to
+                    0.001.  Click on the figure to see its interactive
+                    version.}
+
+                    \label{fig:ex1e_1}
+                \end{subfigure}
+
+                \begin{subfigure}{1.0\textwidth}
+                    \centering
+                    \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples3_withErrorBars.html}{\includegraphics[width=\fig_width]{../figures/ex1_distributionRademacher_popmean0.0000_mean0.0000_nSamples3_withErrorBars.png}}
+
+                    \caption{Histogram of p-values of 1.000 t-tests evaluating
+                    if the mean of 100 samples from the very skewed
+                    distribution distribution with mean 0.001 is equal to 0.0.
+                    Click on the figure to see its interactive version.}
+
+                    \label{fig:ex1e_2}
+                \end{subfigure}
+
+                \caption{Exercise 1e.
+                The script to generate this figure appears
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1WithErrorBars.py}{here} and the
+                parameters used for this script appear
+                \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx1eWithErrorBars.csh}{here}.}
+                \label{fig:ex1e}
+
+            \end{center}
+        \end{figure}
+
+\end{enumerate}
+
+\section*{Exercise 2: randomization test}
+
+Please refer to Fig.~\ref{fig:ex2}.
+
+\begin{figure}[H]
+    \begin{center}
+
+        \begin{subfigure}{1.0\textwidth}
+            \centering
+            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex2_distributionRademacher_popmean0.0000_mean0.0000_nSamples10.html}{\includegraphics[width=\fig_width]{../figures/ex2_distributionRademacher_popmean0.0000_mean0.0000_nSamples10.png}}
+
+            \caption{Histogram of p-values of 1.000 randomization tests evaluating
+            if the mean of 10 samples from the Rademacher
+            distribution distribution is equal to 0.0.  Click on the
+            figure to see its interactive version.}
+
+            \label{fig:ex2_1}
+        \end{subfigure}
+
+        \begin{subfigure}{1.0\textwidth}
+            \centering
+            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/ex2_distributionSkewed_popmean0.0000_mean0.0000_nSamples10.html}{\includegraphics[width=\fig_width]{../figures/ex2_distributionSkewed_popmean0.0000_mean0.0000_nSamples10.png}}
+
+            \caption{Histogram of p-values of 1.000 randomization tests evaluating if the mean
+            of 10 samples from the skewed distribution is equal to zero.
+            Click on the figure to see its interactive version.}
+
+            \label{fig:ex2_2}
+        \end{subfigure}
+
+        \caption{Exercise 2. The script to generate this figure appears
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx2.py}{here}
+        and the parameters used for this script appear
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doEx2.csh}{here}.
+        }
+
+        \label{fig:ex2}
+
+    \end{center}
+\end{figure}
+
+\section*{Exercise 3: raster plots}
+
+Please refer to Fig.~\ref{fig:ex3}.
+
+\begin{figure}[H]
+    \begin{center}
+
+        \begin{subfigure}{1.0\textwidth}
+            \centering
+            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/spikes_times_clusterID41_epochedBystimOn_times_sortedByresponse_times_colorschoice.html}{\includegraphics[width=\fig_width]{../figures/spikes_times_clusterID41_epochedBystimOn_times_sortedByresponse_times_colorschoice.png}}
+
+            \caption{Rasterplot of neuron 41 aligned to
+            \texttt{stimOn\_times},
+            sorted by
+            \texttt{response\_times}
+            and coloured by
+            % \texttt{choice}.
+            }
+
+            \label{fig:ex3_1}
+        \end{subfigure}
+
+        \begin{subfigure}{1.0\textwidth}
+            \centering
+            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/spikes_times_clusterID41_epochedBystimOn_times_sortedByresponse_times_colorsfeedbackType.html}{\includegraphics[width=\fig_width]{../figures/spikes_times_clusterID41_epochedBystimOn_times_sortedByresponse_times_colorsfeedbackType.png}}
+
+            \caption{Rasterplot of neuron 41 aligned to
+            \texttt{stimOn\_times},
+            sorted by
+            \texttt{response\_times}
+            and coloured by
+            \texttt{feedbackType}.
+            }
+
+            \label{fig:ex3_2}
+        \end{subfigure}
+
+        \caption{Exercise 3. The script to generate this figure appears
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doPlotEpochedSpikesTimes.py}{here}
+        and the parameters used for this script appear
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doPlotEpochedSpikesTimes.csh}{here}.
+        }
+
+        \label{fig:ex3}
+
+
+    \end{center}
+\end{figure}
+
+\pagebreak
+\end{comment}
+
+\begin{appendices}
+
+\section{Fourier transform of a continuous periodic signal}
+\label{sec:ftContPeriodicSignal}
+
+    We prove in Lemma~\ref{lemma:ftContPeriodicSignal} that the Fourier
+    transform of a continuous periodic signal is a sum of scaled delta
+    functions at multiples of the frequency of this signal.
+
+    \begin{definition}[continuous signal]
+
+        A continuous signal $x(t)$ is periodic if and only if there exists
+        a period $T>0$ such that
+
+        \begin{align}
+            x(t)=x(t+T), \forall t\in\Re
+        \end{align}
+
+        \label{definition:periodicSignal}
+    \end{definition}
+
+    \begin{lemma}[Fourier transform of a periodic signal]
+        If $x(t)$ is periodic, with period $T$, then
+
+        \begin{align}
+            \mathcal{FT}\{x(t)\}(j\Omega)=2\pi\sum_{k=-\infty}^\infty X^S[k]\;\delta\left(\Omega-\frac{2\pi k}{T}\right)\label{eq:ftPeriodic}
+         \end{align}
+
+         \noindent with $X^S[k]$ the Fourier series coefficient at frequency $k$ (Eq.~\ref{eq:fsCoefficient}).
+
+         \label{lemma:ftContPeriodicSignal}
+
+    \end{lemma}
+
+    \begin{proof}
+        Because $x(t)$ is a periodic signal, it admits a Fourier series
+        representation \citep[][Section 2.3]{porat97}
+
+        \begin{align}
+            x(t)&=\sum_{k=-\infty}^\infty X^S[k]\exp\left(\frac{j2\pi kt}{T}\right)\label{eq:xFourierSeries}\\
+            \text{with}&\nonumber\\
+            X^S[k]&=\frac{1}{T}\int_{-T/2}^{T/2}x(t)\exp\left(-\frac{j2\pi kt}{T}\right)\label{eq:fsCoefficient}
+        \end{align}
+
+        By the linearity of the Fourier transform \citep[][Eq. 2.4]{porat97}, from Eq.~\ref{eq:xFourierSeries},
+        we have
+
+        \begin{align}
+            \mathcal{FT}\{x(t)\}(j\Omega)&=\sum_{k=-\infty}^\infty
+            X^S[k]\;\mathcal{FT}\left\{\exp\left(\frac{j2\pi
+            kt}{T}\right)\right\}(j\Omega)\label{eq:xFT}
+        \end{align}
+
+        We next compute the Fourier transform of the exponential in the right hand
+        side of Eq.~\ref{eq:xFT}
+
+        \begin{align}
+            \mathcal{FT}\left\{\exp\left(\frac{j2\pi
+            kt}{T}\right)\right\}(j\Omega)&=\mathcal{FT}\left\{1\; \exp\left(\frac{j2\pi kt}{T}\right)\right\}(j\Omega)\label{eq:ftExp1}\\
+                                          &=\mathcal{FT}\left\{1\right\}\left(j\left(\Omega-\frac{2\pi kt}{T}\right)\right)\label{eq:ftExp2}\\
+                                          &=2\pi\;\delta\left(\Omega-\frac{2\pi k}{T}\right)\label{eq:ftExp3}
+        \end{align}
+
+        Notes:
+        \begin{enumerate}
+
+            \item Eq.~\ref{eq:ftExp2} follows from Eq.~\ref{eq:ftExp1} by the
+                the frequency shift property of the Fourier
+                transform\footnote{$y(t)=e^{j\Omega_0 t}x(t)\leftrightarrow
+                Y(j\Omega)=X\left(j(\Omega-\Omega_0)\right)$, \citet[][Section
+                2.1]{porat97}}.
+
+            \item Eq.~\ref{eq:ftExp3} follows from Eq.~\ref{eq:ftExp2} by the
+                Fourier transform of the DC function (Lemma~\ref{lemma:ftDC}).
+
+        \end{enumerate}
+
+        Replacing Eq.~\ref{eq:ftExp3} into Eq.~\ref{eq:xFT}
+        yields Eq.~\ref{eq:ftPeriodic}.
+
+    \end{proof}
+
+    \begin{lemma}[Fourier transform of the DC function]
+        \begin{align}
+            \mathcal{FT}\{1\}(j\Omega)=2\pi\;\delta(\Omega)
+        \end{align}
+        \label{lemma:ftDC}
+    \end{lemma}
+
+    \begin{proof}
+        We start by computing the Fourier transform of the delta function.
+
+        \begin{align}
+            \mathcal{FT}\{\delta(t)\}(j\Omega)=\int_{-\infty}^\infty\delta(t)\exp\left(-j\Omega t\right)\ dt=\left.\exp\left(-j\Omega t\right)\right |_{t=0}=1
+        \end{align}
+
+        Then by the duality property of the Fourier transform
+        (Lemma~\ref{lemma:ftDuality}) we have
+
+        \begin{align}
+            \mathcal{FT}\{1\}(j\Omega)=2\pi\;\delta(-\Omega)=2\pi\;\delta(\Omega)\label{eq:ftDC1}
+        \end{align}
+
+        Notes:
+        \begin{enumerate}
+
+            \item The last equality in Eq.~\ref{eq:ftDC1} holds because the
+                delta function is even.
+
+        \end{enumerate}
+    \end{proof}
+
+    \begin{lemma}[Duality of the Fourier transform]
+
+        Let $x(t)$ be a signal and $X(j\Omega)$ be its Fourier transform, then
+
+        \begin{align}
+            \mathcal{FT}\{X(jt)\}(j\Omega)=2\pi\;x(-\Omega)
+        \end{align}
+
+        \label{lemma:ftDuality}
+    \end{lemma}
+
+    \begin{proof}
+        If $x(t)$ is a signal, with real or complex values, and
+        $X(j\Omega)$ is its Fourier transform, then they are related by the
+        following equations \citep[][Section 2.1]{porat97}
+
+        \begin{align}
+            X(j\Omega)=\mathcal{FT}\{x(t)\}(j\Omega)&=\int_{-\infty}^\infty x(t)\exp\left(-j\Omega t\right)dt\label{eq:ft}\\
+            x(t)=\mathcal{IFT}\{X(j\Omega)\}(t)&=\frac{1}{2\pi}\int_{-\infty}^\infty X(j\Omega)\exp\left(j\Omega t\right)d\Omega\label{eq:ift}
+        \end{align}
+
+        Then
+
+        \begin{align}
+            \mathcal{FT}\left\{X(jt)\right\}(j\Omega)&=\int_{-\infty}^\infty X(jt)\exp\left(-j\Omega t\right)dt\label{eq:dualityFT1}\\
+                                                     &=2\pi\left(\frac{1}{2\pi}\int_{-\infty}^\infty X(jt)\exp\left(jt(-\Omega)\right)dt\right)\label{eq:dualityFT2}\\
+                                                     &=2\pi\;x(-\Omega)\label{eq:dualityFT3}
+        \end{align}
+
+        Notes:
+
+        \begin{enumerate}
+
+            \item in Eq.~\ref{eq:dualityFT1} we applied the Fourier transform (Eq.~\ref{eq:ft}) to the complex signal $X(jt)$
+
+            \item in Eq.~\ref{eq:dualityFT3} we used the inverse Fourier
+                transform (Eq.~\ref{eq:ift}) with the change of variables
+                $\Omega$ in Eq.~\ref{eq:ift} to $t$ in Eq.~\ref{eq:dualityFT2}
+                and $t$ in Eq.~\ref{eq:ift} to $-\Omega$ in
+                Eq.~\ref{eq:dualityFT2}.
+
+        \end{enumerate}
+    \end{proof}
+
+    \begin{comment}
+In Exercise~1, for $i=1,\ldots,1000$, we generated samples from random variables
+$\{x_{(i,1)},\ldots,x_{(i,10000)}\}$, from these samples we computed a t-statistic
+$t_i=f(x_{(i,1)},\ldots,x_{(i,10000)})$, and from this statistic we calculated a
+p-value, $p_i=g(t_i)$. Because the t-statistic is a function, $f$, of random
+variables, it can be considered as a random variable, $T$. Because the
+p-value is a function, $g$, of a random variables, it can also be considered as
+a random variable, $P$. The goal of this section is to prove that the p-value random
+variable is uniformly distributed in [0,1]; i.e., $P\sim\mathcal{U}[0,1]$. This
+proof is given in Lemma~\ref{lemma:p_values_uniform01}. Before giving this
+proof we prove two auxiliary claims (Claims~\ref{claim:pvalue_as_function_of_stat}
+and~\ref{claim:uniform_cummulative}).
+
+Fig.~\ref{fig:pvalue} illustrates the concept of a p-value. It is the
+probability of observing a statistic, $t$, greater than the observed one,
+$t_\text{obs}$, when the null hypothesis is true.
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\fig_width]{../figures/pvalue.png}
+
+        \caption{Illustration of the p-value concept. A p-value is the
+        probability of observing a statistic, $t$, greater than the observed
+        one, $t_\text{obs}$, when the null hypothesis is true.}
+        \label{fig:pvalue}
+
+    \end{center}
+\end{figure}
+
+\begin{claim}
+
+    Let $P$ be the p-values random variable, $T$ be the t-statistic random
+    variable, and $F_T$ be the cumulative distribution function of $T$. Then
+    $P=1-F_T(T)$
+    \label{claim:pvalue_as_function_of_stat}
+
+\end{claim}
+
+\begin{proof}
+    Let $t_{\text{obs},i}$ and $p_i$ be an observed statistic and associated
+    p-value, respectively. Then,
+
+    \begin{align}
+        p_i=P(T>t_{\text{obs},i})=1-P(T<t_{\text{obs},i})=1-F_T(t_{\text{obs},i})\label{eq:pvalue_claim_tmp1}
+    \end{align}
+
+    The first equality in Eq.~\ref{eq:pvalue_claim_tmp1} follows from the
+    definition of a p-value (Fig~\ref{fig:pvalue}). Because
+    $p_i=1-F_T(t_{\text{obs},i})$ holds for any pair of samples $p_i$
+    and $t_{\text{obs},i}$, then $P=1-F_T(T)$.
+\end{proof}
+
+\begin{claim}
+
+    A random variable $U$ is uniformly distributed in [0,1]; i.e.,
+    $U\sim\mathcal{U}[0,1]$, if and only if its cumulative distribution
+    function is $F_U(u)=P(U<u)=u$, for $u\in[0,1]$.
+    \label{claim:uniform_cummulative}
+
+\end{claim}
+
+\begin{proof}
+
+    \begin{align}
+        U\sim\mathcal{U}[0,1] &\iff f_U(u)=1 \text{ for } u\in[0,1] \text{ and } f_U(u)=0 \text{ elsewhere } \\
+                              &\iff F_U(u)=P(U<u)=\int_0^pf_U(u)dp=u\text{, for }u\in[0,1].
+    \end{align}
+
+\end{proof}
+
+\begin{lemma}
+
+    When the null hypothesis holds, p-values are uniformly distributed in
+    $[0,1]$; i.e., $P\sim\mathcal{U}[0,1]$.
+    \label{lemma:p_values_uniform01}
+\end{lemma}
+
+\begin{proof}
+    By Claim~\ref{claim:uniform_cummulative} it suffices to show that $F_P(p)=p$.
+
+    \begin{align}
+        F_P(p)&=P(P<p)=P(1-F_T(T)<p)=P(1-p<F_T(T))\label{eq:lemmaUniformPvaluesLine1}\\
+              &=P(T>F_T^{-1}(1-p))=1-P(T<F_T^{-1}(1-p))\nonumber\\
+              &=1-F_T(F_T^{-1}(1-p))=1-(1-p)=p\nonumber
+    \end{align}
+
+Note: the second equality in Eq.~\ref{eq:lemmaUniformPvaluesLine1} follows
+from Claim~\ref{claim:pvalue_as_function_of_stat}.
+
+\end{proof}
+
+\section{Central limit theorem}
+\label{sec:clt}
+
+The central limit theorem demonstrates that, under certain conditions, the
+distribution of the mean of a sufficiently large number of random samples
+is Normally distributed. Precisely:
+
+\begin{theorem}[Central Limit Theorem]
+
+If $X_{1},X_{2},\dots ,X_{n},\dots$ are random samples drawn from a population
+    with overall mean $\mu$ and finite variance $\sigma^{2}$and if $\bar
+    {X}_{n}$ is the sample mean of the first $n$ samples, then the limiting
+    form of the distribution,
+    $Z=\lim_{n\to\infty}\left(\frac{\bar{X}_{n}-\mu}{\sigma_{\bar{X}}}\right)$,
+    with $\sigma _{\bar{X}}=\sigma/\sqrt{n}$, is a standard normal
+    distribution\footnote{\url{https://en.wikipedia.org/wiki/Central_limit_theorem}}.
+
+\end{theorem}
+
+For $n=10,000$ we expect that the distribution of the sample mean closely
+follows a Normal distribution.
+
+The t statistic, i.e., $t=\frac{\bar{X}_n-\mu}{S_n}$, depends on the samples
+only through the sample mean, i.e., $\bar{X}_n$, and the sample standard
+deviation, i.e.,
+$S_n=\sqrt{\frac{1}{n-1}\sum_{i=1}^n\left(x_i-\bar{X}_n\right)^2}$.  For
+simplicity of explanation, we ignore the dependence on the sample standard
+deviation.
+
+With this simplification, the t-statistic depends on the samples only though
+the sample mean. For sufficiently large $n$, by the central limit theorem, the
+mean of samples from most distributions will be Normally distributed, as
+required by the t-test. Thus, we expect that, for large samples, the t-test
+works correctly for samples from most distributions.
+
+The central limit theorem holds to the Rademacher distribution and, as shown in
+Fig.~\ref{fig:cltExamples}a, the distribution of the mean of 10,000 Rademacher
+samples follows a Normal distribution. This explain why the t-test worked well
+for the samples of 10,000 Rademacher random variables in exercise~1d
+(Fig.~\ref{fig:ex1d}a).
+%
+However, the central limit theorem does not hold for the standard Cauchy
+distribution, since this theorem requires finite
+variance and variance is not defined for the standard Cauchy distribution. As
+shown in Fig.~\ref{fig:cltExamples}b, the distribution of the mean of 10,000
+standard Cauchy samples does not follows a Normal distribution.
+This explains why the t-test was not robust to the use of 10,000 standard
+Cauchy samples in exercise~1c (Fig.~\ref{fig:ex1c}a).
+
+Fig.~\ref{fig:cltExamples}b shows that the distribution of the mean of 10,000
+standard Cauchy samples is well approximated by the standard Cauchy
+distribution, as expected by Lemma~\ref{lemma:samleMeanOfStdCauchyIsStdCauchy}.
+
+\begin{figure}[H]
+    \begin{center}
+
+        \begin{subfigure}{1.0\textwidth}
+            \centering
+            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/checkCLT_distributionRademacher_nSamples10000.html}{\includegraphics[width=\fig_width]{../figures/checkCLT_distributionRademacher_nSamples10000.png}}
+
+            \caption{Rademacher samples}
+
+            \label{fig:cltExamples_1}
+        \end{subfigure}
+
+        \begin{subfigure}{1.0\textwidth}
+            \centering
+            \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws1/figures/checkCLT_distributionStdCauchy_nSamples10000.html}{\includegraphics[width=\fig_width]{../figures/checkCLT_distributionStdCauchy_nSamples10000.png}}
+
+            \caption{Standard Cauchy}
+
+            \label{fig:cltExamples_2}
+        \end{subfigure}
+
+        \caption{Central limit theorem examples. The central limit theorem
+        applies to the Rademacher distribution, and panel (a) shows that a
+        histogram of 10,000 samples from this distribution is well
+        approximated by a Normal density with mean 0 and standard deviation
+        $\sigma=\frac{1}{\sqrt{10,000}}$. The central limit theorem does not
+        apply to the standard Cauchy distribution, and panel (b) shows that a
+        histogram of 10,000 samples from this distribution is not well
+        approximated by a Normal density with mean 0 and standard deviation
+        equal to the sample standard deviation. This histogram is well
+        approximated by a Standard Cauchy density, as expected by
+        Lemma~\ref{lemma:samleMeanOfStdCauchyIsStdCauchy}.
+        %
+        The script to generate this figure appears
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doCheckCLT.py}{here}
+        and the parameters used for this script appear
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws1/mySolution/code/scripts/doCheckCLT.csh}{here}.
+        }
+
+        \label{fig:cltExamples}
+
+    \end{center}
+
+\end{figure}
+
+\begin{lemma}
+    If $X_1,\ldots,X_n$ are iid Standard Cauchy random variables, then
+    $\bar{X}_n=\frac{1}{n}\sum_{i=1}^nX_i$ is also Standard Cauchy.
+    \label{lemma:samleMeanOfStdCauchyIsStdCauchy}
+\end{lemma}
+\begin{proof}
+
+    We will show that the characteristic function of the mean of Standard
+    Cauchy iid random variables, i.e., $\varphi_{\bar{X}_n}(t)$, equals the
+    characteristic function of a Standard Cauchy random variable, i.e.,
+    $\varphi_X(t)=e^{-|t|}$\footnote{\url{https://en.wikipedia.org/wiki/Cauchy_distribution}}.
+    Then, because the characteristic function uniquely specifies a random
+    variable, we conclude that this mean is a Standard Cauchy random variable.
+
+    \begin{align}
+        \varphi_{\bar{X}_n}(t)&=E\left\{e^{j\bar{X}_nt}\right\}=E\left\{\prod_{i=1}^ne^{\frac{jX_it}{n}}\right\}=\prod_{i=1}^nE\left\{e^{\frac{jX_it}{n}}\right\}=\prod_{i=1}^ne^{-\frac{|t|}{n}}=\left(e^{-\frac{|t|}{n}}\right)^n=e^{-|t|}
+    \end{align}
+    Notes:
+    \begin{enumerate}
+
+        \item the first equality follows from the definition of the
+            characteristic function,
+
+        \item the second equality uses the property that the exponential of
+            sums is a product of exponentials,
+
+        \item the third equality is a consequence of the Independence of the
+            random variables,
+
+        \item the fourth equality follows from the characteristic function of a
+            Cauchy random variable, i.e., $\varphi_X(t)=e^{-|t|}$, evaluated at
+            $\frac{t}{n}$.
+    \end{enumerate}
+
+\end{proof}
+    \end{comment}
+\end{appendices}
+
+\bibliographystyle{apalike}
+\bibliography{signalProcessing}
+
+\end{document}

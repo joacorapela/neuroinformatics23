@@ -14,6 +14,9 @@ def main(argv):
 
     parser.add_argument("--pid", type=str, help="probed ID",
                         default="38124fca-a0ac-4b58-8e8b-84a2357850e6")
+    parser.add_argument("--selected_channels", type=str,
+                        help="selected channels to plot",
+                        default="[0,16,32,48,64,80,96,112,128,144,160,176,192,208,224,240,256,272,288,304,320,336,352,368]")
     parser.add_argument("--start_time", type=float,
                         help="plotting start time (sec)", default=0.0)
     parser.add_argument("--duration", type=float,
@@ -28,14 +31,11 @@ def main(argv):
                         default="probe ID: {:s}")
     parser.add_argument("--fig_filename_pattern", type=str,
                         help="figure filename pattern",
-                        default="../../figures/lfp_selected_channels_pid_{:s}.{:s}")
+                        default="../../figures/lfp_selected_channels_{:s}_pid_{:s}.{:s}")
     args = parser.parse_args()
 
-    from_time_lfp = 0.0
-    to_time_lfp = 5.0
-    channel_selection_spacing = 16
-
     pid = args.pid
+    selected_channels = args.selected_channels[1:-1].split(",")
     start_time = args.start_time
     duration = args.duration
     plot_channel_spacing = args.plot_channel_spacing 
@@ -44,13 +44,15 @@ def main(argv):
     title_pattern = args.title_pattern
     fig_filename_pattern = args.fig_filename_pattern
 
+    selected_channels_str = "_".join(selected_channels)
+    selected_channels = [int(value) for value in selected_channels]
+    breakpoint()
     title = title_pattern.format(pid)
-    band = "lf"
 
     aOne = one.api.ONE(base_url="https://openalyx.internationalbrainlab.org",
                        password="international", silent=True)
     sr = brainbox.io.spikeglx.Streamer(pid=pid, one=aOne, remove_cached=False,
-                                       typ=band)
+                                       typ="lf")
     # extract channel location acronyms for hover
     eID, probe_label = aOne.pid2eid(pid=pid)
     els = brainbox.io.one.load_channel_locations(eID, one=aOne)
@@ -67,7 +69,6 @@ def main(argv):
     samples = np.arange(start_time*sr.fs, (start_time+duration)*sr.fs,
                         dtype=int)
     times = samples/sr.fs
-    selected_channels = np.arange(0, n_channels, plot_channel_spacing)
     fig = go.Figure()
     for i, selected_channel in enumerate(selected_channels):
         hovertext = [None] * len(times)
@@ -82,8 +83,8 @@ def main(argv):
     fig.update_yaxes(title_text=y_label, showticklabels=False)
     fig.update_layout(title=title)
 
-    fig.write_image(fig_filename_pattern.format(pid, "png"))
-    fig.write_html(fig_filename_pattern.format(pid, "html"))
+    fig.write_image(fig_filename_pattern.format(selected_channels_str, pid, "png"))
+    fig.write_html(fig_filename_pattern.format(selected_channels_str, pid, "html"))
 
     fig.show()
 

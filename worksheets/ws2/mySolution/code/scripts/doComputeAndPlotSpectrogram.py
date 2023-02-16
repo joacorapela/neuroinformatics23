@@ -60,7 +60,6 @@ def main(argv):
     els = brainbox.io.one.load_channel_locations(eID, one=aOne)
     channel_locs_acronyms = els[probe_label]["acronym"]
 
-    # Important: remove sync channel from raw data, and transpose
     channel_lfp = sr[0:sr.ns, channel_nro]*1000
     n_samples = len(channel_lfp)
     print(f"Data has {n_samples} samples")

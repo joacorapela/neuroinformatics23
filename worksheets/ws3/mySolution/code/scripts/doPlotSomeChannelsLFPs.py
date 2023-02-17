@@ -46,7 +46,6 @@ def main(argv):
 
     selected_channels_str = "_".join(selected_channels)
     selected_channels = [int(value) for value in selected_channels]
-    breakpoint()
     title = title_pattern.format(pid)
 
     aOne = one.api.ONE(base_url="https://openalyx.internationalbrainlab.org",
@@ -77,7 +76,8 @@ def main(argv):
         print(f"Processing channel {i} ({len(selected_channels)})")
         trace = go.Scatter(x=times, y=lfp[selected_channel, samples]*1000+i,
                            hoverinfo="text", text=hovertext,
-                           name=f"{selected_channel} {channel_locs_acronyms[selected_channel]}")
+                           name=f"{selected_channel} ({channel_locs_acronyms[selected_channel]})",
+                          )
         fig.add_trace(trace)
     fig.update_xaxes(title_text=x_label)
     fig.update_yaxes(title_text=y_label, showticklabels=False)
@@ -86,9 +86,9 @@ def main(argv):
     fig.write_image(fig_filename_pattern.format(selected_channels_str, pid, "png"))
     fig.write_html(fig_filename_pattern.format(selected_channels_str, pid, "html"))
 
-    fig.show()
+    # fig.show()
 
-    breakpoint()
+    # breakpoint()
 
 
 if __name__ == "__main__":

@@ -32,12 +32,12 @@ Figure~\ref{fig:lfpSelectedChannels1} shows the LFP for a few selected channels.
 
 \begin{figure}[H]
     \begin{center}
-        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws3/figures/lfp_selected_channels_38124fca-a0ac-4b58-8e8b-84a2357850e6_pid_0_16_32_48_64_80_96_112_128_144_160_176_192_208_224_240_256_272_288_304_320_336_352_368.html}{\includegraphics[width=5.5in]{../figures/lfp_selected_channels_38124fca-a0ac-4b58-8e8b-84a2357850e6_pid_0_16_32_48_64_80_96_112_128_144_160_176_192_208_224_240_256_272_288_304_320_336_352_368.png}}
-        \caption{Exercise 1. LFP of selected channels.
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws3/figures/lfp_selected_channels_0_16_32_48_64_80_96_112_128_144_160_176_192_208_224_240_256_272_288_304_320_336_352_368_pid_38124fca-a0ac-4b58-8e8b-84a2357850e6.html}{\includegraphics[width=5.5in]{../figures/lfp_selected_channels_0_16_32_48_64_80_96_112_128_144_160_176_192_208_224_240_256_272_288_304_320_336_352_368_pid_38124fca-a0ac-4b58-8e8b-84a2357850e6.png}}
+        \caption{LFP of selected channels.
                 The script to generate
                 this figure appears
                 \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doPlotSomeChannelsLFPs.py}{here}
-                and the parameters used for this script appear
+                and the parameters used with this script appear
                 \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doPlotSomeChannelsLFPs.csh}{here}.
                 Click on the figure to view its interactive version.
                 }
@@ -56,14 +56,15 @@ channels.
     \begin{center}
         \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws3/figures/welchPxx_segmentLength_4096_pid_38124fca-a0ac-4b58-8e8b-84a2357850e6.html}{\includegraphics[width=5.5in]{../figures/welchPxx_segmentLength_4096_pid_38124fca-a0ac-4b58-8e8b-84a2357850e6.png}}
 
-        \caption{Exercise 2. Power spectrum of all channels. To overcome memory
+        \caption{Power spectrum of all channels. To overcome memory
         problems related from retrieving large LFPs, we estimated this power
         spectrum using only 600~seconds of LFPs. We used the Welch method (as
         implemented in the Python function \texttt{scipy.signal.pwelch}) with a
         window of length 4096 samples, or 1.64 seconds, giving a frequency
         resolution of $1/1.64=0.61$~Hz (\texttt{scipy.signal.pwelch} parameter
-        \texttt{nperseg}=4096). The script to generate this figure appears
-        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doPlotWelchPxxAllChannels.py}{here}.
+        \texttt{nperseg}=4096). We generated this figure using
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doPlotWelchPxxAllChannels.py}{this}
+        script, with its default parameters.
         Click on the figure to view its interactive version.  }
 
                 \label{fig:pxxAllChannels}
@@ -77,28 +78,32 @@ $\mathtt{data\_len\_sec}$ is the length of the data (in seconds) used to
 calculate the Fourier transform. Because the Welch method to estimate the power
 spectrum computes the Fourier transform using data of the length of its window,
 to obtain a frequency resolution less than 1~Hz, we need a window of length
-greater than one second, or greater than $sr.fs=2.500$ samples.
+greater than one second, or greater than $sr.fs=2.500$ samples. We used 4,096
+samples to estimate the power spectrums in Figure~\ref{fig:pxxAllChannels}.
 
 We see large power around 7~Hz (theta band) in electrodes in the dentate gyrus.
 Oscillations in the theta range in the dentate gyrus have been previously
-reported~\citep{rangelEtAl15}.
+reported~\citep[e.g.,][]{rangelEtAl15}.
 
-We observe stripes of high power at multiples of 50~Hz, which most probably
-correspond to contamination of the recordings by the AC power line, which in
-the UK operates at 50~Hz. We see high power stripes at multiples of 50~Hz
-(harmonics of 50~Hz) because, as proved in
-Lemma~\ref{lemma:ftContPeriodicSignal} in the appendix, the Fourier representation of a
-periodic continuous signal is a scaled set of delta functions at multiples of
-the frequency of the periodic signal.
+We observe stripes of high power at multiples of 50~Hz, that correspond to
+contamination of the recordings by the AC power line, which in the UK operates
+at 50~Hz. Why do we see high power stripes at multiples of 50~Hz (i.e., 100~Hz
+or 150~Hz)? This is because, as proved in
+Lemma~\ref{lemma:ftContPeriodicSignal} in the appendix, the Fourier
+representation of a periodic continuous signal (like the AC current) is a
+scaled set of delta functions at multiples of the frequency of the periodic
+signal.
 
 \section*{Exercise 3: spectrogram}
 
-Figure~\ref{fig:spectrogramChannel250} shows the spectrogram for channel 250.
+Figure~\ref{fig:spectrogramChannel250} shows the spectrogram for channel 250,
+calculated with LFP data of length 1,000~seconds, starting at time 4,500~seconds.`
 
 To overcome the memory problem related to loading large LFP data (i.e.,
-multiple channels and long duration), we estimated spectrogram on windows of
-length 1.000 seconds. We only found evidence of power line contamination in a
-window starting at 4,500 seconds.
+multiple channels and long duration), we estimated several spectrograms, with
+different start times, on windows of
+length 1.000 seconds. We only found evidence of power line contamination in the
+spectrogram calculated with LFP data starting at time of 4,500~seconds.
 
 \begin{figure}[H]
     \begin{center}
@@ -106,12 +111,14 @@ window starting at 4,500 seconds.
 
 
 
-        \caption{Exercise 3. Spectrogram of channel 250 from 4,500 to 5,500
-        seconds. Estimation was done
+        \caption{Spectrogram of channel 250 calculated from LFP data between
+        4,500 and 5,500~seconds. Estimation was done
         using the method \texttt{scipy.signal.spectrogram} with a window length
-        of $\mathtt{nperseg}=2^14\ \text{samples}=6.55\ \text{seconds}$.
+        of \texttt{nperseg}=16,384~samples=6.55~seconds.
         The script to generate this figure appears
-        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doComputeAndPlotSpectrogram.py}{here}.
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doComputeAndPlotSpectrogram.py}{here},
+        and the parameters used with this script appear
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doComputeAndPlotSpectrogram.csh}{here}
         Click on the figure to view its interactive version.  }
 
                 \label{fig:spectrogramChannel250}
@@ -132,15 +139,16 @@ multiple channels and long duration), we used a computer with very large RAM mem
 
 
 
-        \caption{Exercise 4. Comodugram for channel 250 from 0 to 5,500
-        seconds. Estimation was done by first computing the spectrogram
-        using the method \texttt{scipy.signal.spectrogram} with a window length
-        of $\mathtt{nperseg}=8,192\ \text{samples}=3.28\ \text{seconds}$ and the
-        calculating the Pearson correlation coefficient between power at different
-        frequencies using function \texttt{np.corrcoef}.
-        The script to generate this figure appears
-        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doPlotComodugram.py}{here}.
-        Click on the figure to view its interactive version.  }
+        \caption{Comodugram for channel 250. Estimation was done using
+        5,500~seconds of LFP data, starting at time zero. We first computed the
+        spectrogram using the method \texttt{scipy.signal.spectrogram} with a
+        window length of \texttt{nperseg}=8,192 samples=3.28 seconds, and then
+        calculated the Pearson correlation coefficient between power at
+        different frequencies using function \texttt{np.corrcoef}.  We
+        generated this figure with
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doPlotComodugram.py}{this}
+        script using its default parameters.  Click on the figure to view its
+        interactive version.  }
 
                 \label{fig:comodugramChannel250}
 
@@ -161,10 +169,12 @@ channel 250 and the other channels.
     \begin{center}
         \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws3/figures/coh_startTime_0.00_duration_10.00_segmentLen_-1_pid_38124fca-a0ac-4b58-8e8b-84a2357850e6_channel_250.html}{\includegraphics[width=5.5in]{../figures/coh_startTime_0.00_duration_10.00_segmentLen_-1_pid_38124fca-a0ac-4b58-8e8b-84a2357850e6_channel_250.png}}
 
-        \caption{Exercise 5. Coherence between channel 250 and other channels.
-        Estimation was done using the method \texttt{scipy.signal.coherence}.
-        The script to generate this figure appears
-        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doPlotCoherence.py}{here}.
+        \caption{Coherence between channel 250 and the other channels.
+        Estimation was done using 10~seconds of LFP data, starting at time 0,
+        with the method \texttt{scipy.signal.coherence}.
+        We genererated this figure with
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doPlotCoherence.py}{this}
+        script, using its default parameters.
         Click on the figure to view its interactive version.}
 
                 \label{fig:coherenceChannel250WithOthers}
@@ -187,11 +197,12 @@ channel 250 and the other channels.
     \begin{center}
         \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws3/figures/csdAngle_startTime_0.00_duration_600.00_segmentLen_-1_pid_38124fca-a0ac-4b58-8e8b-84a2357850e6_channel_250.html}{\includegraphics[width=5.5in]{../figures/csdAngle_startTime_0.00_duration_600.00_segmentLen_-1_pid_38124fca-a0ac-4b58-8e8b-84a2357850e6_channel_250.png}}
 
-        \caption{Exercise 6. Cross-spectrum phase between channel 250 and other
+        \caption{Cross-spectrum phase between channel 250 and the other
         channels. Estimation was done using the method
         \texttt{scipy.signal.csd} in a time window of 600 seconds starting at
-        time zero.  The script to generate this figure appears
-        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doPlotCrossSpectrumPhase.py}{here}.
+        time zero.  We generated this figure with 
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doPlotCrossSpectrumPhase.py}{this}
+        script, using its default parameters.
         Click on the figure to view its interactive version.}
 
         \label{fig:crossSpectrumPhaseChannel250WithOthers}
@@ -219,14 +230,14 @@ with channel 300, as also shown in Figure~\ref{fig:lfpSelectedChannels2}.
     \begin{center}
         \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws3/figures/lfp_selected_channels_170_200_250_300_pid_38124fca-a0ac-4b58-8e8b-84a2357850e6.html}{\includegraphics[width=5.5in]{../figures/lfp_selected_channels_170_200_250_300_pid_38124fca-a0ac-4b58-8e8b-84a2357850e6.png}}
 
-        \caption{Exercise 6. LFP of channels 170, 200, 250 and 300. These LFPs
-        corroborate agree with
+        \caption{LFP of channels 170, 200, 250 and 300. These LFPs agree with
         Figure~\ref{fig:crossSpectrumPhaseChannel250WithOthers} in that the LFP
-        at channel
-        250 should have opposite phase than that at channel 200 and 300, but
-        similar phase than the LFP at channel 170.
-        The script to generate this figure appears
-        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doPlotSomeChannelsLFPs.py}{here}.
+        at channel 250 has opposite phase than that at channel 200 and 300, but
+        similar phase than the LFP at channel 170.  The script used to generate
+        this figure appears
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doPlotSomeChannelsLFPs.py}{here}
+        and the parameters used with this script appear
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws3/mySolution/code/scripts/doPlotSomeChannelsLFPs.csh}{here}.
         Click on the figure to view its interactive version.}
 
         \label{fig:lfpSelectedChannels2}

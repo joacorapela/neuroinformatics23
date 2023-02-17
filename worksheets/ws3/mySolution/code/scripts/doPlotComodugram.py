@@ -17,9 +17,9 @@ def main(argv):
     parser.add_argument("--pid", type=str, help="probed ID",
                         default="38124fca-a0ac-4b58-8e8b-84a2357850e6")
     parser.add_argument("--start_time", type=float,
-                        help="LFP extraction start time (sec)", default=4500.0)
+                        help="LFP extraction start time (sec)", default=0.0)
     parser.add_argument("--duration", type=float,
-                        help="LFP extraction duration (sec)", default=1000.0)
+                        help="LFP extraction duration (sec)", default=5500.0)
     parser.add_argument("--channel_nro", type=int,
                         help="channel number for comodugram calculation",
                         default=250)

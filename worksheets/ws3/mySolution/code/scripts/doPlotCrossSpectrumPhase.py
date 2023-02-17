@@ -24,7 +24,7 @@ def main(argv):
     parser.add_argument("--start_time", type=float,
                         help="plotting start time (sec)", default=0.0)
     parser.add_argument("--duration", type=float,
-                        help="signal duration (sec)", default=10.0)
+                        help="signal duration (sec)", default=600.0)
                         # help="signal duration (sec)", default=3.0)
     parser.add_argument("--segment_len", type=int,
                         help="Segement length (samples)", default=-1)
@@ -122,6 +122,9 @@ def main(argv):
     elapsed_time = time.time() - t0
     print(f"elapsed_time: {elapsed_time}")
 
+    fig.write_image(fig_filename_pattern.format(start_time, duration,
+                                               segment_len, pid, channel_nro,
+                                               "png"))
     fig.write_html(fig_filename_pattern.format(start_time, duration,
                                                segment_len, pid, channel_nro,
                                                "html"))

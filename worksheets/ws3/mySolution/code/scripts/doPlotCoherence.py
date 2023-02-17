@@ -118,6 +118,9 @@ def main(argv):
     elapsed_time = time.time() - t0
     print(f"elapsed_time: {elapsed_time}")
 
+    fig.write_image(fig_filename_pattern.format(start_time, duration,
+                                               segment_len, pid, channel_nro,
+                                               "png"))
     fig.write_html(fig_filename_pattern.format(start_time, duration,
                                                segment_len, pid, channel_nro,
                                                "html"))

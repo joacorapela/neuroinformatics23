@@ -21,7 +21,7 @@ def main(argv):
     parser.add_argument("--duration", type=float,
                         help="LFP extraction duration (sec)", default=1000.0)
     parser.add_argument("--channel_nro", type=int,
-                        help="channel number for spectrogram calculation",
+                        help="channel number for comodugram calculation",
                         default=250)
     parser.add_argument("--segment_len", type=int,
                         help="Segement length (samples)", default=2**13)
@@ -115,13 +115,14 @@ def main(argv):
     elapsed_time = time.time() - t0
     print(f"elapsed_time: {elapsed_time}")
 
-    # fig.write_image(fig_filename_pattern.format(segment_len, pid, channel_nro, "png"))
+    fig.write_image(fig_filename_pattern.format(segment_len, pid, channel_nro, 
+                                                start_time, duration, "png"))
     fig.write_html(fig_filename_pattern.format(segment_len, pid, channel_nro,
                                                start_time, duration, "html"))
 
-    fig.show()
+    # fig.show()
 
-    breakpoint()
+    # breakpoint()
 
 
 if __name__ == "__main__":

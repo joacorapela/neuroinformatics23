@@ -56,9 +56,9 @@ channels.
     \begin{center}
         \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws3/figures/welchPxx_segmentLength_4096_pid_38124fca-a0ac-4b58-8e8b-84a2357850e6.html}{\includegraphics[width=5.5in]{../figures/welchPxx_segmentLength_4096_pid_38124fca-a0ac-4b58-8e8b-84a2357850e6.png}}
 
-        \caption{Power spectrum of all channels. To overcome memory
-        problems related from retrieving large LFPs, we estimated this power
-        spectrum using only 600~seconds of LFPs. We used the Welch method (as
+        \caption{Power spectrum of all channels, estimated from 600~seconds of
+        LFPs.
+        We used the Welch method (as
         implemented in the Python function \texttt{scipy.signal.pwelch}) with a
         window of length 4096 samples, or 1.64 seconds, giving a frequency
         resolution of $1/1.64=0.61$~Hz (\texttt{scipy.signal.pwelch} parameter

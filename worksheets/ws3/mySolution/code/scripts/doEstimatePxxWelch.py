@@ -15,9 +15,9 @@ def main(argv):
     parser.add_argument("--pid", type=str, help="probed ID",
                         default="da8dfec1-d265-44e8-84ce-6ae9c109b8bd")
     parser.add_argument("--start_time", type=float,
-                        help="plotting start time (sec)", default=100.0)
+                        help="lfp start time (sec) for estimating the power spectrum", default=100.0)
     parser.add_argument("--duration", type=float,
-                        help="plotting duration (sec)", default=10.0)
+                        help="duration (sec) for estimating the power spectrum", default=10.0)
     parser.add_argument("--segment_length", type=int,
                         help="Welch segement length", default=256)
     parser.add_argument("--channel_to_plot", type=int,
@@ -54,11 +54,11 @@ def main(argv):
     tsel = slice(int(s0), int(s0) + int(duration * sr.fs))
 
     # Important: remove sync channel from raw data, and transpose
-    lfp = sr[tsel, :-sr.nsync].T
-    n_channels, n_samples = lfp.shape
+    lfp = sr[tsel, :-sr.nsync]
+    n_samples, n_channels = lfp.shape
     print(f"Data has {n_channels} channels and {n_samples} samples")
 
-    f, Pxx = scipy.signal.welch(x=lfp[channel_to_plot, :]*1000, fs=sr.fs,
+    f, Pxx = scipy.signal.welch(x=lfp[:, channel_to_plot]*1000, fs=sr.fs,
                                 nperseg=segment_length, scaling="spectrum")
 
     fig = go.Figure()

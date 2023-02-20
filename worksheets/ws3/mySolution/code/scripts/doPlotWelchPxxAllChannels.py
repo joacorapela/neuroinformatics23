@@ -17,11 +17,11 @@ def main(argv):
     parser.add_argument("--pid", type=str, help="probed ID",
                         default="38124fca-a0ac-4b58-8e8b-84a2357850e6")
     parser.add_argument("--start_time", type=float,
-                        help="plotting start time (sec)", default=0.0)
+                        help="lfp start time (sec) for estimating the power spectrum", default=0.0)
     parser.add_argument("--duration", type=float,
-                        help="plotting duration (sec)", default=600.0)
+                        help="duration (sec) for estimating the power spectrum", default=600.0)
     parser.add_argument("--segment_length", type=int,
-                        help="Welch segement length", default=2048)
+                        help="Welch segement length", default=4096)
     parser.add_argument("--n_ticks", type=int,
                         help="nunmber of ticks in colorbar", default=6)
     parser.add_argument("--colorscale", type=str, help="colorscale",

@@ -1,4 +1,4 @@
-all: rapela_ws2.pdf
+all: rapela_ws3.pdf
 
 
 %.pdf: %.tex

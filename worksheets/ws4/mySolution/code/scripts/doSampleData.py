@@ -17,7 +17,9 @@ def main(argv):
                         help="location slope coefficient", default=2*np.pi)
     parser.add_argument("--results_filename_pattern", type=str,
                         help="results filename pattern",
-                        default="../../results/data_nSamples_{:d}_kappa_{:.02f}_locIntercept_{:.02f}_locSlope_{:02f}.csv")
+                        default=("../../results/data_nSamples_{:d}_"
+                                 "kappa_{:.02f}_locIntercept_{:.02f}_"
+                                 "locSlope_{:02f}.csv"))
     args = parser.parse_args()
 
     n_samples = args.n_samples
@@ -35,7 +37,6 @@ def main(argv):
     results_filename = results_filename_pattern.format(
         n_samples, kappa, loc_intercept, loc_slope)
     np.savetxt(results_filename, results)
-
 
 
 if __name__ == "__main__":

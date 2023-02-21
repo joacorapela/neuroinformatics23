@@ -11,7 +11,7 @@ def main(argv):
 
     parser.add_argument("--n_resamples", type=int,
                         help="number of resamples for permutation test",
-                        default=100)
+                        default=1000)
     parser.add_argument("--n_samples", type=int, help="number of samples",
                         default=1000)
     parser.add_argument("--kappa", type=float, help="kappa", default=1.0)
@@ -24,18 +24,24 @@ def main(argv):
                               "(e.g., 95.0)"), default=95.0)
     parser.add_argument("--n_bins", type=int, help="number of bins",
                         default=20)
+    parser.add_argument("--n_xs", type=int, help="number of x values",
+                        default=10)
     parser.add_argument("--results_filename_pattern", type=str,
                         help="results filename pattern",
                         default=("../../results/lwllPermutationTest_"
                                  "nSamples_{:d}_kappa_{:.02f}_"
                                  "locIntercept_{:.02f}_"
-                                 "locSlope_{:02f}_nResamples_{:d}.pickle"))
+                                 "locSlope_{:02f}_"
+                                 "nXs_{:d}_"
+                                 "nResamples_{:d}.pickle"))
     parser.add_argument("--fig_filename_pattern", type=str,
                         help="figure filename pattern",
                         default=("../../figures/lwllPermutationTest_"
                                  "nSamples_{:d}_kappa_{:.02f}_"
                                  "locIntercept_{:.02f}_"
-                                 "locSlope_{:02f}_nResamples_{:d}_"
+                                 "locSlope_{:02f}_"
+                                 "nXs_{:d}_"
+                                 "nResamples_{:d}_"
                                  "nBins_{:d}.{:s}"))
     args = parser.parse_args()
 
@@ -46,12 +52,13 @@ def main(argv):
     loc_slope = args.loc_slope
     percentile_percent = args.percentile_percent
     n_bins = args.n_bins
+    n_xs = args.n_xs
     results_filename_pattern = args.results_filename_pattern
     fig_filename_pattern = args.fig_filename_pattern
 
     results_filename = results_filename_pattern.format(n_resamples, kappa,
                                                        loc_intercept,
-                                                       loc_slope, n_resamples)
+                                                       loc_slope, n_xs, n_resamples)
     with open(results_filename, "rb") as f:
         load_res = pickle.load(f)
 
@@ -73,18 +80,20 @@ def main(argv):
                          xbins=dict(start=percentile_1, end=percentile_99,
                                     size=bin_size))
     fig.add_trace(trace)
-    fig.add_vline(x=obs_stat_value, annotation_text="observed")
+    fig.add_vline(x=obs_stat_value, annotation_text="observed",
+                  annotation_position="top left")
     fig.add_vline(x=percentile_value,
-                  annotation_text=f"{percentile_percent}% percentile")
+                  annotation_text=f"{percentile_percent}% percentile",
+                  annotation_position="top right")
     fig.update_xaxes(title_text=x_label)
     fig.update_yaxes(title_text=y_label)
     fig.update_layout(title=title)
 
     fig.write_html(fig_filename_pattern.format(
-        n_samples, kappa, loc_intercept, loc_slope, n_resamples, n_bins,
+        n_samples, kappa, loc_intercept, loc_slope, n_xs, n_resamples, n_bins,
         "html"))
     fig.write_image(fig_filename_pattern.format(
-        n_samples, kappa, loc_intercept, loc_slope, n_resamples, n_bins,
+        n_samples, kappa, loc_intercept, loc_slope, n_xs, n_resamples, n_bins,
         "png"))
     breakpoint()
 

@@ -1,0 +1,140 @@
+\documentclass[12pt]{article}
+
+\usepackage{natbib}
+\usepackage{apalike}
+\usepackage[hypertexnames=false,colorlinks=true,breaklinks]{hyperref}
+\usepackage{graphicx}
+\usepackage[shortlabels]{enumitem}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[title]{appendix}
+\usepackage[margin=1in]{geometry}
+\usepackage{verbatim}
+
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+
+\def\fig_width{3.5in}
+\title{Report worksheet 4}
+\author{Joaqu\'{i}n Rapela}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercise 1: Permutation test using locally-weighted log likelihood}
+
+I used a sum of the locally-weighted log likelihood function, \texttt{lwll},
+function values as the test statistic. This function takes three parameters:
+$x, \theta_x, \kappa_x$. I considered ten equally-spaced values of $x_i$ in [0,
+1]. For each $x_i$ I took the angles $\{\theta_j\}$ of the $x_j$'s in the
+neighbourhood of $x_i$ (i.e., of the $x_j$s such that $|x_i-x_j|<0.005$). I
+passed these angles as inputs to the function \texttt{scipy.stats.vonmises.fit}
+to estimate $\theta_{x_i}$ and $\kappa_{x_i}$. The test statistic
+\texttt{test\_lwll} I used is:
+
+\begin{align}
+    % \text{test_stat}(\{x_t,\theta_t\})=\sum_{i=1}^{10}\text{lwll}\left(\{x_t,\theta_t\}|x_i,\theta_{x_i},\kappa_{x_i}\right)
+    \text{lwll\_stat}(\{x_t,\theta_t\})=\sum_{i=1}^{10}\text{lwll}\left(\{x_t,\theta_t\}|x_i,\theta_{x_i},\kappa_{x_i}\right)
+\end{align}
+
+Given a dataset $\{x_i, \theta_i\}, i=1,\ldots,N$, I employed as shuffled dataset
+$\{x_i, \theta_{p(i)}\}$, with $\{p(1),\ldots,p(N)\}$ a permutation of
+$\{1,\ldots,N\}$.
+
+A Python implementation of \texttt{lwll\_stat} and of \texttt{lwll} can be
+found
+\href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws4/mySolution/code/scripts/utils.py}{here}
+and a script calling these functions to perform permutation tests can be found
+\href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws4/mySolution/code/scripts/doPermutationTestLWLL.py}{here}.
+To improve runtime, this script uses multiprocessing.
+
+Figure~\ref{fig:data_non_independent} plots the non-independent 
+dataset in the exercise statement and
+Figure~\ref{fig:perm_test_non_independent_data} shows the results of a
+permutation test, with 1000 resamples, on this dataset. The independence null
+hypothesis was rejected with a p-value of zero.
+
+\begin{figure}
+    \begin{center}
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws4/figures/data_nSamples_1000_kappa_1.00_locIntercept_0.00_locSlope_6.283185.html}{\includegraphics[width=4.0in]{../figures/data_nSamples_1000_kappa_1.00_locIntercept_0.00_locSlope_6.283185.png}}
+
+        \caption{Non-independent dataset in the exercise statement used to
+        calculate the permutation test in
+        Figure~\ref{fig:perm_test_non_independent_data}. To generate this
+        figure, I used
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws4/mySolution/code/scripts/doPlotSampledData.py}{this}
+        script, with its default parameters.  Click on the image to view its
+        interactive version.}
+
+        \label{fig:data_non_independent}
+
+    \end{center}
+\end{figure}
+
+\begin{figure}
+    \begin{center}
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws4/figures/lwllPermutationTest_nSamples_1000_kappa_1.00_locIntercept_0.00_locSlope_6.283185_nXs_10_nResamples_1000_nBins_20.html}{\includegraphics[width=4.0in]{../figures/lwllPermutationTest_nSamples_1000_kappa_1.00_locIntercept_0.00_locSlope_6.283185_nXs_10_nResamples_1000_nBins_20.png}}
+
+        \caption{Result from a permutation test for the non-independent dataset
+        in the exercise statement (Figure~\ref{fig:data_non_independent}). I
+        used 1000 resamples. The independence null hypothesis was rejected with
+        a p-value of zero. I performed this test using
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws4/mySolution/code/scripts/doPermutationTestLWLL.py}{this}
+        script with its default parameters. I generated this figures using
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws4/mySolution/code/scripts/doPlotPermutationTestResult.py}{this}
+        script, with its default parameters. Click on the image to view its
+        interactive version.}
+
+        \label{fig:perm_test_non_independent_data}
+
+    \end{center}
+\end{figure}
+
+Figure~\ref{fig:data_independent} plots an independent dataset, where all
+samples of $\theta$ were generated from a von Mises distribution with
+parameters $\theta=0, \kappa=1$.  Figure~\ref{fig:perm_test_independent_data}
+shows the results of a permutation test, with 1000 resamples, on this dataset.
+The independence null hypothesis was not rejected with p-value=0.427
+
+\begin{figure}
+    \begin{center}
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws4/figures/data_nSamples_1000_kappa_1.00_locIntercept_0.00_locSlope_0.000000.html}{\includegraphics[width=4.0in]{../figures/data_nSamples_1000_kappa_1.00_locIntercept_0.00_locSlope_0.000000.png}}
+
+        \caption{Independent dataset used to calculate the permutation test in
+        Figure~\ref{fig:perm_test_independent_data}.  To generate this figure,
+        I used
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws4/mySolution/code/scripts/doPlotSampledData.py}{this}
+        script, with its default parameters, except \texttt{--loc\_slope=0}.
+        Click on the image to view its interactive version.}
+
+        \label{fig:data_independent}
+
+    \end{center}
+\end{figure}
+
+\begin{figure}
+    \begin{center}
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws4/figures/lwllPermutationTest_nSamples_1000_kappa_1.00_locIntercept_0.00_locSlope_0.000000_nXs_10_nResamples_1000_nBins_20.html}{\includegraphics[width=4.0in]{../figures/lwllPermutationTest_nSamples_1000_kappa_1.00_locIntercept_0.00_locSlope_0.000000_nXs_10_nResamples_1000_nBins_20.png}}
+
+        \caption{Result from a permutation test for the independent dataset
+        (Figure~\ref{fig:data_independent}).  I
+        used 1000 resamples. The independence null hypothesis was not rejected
+        with a p-value of 0.427. I performed this test using
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws4/mySolution/code/scripts/doPermutationTestLWLL.py}{this}
+        script, with its default parameters, except by \texttt{--loc\_slope=0}.
+        I generated this figures using
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws4/mySolution/code/scripts/doPlotPermutationTestResult.py}{this}
+        script with its default parameters, except by \texttt{--loc\_slope=0}.
+        Click on the image to view its interactive version.}
+
+        \label{fig:perm_test_independent_data}
+
+    \end{center}
+\end{figure}
+
+
+\end{document}

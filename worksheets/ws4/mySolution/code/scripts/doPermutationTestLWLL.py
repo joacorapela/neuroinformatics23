@@ -50,7 +50,7 @@ def main(argv):
                         help="scale for the weight funct", default=0.01)
     parser.add_argument("--x_dist_thr", type=float,
                         help=("distance threshold for the definition of close "
-                              "x points"), default=0.005)
+                              "x points"), default=0.01)
     parser.add_argument("--n_xs", type=int, help="number of x values",
                         default=10)
     parser.add_argument("--data_filename_pattern", type=str,

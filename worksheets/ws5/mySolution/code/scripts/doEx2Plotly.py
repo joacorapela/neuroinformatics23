@@ -79,7 +79,8 @@ def main(argv):
     fig = utils.getHeatmap(xs=times, ys=clusters_ids,
                            zs=activity_arrayZ_sorted.T,
                            hovertext=hovertext, zmin=zmin, zmax=zmax,
-                           x_label=x_label, y_label=y_label)
+                           x_label=x_label, y_label="Sorted Cluster ID")
+    fig.add_vline(x=max(trials.response_times))
     fig.write_image(fig_filename_pattern.format(bin_size, "vh0Sorted",  "png"))
     fig.write_html(fig_filename_pattern.format(bin_size, "vh0Sorted",  "html"))
 
@@ -100,7 +101,7 @@ def main(argv):
     fig.add_trace(trace)
     fig.update_xaxes(title_text="weight")
     fig.update_yaxes(title_text="counts")
-    fig.write_image(fig_filename_pattern.format(bin_size, "uFirstColWeigth",
+    fig.write_image(fig_filename_pattern.format(bin_size, "uFirstColWeight",
                                                 "png"))
     fig.write_html(fig_filename_pattern.format(bin_size, "uFirstColWeight",
                                                "html"))

@@ -11,7 +11,8 @@ import one.api
 
 def main(argv):
     parser = argparse.ArgumentParser()
-    parser.add_argument("--bin_size", type=float, help="bin_size", default=1.0)
+    parser.add_argument("--bin_size", type=float, help="bin_size",
+                        default=0.05)
     parser.add_argument("--experiment_id", type=str,
                         help="experiment to analyze",
                         default="ebe2efe3-e8a1-451a-8947-76ef42427cc9")

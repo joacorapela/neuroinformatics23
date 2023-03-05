@@ -16,7 +16,7 @@ def getHovertext(times, clusters_ids, z,
     return hovertext
 
 
-def getHeatmap(xs, ys, zs, hovertext, zmin, zmax, x_label, y_label):
+def getHeatmap(xs, ys, zs, hovertext, zmin, zmax, x_label, y_label, title):
     xzero = zmin/(zmin - zmax)
     colorscale = [[0.0, 'rgba(0, 0, 255, 0.85)'],
                   [xzero, 'rgba(255, 255, 255, 0.85)'],
@@ -28,6 +28,6 @@ def getHeatmap(xs, ys, zs, hovertext, zmin, zmax, x_label, y_label):
     fig.add_trace(trace)
     fig.update_xaxes(title_text=x_label)
     fig.update_yaxes(title_text=y_label)
-
+    fig.update_layout(title=title)
     return fig
 

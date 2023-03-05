@@ -2,7 +2,6 @@ import sys
 import argparse
 import numpy as np
 import scipy.stats
-import plotly.graph_objs as go
 
 import one.api
 import brainbox.io.one
@@ -72,6 +71,13 @@ def main(argv):
 
     zmin, zmax = np.percentile(activity_arrayZ, q=(1.0, 99.0))
 
+    empiricalError = np.linalg.norm(z_truncated-activity_arrayZ, ord="fro")
+    analyticalError = np.sqrt(np.power(s[n_components:], 2).sum())
+
+    title = (f"analytical error: {analyticalError}, "
+             f"empirical error: {empiricalError}")
+    print(title)
+    breakpoint()
     hovertext = utils.getHovertext(
         times=times, clusters_ids=clusters_ids, z=z_truncated.T,
         channels_for_clusters=clusters.channels,
@@ -79,7 +85,7 @@ def main(argv):
 
     fig = utils.getHeatmap(xs=times, ys=clusters_ids, zs=z_truncated.T,
                            hovertext=hovertext, zmin=zmin, zmax=zmax,
-                           x_label=x_label, y_label=y_label)
+                           x_label=x_label, y_label=y_label, title=title)
     fig.write_image(fig_filename_pattern.format(bin_size, n_components, "png"))
     fig.write_html(fig_filename_pattern.format(bin_size, n_components, "html"))
 

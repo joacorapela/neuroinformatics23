@@ -16,7 +16,7 @@ def getHovertext(times, clusters_ids, z,
     return hovertext
 
 
-def getHeatmap(xs, ys, zs, hovertext, zmin, zmax, x_label, y_label, title):
+def getHeatmap(xs, ys, zs, hovertext, zmin, zmax, x_label, y_label, title=""):
     xzero = zmin/(zmin - zmax)
     colorscale = [[0.0, 'rgba(0, 0, 255, 0.85)'],
                   [xzero, 'rgba(255, 255, 255, 0.85)'],

@@ -33,7 +33,7 @@ def main(argv):
                         default="Cluster ID")
     parser.add_argument("--fig_filename_pattern", type=str,
                         help="figure filename pattern",
-                        default=("../../figures/spikes_counts_truncatedSVD_"
+                        default=("../../figures/binned_spikes_truncatedSVD_"
                                  "binSize_{:.02f}_nComponetns_{:d}.{:s}"))
     args = parser.parse_args()
 
@@ -71,13 +71,13 @@ def main(argv):
 
     zmin, zmax = np.percentile(activity_arrayZ, q=(1.0, 99.0))
 
-    empiricalError = np.linalg.norm(z_truncated-activity_arrayZ, ord="fro")
+    empiricalError = np.linalg.norm(
+        z_truncated-activity_arrayZ[:, argsort_res], ord="fro")
     analyticalError = np.sqrt(np.power(s[n_components:], 2).sum())
 
     title = (f"analytical error: {analyticalError}, "
              f"empirical error: {empiricalError}")
     print(title)
-    breakpoint()
     hovertext = utils.getHovertext(
         times=times, clusters_ids=clusters_ids, z=z_truncated.T,
         channels_for_clusters=clusters.channels,

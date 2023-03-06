@@ -64,9 +64,9 @@
 \section*{Exercise 1: z-scored binned spikes}
 
 Figure~\ref{fig:zscores_unsorted} shows the zscores of the binned spikes of all
-neurons (bin size=1~sec, unsorted neurons). I choosed \texttt{zmin} and
+neurons (bin size=1~sec, unsorted neurons). I chose \texttt{zmin} and
 \texttt{zmax} as the 1\% and 99\% percentiles of the zscores distribution,
-because, as shown below, the negative z-values are informative.
+because, as shown below, negative z-values are informative.
 
 
 \begin{figure}[H]
@@ -83,7 +83,7 @@ because, as shown below, the negative z-values are informative.
     \end{center}
 \end{figure}
 
-If I don't limit the \texttt{zmax} of the heatmap colors become imbalanced due
+If I don't limit the \texttt{zmax} of the heatmap colours become imbalanced due
 to a neuron with high firing at one time
 (Figure~\ref{fig:zscores_unsorted_noZmax}). 
 
@@ -102,7 +102,7 @@ to a neuron with high firing at one time
     \end{center}
 \end{figure}
 
-If I don't z-score the binned spikes colors become imbalanced due to neurons that
+If I don't z-score the binned spikes colours become imbalanced due to neurons that
 have large mean firing rate (Figure~\ref{fig:zscores_unsorted_noZscored}).
 
 \begin{figure}[H]
@@ -150,7 +150,7 @@ Figure~\ref{fig:firstLeftSingularVector} plots in blue a part of the the first
 left singular vector between 400 and 650~seconds. The block vertical lines
 indicate subject response times. Interestingly, we see that this approximation
 of the binned spikes times tends to peak immediately after the subject response
-times. This suggest a synchronization between neurons' spikes and subject's
+times. This suggest a synchronisation between neurons' spikes and subject's
 responses.
 
 \begin{figure}[H]
@@ -158,7 +158,7 @@ responses.
         \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws5/figures/binned_spikes_svd_binSize_1.00_uFirstCol.html}{\includegraphics[width=5.5in]{../figures/binned_spikes_svd_binSize_1.00_uFirstCol_segment.png}}
 
         \caption{Part of the first left singular vector (blue trace) and subject response times
-        (black vertical lines). This figure suggests a synchronization betweeen
+        (black vertical lines). This figure suggests a synchronisation between
         neurons' spikes and subjects responses (see text).
         Generated with
         \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws5/mySolution/code/scripts/doEx2Plotly.py}{this}
@@ -196,7 +196,7 @@ correlated to the first left singular vector.
 The weight of the first left singular vector on the z-scored binned spikes of
 the neurons near the top of Figure~\ref{fig:zscores_vh0Sorted} is large and
 positive. We see vertical red stripes on the z-scores of these neurons,
-indicating their strong synchronization with the response times of the subject.
+indicating their strong synchronisation with the response times of the subject.
 %
 Before the time of the last response of the subject (black vertical line)
 z-scores tend to be positive (i.e., binned spikes larger than their mean), but
@@ -207,7 +207,7 @@ neurons belong to the primary motor cortex\footnote{areas: MOp5 (layer 5),
 MOp6a (layer 6a), MOp6b (layer 6b)} and striatum\footnote{areas: CP
 (caudoputamen), STR (striatum)}.
 
-The oposite happens to neurons near the bottom of
+The opposite happens to neurons near the bottom of
 Figure~\ref{fig:zscores_vh0Sorted}. For these neurons the weight of the first
 left singular vector on their z-scored binned spikes is large and negative. We
 don't see vertical stripes on their z-scores. Before the time of the last
@@ -223,6 +223,27 @@ belong to the pallidum\footnote{area BST (bed nuclei of the stria terminalis)}.
 
 \section{Notes on the SVD}
 \label{sec:notesOnTheSVD}
+
+    \begin{definition}[The SVD]
+        Given $M\in\mathbb{C}^{m\times n}$, a singular value decomposition (SVD)
+        of $M$ is a factorisation:
+
+        \begin{align*}
+            M = USV^*
+        \end{align*}
+
+        where
+
+        \begin{align*}
+            U &\in \mathbb{C}^{m\times m}\quad\text{is unitary,}\\
+            V &\in \mathbb{C}^{n\times n}\quad\text{is unitary,}\\
+            S &\in \mathbb{C}^{m\times n}\quad\text{is diagonal.}
+        \end{align*}
+
+        In addition, it is assumed that the diagonal entries $s_k$ of $S$ are
+        nonnegative and in nonincreasing order; that is, $s_1\ge
+        s_2\ge\ldots\ge s_p\ge 0$, where $p=\min(m, n)$.
+    \end{definition}
 
     \begin{definition}[Rank of a matrix]
 
@@ -242,10 +263,9 @@ belong to the pallidum\footnote{area BST (bed nuclei of the stria terminalis)}.
     The SVD decomposes a matrix as a sum of rank-one (i.e., very simple)
     matrices. 
 
-    \begin{align}
+    \begin{align*}
         M = \sum_{k=1}^rs_k\mathbf{u}_k\mathbf{v}_k^*
-        \label{eq:svd}
-    \end{align}
+    \end{align*}
 
     There are multiple other decompositions as sums of rank-one matrices. If
     $M\in\mathbb{C}^{m\times n}$, then it can be decomposed as a sum of $m$
@@ -268,10 +288,9 @@ belong to the pallidum\footnote{area BST (bed nuclei of the stria terminalis)}.
     \begin{definition}[Frobenius norm]
         The Frobenius norm of matrix $M\in\mathbb{C}^{m\times n}$ is
 
-        \begin{align}
+        \begin{align*}
             \|M\|_F=\left(\sum_{i=1}^m\sum_{j=1}^nm_{ij}^2\right)^{1/2}
-        \end{align}
-        \label{def:frobeniusNorm}
+        \end{align*}
 
     \end{definition}
 
@@ -286,9 +305,9 @@ belong to the pallidum\footnote{area BST (bed nuclei of the stria terminalis)}.
         Let $M\in\mathbb{C}^{m\times n}$ and let $P\in\mathbb{C}^{m\times m}$
         and $Q\in\mathbb{C}^{n\times n}$ be orthogonal matrices. Then
 
-        \begin{align}
+        \begin{align*}
             \|PMQ\|_F=\|M\|_F
-        \end{align}
+        \end{align*}
 
         \label{lemma:orthogonalPreserveF}
     \end{lemma}
@@ -307,7 +326,7 @@ belong to the pallidum\footnote{area BST (bed nuclei of the stria terminalis)}.
             \item The third equality in Eq.~\ref{eq:frobInvLine1} holds because
                 $Q$ is orthogonal (i.e., $QQ^*=I$).
             \item The first equality in Eq.~\ref{eq:frobInvLine2} uses the
-                ciclic property of the trace (i.e., tr(ABC)=tr(CAB)).
+                cyclic property of the trace (i.e., tr(ABC)=tr(CAB)).
             \item The first equality in Eq.~\ref{eq:frobInvLine2} holds by the
                 orthogonality of $P$.
             \item The last equality in Eq.~\ref{eq:frobInvLine2} again applies
@@ -318,9 +337,9 @@ belong to the pallidum\footnote{area BST (bed nuclei of the stria terminalis)}.
     A direct consequence of Lemma~\ref{lemma:orthogonalPreserveF} is that the
     Frobenius norm of any matrix $M=USV^*$ is
 
-    \begin{align}
+    \begin{align*}
         \|M\|_F=\|USV^*\|_F=\|S\|_F=\sqrt{\sum_{k=1}^rs_k^2}
-    \end{align}
+    \end{align*}
 
     Another consequence of Lemma~\ref{lemma:orthogonalPreserveF} is 
     the error in approximating a matrix $M$ of rank $r$ with its truncated
@@ -337,9 +356,9 @@ belong to the pallidum\footnote{area BST (bed nuclei of the stria terminalis)}.
         any $\nu$ with $0\leq\nu\leq r$, define
 
         
-        \begin{align}
+        \begin{align*}
             M_\nu=\sum_{k=1}^\nu s_k\mathbf{u}_k\mathbf{v}_k^*
-        \end{align}
+        \end{align*}
 
         Then
 
@@ -380,16 +399,17 @@ belong to the pallidum\footnote{area BST (bed nuclei of the stria terminalis)}.
         Notes:
         \begin{enumerate}
             \item The first equality in Eq.~\ref{eq:final1} holds by
-                Eq.~\ref{eq:errorFNorm}.
+                Eq.~\ref{eq:truncSVDerror}.
             \item The second equality in Eq.~\ref{eq:final1} used the change of
                 variables $i=j-\nu$.
             \item The first inequality in Eq.~\ref{eq:final1} used
                 Eq.~\ref{eq:svMandMerror}
             \item The last inequality in Eq.~\ref{eq:final1} is true because
-                $r-\nu<=\min(m,n)$ and adding squared eigenvalues to the sum in
-                the left hand side increases this sum.
+                $r-\nu\leq\min(m,n)$ and adding squared singular values to the sum in
+                the left hand side only increases this sum.
             \item The equality in Eq.~\ref{eq:final2} again holds by
-                Eq.~\ref{eq:errorFNorm}.
+                Eq.~\ref{eq:errorFNorm} and by the fact that singular values of
+                index larger than the rank of a matrix are zero.
         \end{enumerate}
 
         The last equality in Eq.~\ref{eq:errorFNorm} follows from
@@ -400,18 +420,67 @@ belong to the pallidum\footnote{area BST (bed nuclei of the stria terminalis)}.
 \section{Verification of the Eckart-Young-Mirsky theorem}
 \label{sec:verificationEckartYoungMirsky}
 
-To verify Theorem~\ref{thm:eckartYoungMirsky}, for different ranks $\nu$, I
-will compute truncated SVD approximations to the matrix shown in
-Figure~\ref{fig:zscores_vh0Sorted}.
-For each of these approximations, I will compute the Frobenius norm of the
-difference between the matrix and its truncated SVD approximation, and check
-if this error is close to the sum of singular values in Eq.~\ref{eq:errorFNorm}.
+I found it almost unbelievable that Theorem~\ref{thm:eckart-young-mirsky} allows
+us to compute the error that will be achieved by a low-rank approximation by
+just using the singular values of the matrix to be approximated, and without
+the need to calculating this approximation.
 
-Figure~\ref{fig:singularValues} plots the singular value of the matrix in
-Figure~\ref{fig:zscores_vh0Sorted}. We see large reductions in singular values
-upto the xth singular value. Therefore, we expect to see large improvements in
-the approximation error as we increase the rank of the truncated SVD until rank
-x, but not later.
+To verify Theorem~\ref{thm:eckart-young-mirsky}, for different ranks $\nu$, I
+computed truncated SVD approximations to the matrix shown in
+Figure~\ref{fig:zscores_vh0Sorted}. For each of these approximations, I
+calculated the empirical error (i.e., the Frobenius norm of the difference between
+the matrix and the approximation) and the analytical error (i.e., the sum of
+singular values in Eq.~\ref{eq:errorFNorm}). As shown in
+Figures~\ref{fig:truncatedSVD-rank1}-\ref{fig:truncatedSVD-rank20}
+the empirical and analytical errors are almost identical.
+
+% Figure~\ref{fig:singularValues} plots the singular value of the matrix in
+% Figure~\ref{fig:zscores_vh0Sorted}. We see large reductions in singular values
+% upto the xth singular value. Therefore, we expect to see large improvements in
+% the approximation error as we increase the rank of the truncated SVD until rank
+% x, but not later.
+
+\def\i{1}
+    \begin{figure}
+        \begin{center}
+
+            \href{http://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws5/figures/binned_spikes_truncatedSVD_binSize_1.00_nComponents_\i.html}{\includegraphics[width=5in]{../figures/binned_spikes_truncatedSVD_binSize_1.00_nComponents_\i.png}}
+
+            \caption{Low-rank approximation of the image in
+            Figure~\ref{fig:zscores_vh0Sorted} using a truncated SVD or rank
+            \i. The title reports the empirical and analytical errors of the
+            reconstruction. The empirical error is the Frobenius norm of the
+            difference between the low-rank approximation and the image in
+            Figure~\ref{fig:zscores_vh0Sorted}. The analytical error is
+            computed from the singular values of the image in
+            Figure~\ref{fig:zscores_vh0Sorted} using Eq.~\ref{eq:errorFNorm}.
+            Generated with
+            \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws5/mySolution/code/scripts/doPlotTruncatedSVD.py}{this}
+            script with
+            \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws5/mySolution/code/scripts/doPlotTruncatedSVD.csh}{these}
+            parameters.  Click on the image to access its interactive version.}
+
+            \label{fig:truncatedSVD-rank\i}
+
+        \end{center}
+    \end{figure}
+\foreach \i in {2,3,...,20}{
+    \begin{figure}
+        \begin{center}
+
+            \href{http://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws5/figures/binned_spikes_truncatedSVD_binSize_1.00_nComponents_\i.html}{\includegraphics[width=5in]{../figures/binned_spikes_truncatedSVD_binSize_1.00_nComponents_\i.png}}
+
+            \caption{Low-rank approximation of the image in
+            Figure~\ref{fig:zscores_vh0Sorted} using a truncated SVD or rank
+            \i. Same format as that in Figure~\ref{fig:truncatedSVD-rank1}.
+            Click on the image to
+            access its interactive version.}
+
+            \label{fig:truncatedSVD-rank\i}
+
+        \end{center}
+    \end{figure}
+}
 
 \end{appendices}
 

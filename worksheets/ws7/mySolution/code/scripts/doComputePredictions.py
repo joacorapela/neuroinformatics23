@@ -1,9 +1,9 @@
 
 import sys
+import pickle
 import argparse
 import numpy as np
 import scipy.stats
-import sklearn.linear_model
 import plotly.graph_objects as go
 
 import utils
@@ -12,7 +12,7 @@ import utils
 def main(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument("--n_trials", type=int, help="Number of trials",
-                        default=1000)
+                        default=100)
     parser.add_argument("--n_neurons", type=int, help="Number of neurons",
                         default=30)
     parser.add_argument("--n_repeats", type=int, help="Number of repeats",
@@ -26,6 +26,10 @@ def main(argv):
                         help="data filename pattern",
                         default=("../../results/counts_nNeurons_{:d}_"
                                  "nTrials_{:d}.npz"))
+    parser.add_argument("--model_filename_pattern", type=str,
+                        help="model filename pattern",
+                        default=("../../results/model{:s}_target_{:d}_"
+                                 "nNeurons_{:d}_nTrials_{:d}.pickle"))
     parser.add_argument("--fig_filename_pattern", type=str,
                         help="figure filename pattern",
                         default=("../../figures/predictions{:s}_"
@@ -41,6 +45,10 @@ def main(argv):
     cross_validated = args.cross_validated
     target_neuron_index = args.target_neuron_index
     data_filename = args.data_filename_pattern.format(n_neurons, n_trials)
+    poisson_model_filename = args.model_filename_pattern.format(
+        "Poisson", target_neuron_index, n_neurons, n_trials)
+    gaussian_model_filename = args.model_filename_pattern.format(
+        "Gaussian", target_neuron_index, n_neurons, n_trials)
     fig_filename_pattern = args.fig_filename_pattern 
 
     load_res = np.load(data_filename)
@@ -49,10 +57,10 @@ def main(argv):
     X = count_data[:, neurons_indices != target_neuron_index]
     y = count_data[:, target_neuron_index]
 
-    poisson_model = sklearn.linear_model.PoissonRegressor(alpha=0.0)
-    gaussian_model = sklearn.linear_model.LinearRegression()
-    poisson_model.fit(X=X, y=y)
-    gaussian_model.fit(X=X, y=y)
+    with open(poisson_model_filename, "rb") as f:
+        poisson_model = pickle.load(f)
+    with open(gaussian_model_filename, "rb") as f:
+        gaussian_model = pickle.load(f)
 
     poisson_mses = [None] * n_repeats
     gaussian_mses = [None] * n_repeats

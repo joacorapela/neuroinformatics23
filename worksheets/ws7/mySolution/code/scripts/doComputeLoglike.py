@@ -1,5 +1,6 @@
 
 import sys
+import pickle
 import argparse
 import numpy as np
 import sklearn.linear_model
@@ -22,6 +23,10 @@ def main(argv):
                         help="data filename pattern",
                         default=("../../results/counts_nNeurons_{:d}_"
                                  "nTrials_{:d}.npz"))
+    parser.add_argument("--model_filename_pattern", type=str,
+                        help="model filename pattern",
+                        default=("../../results/model{:s}_target_{:d}_"
+                                 "nNeurons_{:d}_nTrials_{:d}.pickle"))
     args = parser.parse_args()
 
     n_trials = args.n_trials
@@ -29,20 +34,18 @@ def main(argv):
     target_neuron_index = args.target_neuron_index
     glm_family = args.glm_family
     data_filename = args.data_filename_pattern.format(n_neurons, n_trials)
+    model_filename = args.model_filename_pattern.format(glm_family,
+                                                        target_neuron_index,
+                                                        n_neurons, n_trials)
 
     load_res = np.load(data_filename)
     count_data = load_res["count_data"]
 
+    with open(model_filename, "rb") as f:
+        model = pickle.load(f)
     neurons_indices = np.arange(n_neurons)
-    if glm_family == "Poisson":
-        model = sklearn.linear_model.PoissonRegressor(alpha=0.0)
-    elif glm_family == "Gaussian":
-        model = sklearn.linear_model.LinearRegression()
-    else:
-        raise ValueError(f"Invalid glm_family: {glm_family}")
     X = count_data[:, neurons_indices != target_neuron_index]
     y = count_data[:, target_neuron_index]
-    model.fit(X=X, y=y)
     if glm_family == "Poisson":
         loglike = utils.computePoissonLoglike(intercept=model.intercept_,
                                               coefs=model.coef_,

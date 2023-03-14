@@ -1,5 +1,6 @@
 
 import sys
+import pickle
 import argparse
 import numpy as np
 import sklearn.linear_model
@@ -25,6 +26,10 @@ def main(argv):
                         help="data filename pattern",
                         default=("../../results/counts_nNeurons_{:d}_"
                                  "nTrials_{:d}.npz"))
+    parser.add_argument("--model_filename_pattern", type=str,
+                        help="model filename pattern",
+                        default=("../../results/model{:s}_target_{:d}_"
+                                 "nNeurons_{:d}_nTrials_{:d}.pickle"))
     parser.add_argument("--fig_filename_pattern", type=str,
                         help="figure filename pattern",
                         default=("../../figures/predicted_counts_"
@@ -37,25 +42,27 @@ def main(argv):
     predict_on_test_data = args.predict_on_test_data 
     glm_family = args.glm_family
     data_filename = args.data_filename_pattern.format(n_neurons, n_trials)
+    model_filename = args.model_filename_pattern.format(glm_family,
+                                                        target_neuron_index,
+                                                        n_neurons, n_trials)
     fig_filename_pattern = args.fig_filename_pattern
 
-    load_res = np.load(data_filename)
-    count_data = load_res["count_data"]
+    with open(model_filename, "rb") as f:
+        model = pickle.load(f)
 
-    neurons_indices = np.arange(n_neurons)
-    if glm_family == "Poisson":
-        model = sklearn.linear_model.PoissonRegressor(alpha=0.0)
-    elif glm_family == "Gaussian":
-        model = sklearn.linear_model.LinearRegression()
-    X = count_data[:, neurons_indices != target_neuron_index]
-    y = count_data[:, target_neuron_index]
-    model.fit(X=X, y=y)
     if predict_on_test_data:
         count_data, trials_weights, neurons_weigts = \
             utils.simulatePoissonCountsInTrials(n_trials=n_trials,
                                                 n_neurons=n_neurons)
         X = count_data[:, neurons_indices != target_neuron_index]
         y = count_data[:, target_neuron_index]
+    else:
+        load_res = np.load(data_filename)
+        count_data = load_res["count_data"]
+        neurons_indices = np.arange(n_neurons)
+        X = count_data[:, neurons_indices != target_neuron_index]
+        y = count_data[:, target_neuron_index]
+
     y_pred = model.predict(X)
     mse = np.mean((y-y_pred)**2)
     mean_pred_data = {i: y_pred[y == i].mean() for i in np.unique(y)}

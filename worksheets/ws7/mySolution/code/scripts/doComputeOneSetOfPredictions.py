@@ -50,6 +50,7 @@ def main(argv):
     with open(model_filename, "rb") as f:
         model = pickle.load(f)
 
+    neurons_indices = np.arange(n_neurons)
     if predict_on_test_data:
         count_data, trials_weights, neurons_weigts = \
             utils.simulatePoissonCountsInTrials(n_trials=n_trials,
@@ -59,7 +60,6 @@ def main(argv):
     else:
         load_res = np.load(data_filename)
         count_data = load_res["count_data"]
-        neurons_indices = np.arange(n_neurons)
         X = count_data[:, neurons_indices != target_neuron_index]
         y = count_data[:, target_neuron_index]
 
@@ -88,8 +88,6 @@ def main(argv):
     fig.write_html(fig_filename_pattern.format(glm_family,
                                                predict_on_test_data,
                                                n_neurons, n_trials, "html"))
-
-    breakpoint()
 
 
 if __name__ == "__main__":

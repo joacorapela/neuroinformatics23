@@ -1,0 +1,264 @@
+\documentclass[12pt]{article}
+
+\usepackage{natbib}
+\usepackage{apalike}
+\usepackage[hypertexnames=false,colorlinks=true,breaklinks]{hyperref}
+\usepackage{graphicx}
+\usepackage[shortlabels]{enumitem}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[title]{appendix}
+\usepackage[margin=1in]{geometry}
+\usepackage{verbatim}
+\usepackage[many]{tcolorbox}
+
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
+\def\figWidth{4.5in}
+
+\tcolorboxenvironment{theorem}{
+    colback=blue!5!white,
+    boxrule=0pt,
+    boxsep=1pt,
+    left=2pt,right=2pt,top=2pt,bottom=2pt,
+    oversize=2pt,
+    sharp corners,
+    before skip=\topsep,
+    after skip=\topsep,
+}
+
+\tcolorboxenvironment{definition}{
+    colback=blue!5!white,
+    boxrule=0pt,
+    boxsep=1pt,
+    left=2pt,right=2pt,top=2pt,bottom=2pt,
+    oversize=2pt,
+    sharp corners,
+    before skip=\topsep,
+    after skip=\topsep,
+}
+
+\tcolorboxenvironment{lemma}{
+    colback=blue!5!white,
+    boxrule=0pt,
+    boxsep=1pt,
+    left=2pt,right=2pt,top=2pt,bottom=2pt,
+    oversize=2pt,
+    sharp corners,
+    before skip=\topsep,
+    after skip=\topsep,
+}
+
+\def\fig_width{3.5in}
+\title{Report worksheet 7}
+\author{Joaqu\'{i}n Rapela}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercise 1: predict spike counts of one neuron}
+
+Figure~\ref{fig:predictions_one_neuron}a shows the predictions of the spike
+counts of neuron 29 from the spike counts of the other neurons. These
+predictions were not cross-validated, and reflect overfitting.
+%
+Figure~\ref{fig:predictions_one_neuron}b is as
+Figure~\ref{fig:predictions_one_neuron}a but uses cross-validation and avoids
+overfitting.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{\textwidth}
+	        \centering
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws7/figures/predicted_counts_Poisson_predictOnTest_0_nNeurons_30_nTrials_100.html}{\includegraphics[width=\figWidth]{../figures/predicted_counts_Poisson_predictOnTest_0_nNeurons_30_nTrials_100.png}}
+	        \caption{non-crossvalidated}
+    \end{subfigure}
+    \linebreak
+    \begin{subfigure}{\textwidth}
+        \centering
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws7/figures/predicted_counts_Poisson_predictOnTest_1_nNeurons_30_nTrials_100.html}{\includegraphics[width=\figWidth]{../figures/predicted_counts_Poisson_predictOnTest_1_nNeurons_30_nTrials_100.png}}
+	        \caption{crossvalidated}
+    \end{subfigure}
+
+    \caption{Non-crossvalidated (a) and crossvalidated (b) predictions of
+	response of neuron 29 from the spike counts of the other neurons.
+	Generated with
+	\href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws7/mySolution/code/scripts/doComputeOneSetOfPredictions.py}{this}
+	script using the default parameters for (a) and using the parameter
+	\texttt{--predict\_on\_test\_data} for (b). Click on the image to see its
+	interactive version.}
+
+    \label{fig:predictions_one_neuron}
+\end{figure}
+
+The red line is not straight because for neural responses that are too large
+(small) the model will tend to predict smaller (larger) responses. If by
+chance the response of neuron 29 is too large (small), its prediction should be
+smaller (larger), because too large (small) responses are uncommon and do not
+contribute much to the optimisation criterion (i.e., residuals deviance).
+
+\section*{Exercise 2: compare prediction of linear regression models and Poisson
+GLMs}
+\label{sec:comparePredictions}
+
+Figure~\ref{fig:mses_PoissonVsGaussian}a shows histograms of
+mean-squared-errors (MSEs) achieved by the Poisson and linear regression (i.e.,
+Gaussian) models. Another  visualisation for this type of data is the scatter
+plot of MSEs of the Gaussian versus the Poisson model shown in
+Figure~\ref{fig:mses_PoissonVsGaussian}b.
+
+The title bar of these plots show the statistic and p-values of a
+\textcolor{red}{paired t-test}. In this plot there are two sources of randomness.
+One source is the random dataset and the other one is the random prediction of
+the models. Each MSE for the Poisson and Gaussian models were computed from the
+same randomly generated dataset.  Thus, to eliminate the first source of
+randomness from the significance test, it is better to use a paired  than a
+non-paired t-test. In this case both types of tests yield a significant
+difference.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{\textwidth}
+        \centering
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws7/figures/predictionsHist_crossValidated_1_target_29_nNeurons_30_nTrials_100_nRepeats_1000.html}{\includegraphics[width=\figWidth]{../figures/predictionsHist_crossValidated_1_target_29_nNeurons_30_nTrials_100_nRepeats_1000.png}}
+        \caption{Histogram}
+    \end{subfigure}
+    \begin{subfigure}{\textwidth}
+        \centering
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws7/figures/predictionsScatter_crossValidated_1_target_29_nNeurons_30_nTrials_100_nRepeats_1000.html}{\includegraphics[width=\figWidth]{../figures/predictionsScatter_crossValidated_1_target_29_nNeurons_30_nTrials_100_nRepeats_1000.png}}
+        \caption{Scatter plot}
+    \end{subfigure}
+    \caption{Histogram (a) and scatter plot (b) of MSEs from a linear
+    regression model (i.e., Gaussian) versus a Poisson GLM.
+    Generated with
+    \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws7/mySolution/code/scripts/doComputePredictions.py}{this}
+    script using its default parameters. Click on the image to see its
+    interactive version.}
+
+    \label{fig:mses_PoissonVsGaussian}
+\end{figure}
+
+The linear regression model achieved a lower MSE the Poisson GLM because the
+former model was optimised to minimise the MSE, while the Poisson model was NOT
+optimise to minimise this criterion. The Poisson model was optimised to maximise
+the likelihood of the responses.
+
+Another possibility is that the linear regression model was correctly
+estimated, but the Poisson model not. We examine this possibility in
+Appendix~\ref{sec:gof}.
+
+\pagebreak
+
+\begin{appendices}
+
+\section{Goodness-of-fit assessment}
+\label{sec:gof}
+
+Were 100 trials enough to obtain a good model fit of the linear regression models or
+	Poisson GLMs? If not the conclusion we drew in
+	Exercise~2 could be invalid.
+
+A useful property of linear regression models and of GLMs is that its
+	parameters are interpretable. That is, we can read the parameters of
+	the model and learn about the problem on which the model is applied.
+	However, to be able to make inferences from the model parameters, it is
+	crucial to test that the model was well fitted.
+
+For linear regression there exist a large number of methods to assess their
+	goodness of fit. Most of them are described in detail in
+	\citet{kutnerEtAl05}. One should check that the errors of the model are
+	approximately Gaussian, that the variance of the errors is the same for
+	any group of observations (i.e., homoescedasticity), that there are not
+	outliers or influential observations, that the estimated model fits the
+	data better than a model without regressors, that the linearity
+	assumption is justified, etc.
+
+A GLM does not make as many assumptions as a linear regression model. For
+	example, a Poisson GLM allows the variance of the observations to be
+	different for different groups of observations (i.e., for Poisson
+	observations the variance is equal to the mean, and observations with
+	larger mean will have larger variance). Still, with GLMs one should
+	also check for outliers and for nonlinearities.
+
+Here I will only examine the estimated coefficients from the Poisson GLM. If
+	these coefficients are not significantly different from zero, I will
+	conclude that the estimated model is not adequate. But if some of these
+	coefficients are significantly different from zero, I will try to
+	interpret them.
+
+Figure~\ref{fig:coefs_Poisson}a shows the coefficients, and their 95\%
+	confidence interval, of a Poisson GLM estimated using 100 trials. We
+	see that the 95\% confidence interval of most coefficients includes
+	zero, which suggests that these coefficients are not significantly
+	different from chance.
+
+Figure~\ref{fig:coefs_Poisson}b is the same as
+	Figure~\ref{fig:coefs_Poisson}a but for a model estimated
+	using 10,000 trials. We see that with the larger number of trials the
+	error bars of the coefficients became smaller, and most coefficients
+	are now significantly different from zero. We learn that response of
+	neurons close to the predicted one (neurons 15-28) contribute
+	positively to the logarithm of mean response of the predicted neurons.
+	Also, the closer is a neuron to the predicted one, the larger is its
+	contribution.
+
+It appears that the model fitted with 10,000 trials is better fitted than the
+	one fitted with 100 trials. Will this better fitted model yield worse
+	predictions than a linear regression model?
+	Figure~\ref{fig:mses_PoissonVsGaussian_nTrials_10000} shows that that
+	this is still the case. Moreover, for better fitted models the linear
+	regression model appears to be much better than the Poisson GLM. So,
+	the conclusion we drew in
+	Section~\ref{fig:mses_PoissonVsGaussian_nTrials_10000} holds.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{\textwidth}
+        \centering
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws7/figures/coefs_Poisson_nNeurons_30_nTrials_100.html}{\includegraphics[width=\figWidth]{../figures/coefs_Poisson_nNeurons_30_nTrials_100.png}}
+
+	\caption{100 trials.}
+    \end{subfigure}
+    \begin{subfigure}{\textwidth}
+        \centering
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws7/figures/coefs_Poisson_nNeurons_30_nTrials_10000.html}{\includegraphics[width=\figWidth]{../figures/coefs_Poisson_nNeurons_30_nTrials_10000.png}}
+	\caption{10,000 trials.}
+    \end{subfigure}
+    \caption{Estimated coefficients of the Poisson GLM fitted to 100 (a) and 10000 (b) trials.  Generated with \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws7/mySolution/code/scripts/doPlotModelCoefs.py}{this} script using parameter \texttt{--n\_trials=100} (a) and \texttt{--n\_trials=10000} (b). Click on the image to see its interactive version.}
+        \label{fig:coefs_Poisson}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{\textwidth}
+        \centering
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws7/figures/predictionsHist_crossValidated_1_target_29_nNeurons_30_nTrials_10000_nRepeats_1000.html}{\includegraphics[width=\figWidth]{../figures/predictionsHist_crossValidated_1_target_29_nNeurons_30_nTrials_10000_nRepeats_1000.png}}
+        \caption{Histogram}
+    \end{subfigure}
+    \begin{subfigure}{\textwidth}
+        \centering
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws7/figures/predictionsScatter_crossValidated_1_target_29_nNeurons_30_nTrials_10000_nRepeats_1000.html}{\includegraphics[width=\figWidth]{../figures/predictionsScatter_crossValidated_1_target_29_nNeurons_30_nTrials_10000_nRepeats_1000.png}}
+        \caption{Scatter plot}
+    \end{subfigure}
+    \caption{Histogram (a) and scatter plot (b) of MSEs from a linear
+	regression (i.e., Gaussian) versus a Poisson GLM.
+	Generated with
+	\href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws7/mySolution/code/scripts/doComputePredictions.py}{this}
+	script using parameter \texttt{--n\_trials=10000}. Click on the image to
+	see its interactive version.}
+    \label{fig:mses_PoissonVsGaussian_nTrials_10000}
+\end{figure}
+
+\end{appendices}
+
+\bibliographystyle{apalike}
+\bibliography{stats}
+
+\end{document}

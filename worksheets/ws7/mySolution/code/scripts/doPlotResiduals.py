@@ -32,7 +32,7 @@ def main(argv):
                                  "nNeurons_{:d}_nTrials_{:d}.pickle"))
     parser.add_argument("--fig_filename_pattern", type=str,
                         help="figure filename pattern",
-                        default=("../../figures/residualsVsPredictions_"
+                        default=("../../figures/{:s}_"
                                  "{:s}_predictOnTest_{:d}_nNeurons_{:d}_nTrials_{:d}.{:s}"))
     args = parser.parse_args()
 
@@ -72,10 +72,23 @@ def main(argv):
 
     fig.update_xaxes(title_text="Predictions")
     fig.update_yaxes(title_text="Residuals")
-    fig.write_image(fig_filename_pattern.format(glm_family,
+    fig.write_image(fig_filename_pattern.format("residualsVsPredictions", glm_family,
                                                 predict_on_test_data,
                                                 n_neurons, n_trials, "png"))
-    fig.write_html(fig_filename_pattern.format(glm_family,
+    fig.write_html(fig_filename_pattern.format("residualsVsPredictions", glm_family,
+                                               predict_on_test_data,
+                                               n_neurons, n_trials, "html"))
+
+    fig = go.Figure()
+    trace = go.Histogram(x=residuals)
+    fig.add_trace(trace)
+
+    fig.update_xaxes(title_text="Residuals")
+    fig.update_yaxes(title_text="Counts")
+    fig.write_image(fig_filename_pattern.format("histResiduals", glm_family,
+                                                predict_on_test_data,
+                                                n_neurons, n_trials, "png"))
+    fig.write_html(fig_filename_pattern.format("histResiduals", glm_family,
                                                predict_on_test_data,
                                                n_neurons, n_trials, "html"))
 

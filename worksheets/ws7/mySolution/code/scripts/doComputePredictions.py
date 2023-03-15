@@ -17,9 +17,9 @@ def main(argv):
                         default=30)
     parser.add_argument("--n_repeats", type=int, help="Number of repeats",
                         default=1000)
-    parser.add_argument("--cross_validated", action="store_true",
-                        help=("Use this option to calculated cross-validated "
-                              "log likelihoods"))
+    parser.add_argument("--not_cross_validated", action="store_true",
+                        help=("Use this option to calculated log likelihoods "
+                              "without cross validation"))
     parser.add_argument("--target_neuron_index", type=int,
                         help="target neuron index", default=29)
     parser.add_argument("--data_filename_pattern", type=str,
@@ -42,7 +42,7 @@ def main(argv):
     n_trials = args.n_trials
     n_neurons = args.n_neurons
     n_repeats = args.n_repeats
-    cross_validated = args.cross_validated
+    not_cross_validated = args.not_cross_validated
     target_neuron_index = args.target_neuron_index
     data_filename = args.data_filename_pattern.format(n_neurons, n_trials)
     poisson_model_filename = args.model_filename_pattern.format(
@@ -70,7 +70,7 @@ def main(argv):
                                                 n_neurons=n_neurons)
         X = count_data[:, neurons_indices != target_neuron_index]
         y = count_data[:, target_neuron_index]
-        if not cross_validated:
+        if not_cross_validated:
             poisson_model.fit(X=X, y=y)
             gaussian_model.fit(X=X, y=y)
         poisson_mses[i] = np.mean((poisson_model.predict(X)-y)**2)
@@ -91,10 +91,10 @@ def main(argv):
                        line=dict(color="gray", dash="dash"),
                        showlegend=False)
     fig.add_trace(trace)
-    fig.write_image(fig_filename_pattern.format("Scatter", cross_validated,
+    fig.write_image(fig_filename_pattern.format("Scatter", not not_cross_validated,
                                                 target_neuron_index, n_neurons,
                                                 n_trials, n_repeats, "png"))
-    fig.write_html(fig_filename_pattern.format("Scatter", cross_validated,
+    fig.write_html(fig_filename_pattern.format("Scatter", not not_cross_validated,
                                                target_neuron_index, n_neurons,
                                                n_trials, n_repeats, "html"))
     fig = go.Figure()
@@ -109,10 +109,10 @@ def main(argv):
         bargap=0.2, # gap between bars of adjacent location coordinates
         bargroupgap=0.1 # gap between bars of the same location coordinates
     )
-    fig.write_image(fig_filename_pattern.format("Hist", cross_validated,
+    fig.write_image(fig_filename_pattern.format("Hist", not not_cross_validated,
                                                 target_neuron_index, n_neurons,
                                                 n_trials, n_repeats, "png"))
-    fig.write_html(fig_filename_pattern.format("Hist", cross_validated,
+    fig.write_html(fig_filename_pattern.format("Hist", not not_cross_validated,
                                                target_neuron_index, n_neurons,
                                                n_trials, n_repeats, "html"))
     breakpoint()

@@ -99,7 +99,7 @@ information (using the plugin method) for different numbers of trials.
 As the number of trials increases, the plugin estimate of mutual information
 should approach its true value. In agreement with this,
 Figure~\ref{fig:miEstimatesMultiTrial} shows that, as the number of trials
-increases, the estimated mutual information approches its true zero value.
+increases, the estimated mutual information approaches its true zero value.
 
 For one trial the mutual information estimate is zero, because the probability
 estimates for one trial are those of a deterministic random variable, and the
@@ -131,9 +131,9 @@ mutual information across multiple trial lengths.
 The code to estimate cross-validated mutual information is the same as the one
 used above, with the exception that entropies are estimated with cross
 validation. Two sets of probabilities are calculated, one set is used for the
-probability component of the entropy, and the other set for the log-progability
+probability component of the entropy, and the other set for the log-probability
 component. Thus, if both estimates of probability were accurate, the
-cross-valiated estimates should be identical to the non-cross-validated ones.
+cross-validated estimates should be identical to the non-cross-validated ones.
 
 We get estimates smaller than zero because, differently from the plugin
 estimation method, cross-validation estimation is biased below.

@@ -1,0 +1,190 @@
+\documentclass[12pt]{article}
+
+\usepackage{natbib}
+\usepackage{apalike}
+\usepackage[hypertexnames=false,colorlinks=true,breaklinks]{hyperref}
+\usepackage{graphicx}
+\usepackage[shortlabels]{enumitem}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[title]{appendix}
+\usepackage[margin=1in]{geometry}
+\usepackage{verbatim}
+\usepackage[many]{tcolorbox}
+
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
+\tcolorboxenvironment{theorem}{
+    colback=blue!5!white,
+    boxrule=0pt,
+    boxsep=1pt,
+    left=2pt,right=2pt,top=2pt,bottom=2pt,
+    oversize=2pt,
+    sharp corners,
+    before skip=\topsep,
+    after skip=\topsep,
+}
+
+\tcolorboxenvironment{definition}{
+    colback=blue!5!white,
+    boxrule=0pt,
+    boxsep=1pt,
+    left=2pt,right=2pt,top=2pt,bottom=2pt,
+    oversize=2pt,
+    sharp corners,
+    before skip=\topsep,
+    after skip=\topsep,
+}
+
+\tcolorboxenvironment{lemma}{
+    colback=blue!5!white,
+    boxrule=0pt,
+    boxsep=1pt,
+    left=2pt,right=2pt,top=2pt,bottom=2pt,
+    oversize=2pt,
+    sharp corners,
+    before skip=\topsep,
+    after skip=\topsep,
+}
+
+\def\fig_width{3.5in}
+\title{Report worksheet 8}
+\author{Joaqu\'{i}n Rapela}
+
+\begin{document}
+
+\maketitle
+
+\section*{Question 1: mutual information: one trial length}
+
+Function \texttt{def H(x):} computes the entropy of the probability
+distribution given in variable \texttt{x}. This distribution can be univariate,
+e.g., \texttt{x=p(y)}, or bivariate, e.g., \texttt{x=p(y, z)}. Function
+\texttt{def mi(C):} computes mutual information from the expression $I(X,
+Y)=H(X)+H(Y)-H(X,Y)$, using the previous function \texttt{def H(x):} to
+calculate the marginal and joint entropies.
+
+Because $X$ and $Y$ are independent random variables, there mutual information
+is zero. However, we don't get zero, since the code above uses the plugin
+estimate of mutual information, which is biased above, and returns a positive
+mutual information estimate.
+
+\section*{Question 2: mutual information: multiple trial lengths}
+
+Figure~\ref{fig:miEstimatesMultiTrial} shows the results of estimating mutual
+information (using the plugin method) for different numbers of trials.
+
+\begin{figure}[H]
+    \begin{center}
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws8/figures/mi_nRepeats_1_maxNTrials_100_p_0.500000_q_0.500000.html}{\includegraphics[width=5.5in]{../figures/mi_nRepeats_1_maxNTrials_100_p_0.500000_q_0.500000.png}}
+
+        \caption{Estimates of mutual information, using the plugin method, for different number of trials.
+        Generated with
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws8/mySolution/code/scripts/doEstimateMI_multiTrials.py}{this}
+        script using parameters \texttt{--n\_repeats 1}. Click on the image to see its
+        interactive version.}
+
+        \label{fig:miEstimatesMultiTrial}
+    \end{center}
+\end{figure}
+
+\section*{Question 3: mutual information: multiple trial lengths}
+
+As the number of trials increases, the plugin estimate of mutual information
+should approach its true value. In agreement with this,
+Figure~\ref{fig:miEstimatesMultiTrial} shows that, as the number of trials
+increases, the estimated mutual information approches its true zero value.
+
+For one trial the mutual information estimate is zero, because the probability
+estimates for one trial are those of a deterministic random variable, and the
+marginal and joint entropies of deterministic random variables are zero.
+
+We cannot compute mutual information for an experiment with  zero trials.
+
+\section*{Question 4: computing mutual information: multiple trial lengths, averaged}
+
+Figure~\ref{fig:miEstimatesMultiTrialAveraged} shows averaged estimates of
+mutual information across multiple trial lengths.
+
+\begin{figure}[H]
+    \begin{center}
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws8/figures/mi_nRepeats_1000_maxNTrials_100_p_0.500000_q_0.500000.html}{\includegraphics[width=5.5in]{../figures/mi_nRepeats_1000_maxNTrials_100_p_0.500000_q_0.500000.png}}
+
+        \caption{Averaged estimates of mutual information, using the plugin method, for different number of trials.
+        Generated with
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws8/mySolution/code/scripts/doEstimateMI_multiTrials.py}{this}
+        script using parameters \texttt{--n\_repeats 1000}. Click on the image to see its
+        interactive version.}
+
+        \label{fig:miEstimatesMultiTrialAveraged}
+    \end{center}
+\end{figure}
+
+\section*{Question 5: cross-validated mutual information: one trial length}
+
+The code to estimate cross-validated mutual information is the same as the one
+used above, with the exception that entropies are estimated with cross
+validation. Two sets of probabilities are calculated, one set is used for the
+probability component of the entropy, and the other set for the log-progability
+component. Thus, if both estimates of probability were accurate, the
+cross-valiated estimates should be identical to the non-cross-validated ones.
+
+We get estimates smaller than zero because, differently from the plugin
+estimation method, cross-validation estimation is biased below.
+
+\section*{Question 6: cross-validated mutual information: multiple trial lengths}
+
+Figure~\ref{fig:miEstimatesCVMultiTrial} shows cross-validated estimates of mutual
+information for different numbers of trials.
+
+\begin{figure}[H]
+    \begin{center}
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws8/figures/mi_cv_nRepeats_1_maxNTrials_100_p_0.500000_q_0.500000.html}{\includegraphics[width=5.5in]{../figures/mi_cv_nRepeats_1_maxNTrials_100_p_0.500000_q_0.500000.png}}
+
+        \caption{Cross-Validated estimates of mutual information for different number of trials.
+        Generated with
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws8/mySolution/code/scripts/doEstimateMI_cv_multiTrials.py}{this}
+        script using parameters \texttt{--n\_repeats 1}. Click on the image to see its
+        interactive version.}
+
+        \label{fig:miEstimatesCVMultiTrial}
+    \end{center}
+\end{figure}
+
+\section*{Question 7: why do we get error in the function $\log_2$ during the estimation of the cross-validated mutual information?}
+
+Because sometimes we compute $\log_2$ of zero values, since the
+\texttt{nonzero} variable is set based on the probability used in the
+probability part of the entropy (and not based on the probability used to
+calculated the log-probability part of the entropy).
+
+\section*{Question 8: computing mutual information: multiple trial lengths, averaged, cross-validated}
+
+Figure~\ref{fig:miEstimatesCVMultiTrialAveraged} shows averaged cross-validated estimates of
+mutual information across multiple trial lengths.
+
+\begin{figure}[H]
+    \begin{center}
+        \href{https://www.gatsby.ucl.ac.uk/~rapela/neuroinformatics/2023/ws8/figures/mi_cv_nRepeats_1000_maxNTrials_100_p_0.500000_q_0.500000.html}{\includegraphics[width=5.5in]{../figures/mi_cv_nRepeats_1000_maxNTrials_100_p_0.500000_q_0.500000.png}}
+
+        \caption{Averaged cross-validated estimates of mutual information for different number of trials.
+        Generated with
+        \href{https://github.com/joacorapela/neuroinformatics23/blob/master/worksheets/ws8/mySolution/code/scripts/doEstimateMI_cv_multiTrials.py}{this}
+        script using parameters \texttt{--n\_repeats 1000}. Click on the image to see its
+        interactive version.}
+
+        \label{fig:miEstimatesCVMultiTrialAveraged}
+    \end{center}
+\end{figure}
+
+\section*{Question 8: why the shape of the mutual information estimates in Fig.~\ref{fig:miEstimatesCVMultiTrialAveraged}}
+
+Because cross-validated estimates of mutual information are biased below.
+
+\end{document}
